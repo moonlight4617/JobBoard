@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
   return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth:companies'])->name('dashboard');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
   ->middleware('guest')
@@ -60,24 +60,24 @@ Route::post('/reset-password', [NewPasswordController::class, 'store'])
   ->name('password.update');
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
-  ->middleware('auth')
+  ->middleware('auth:companies')
   ->name('verification.notice');
 
 Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-  ->middleware(['auth', 'signed', 'throttle:6,1'])
+  ->middleware(['auth:companies', 'signed', 'throttle:6,1'])
   ->name('verification.verify');
 
 Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-  ->middleware(['auth', 'throttle:6,1'])
+  ->middleware(['auth:companies', 'throttle:6,1'])
   ->name('verification.send');
 
 Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
-  ->middleware('auth')
+  ->middleware('auth:companies')
   ->name('password.confirm');
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
-  ->middleware('auth');
+  ->middleware('auth:companies');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-  ->middleware('auth')
+  ->middleware('auth:companies')
   ->name('logout');
