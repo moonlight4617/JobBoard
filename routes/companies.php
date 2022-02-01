@@ -22,11 +22,11 @@ use App\Http\Controllers\Companies\Auth\VerifyEmailController;
 */
 
 Route::get('/', function () {
-  return view('welcome');
+  return view('company.welcome');
 });
 
 Route::get('/dashboard', function () {
-  return view('dashboard');
+  return view('company.dashboard');
 })->middleware(['auth:companies'])->name('dashboard');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
