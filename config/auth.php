@@ -80,9 +80,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Companies::class,
         ],
-        'owner' => [
+        'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Owner::class,
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
