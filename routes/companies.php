@@ -1,14 +1,33 @@
 <?php
 
-use App\Http\Controllers\User\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\User\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\User\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\User\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\User\Auth\NewPasswordController;
-use App\Http\Controllers\User\Auth\PasswordResetLinkController;
-use App\Http\Controllers\User\Auth\RegisteredUserController;
-use App\Http\Controllers\User\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Companies\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Companies\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Companies\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Companies\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Companies\Auth\NewPasswordController;
+use App\Http\Controllers\Companies\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Companies\Auth\RegisteredUserController;
+use App\Http\Controllers\Companies\Auth\VerifyEmailController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+  return view('company.welcome');
+});
+
+Route::get('/dashboard', function () {
+  return view('company.dashboard');
+})->middleware(['auth:companies'])->name('dashboard');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
   ->middleware('guest')
@@ -41,24 +60,24 @@ Route::post('/reset-password', [NewPasswordController::class, 'store'])
   ->name('password.update');
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
-  ->middleware('auth:users')
+  ->middleware('auth:companies')
   ->name('verification.notice');
 
 Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-  ->middleware(['auth:users', 'signed', 'throttle:6,1'])
+  ->middleware(['auth:companies', 'signed', 'throttle:6,1'])
   ->name('verification.verify');
 
 Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-  ->middleware(['auth:users', 'throttle:6,1'])
+  ->middleware(['auth:companies', 'throttle:6,1'])
   ->name('verification.send');
 
 Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
-  ->middleware('auth:users')
+  ->middleware('auth:companies')
   ->name('password.confirm');
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
-  ->middleware('auth:users');
+  ->middleware('auth:companies');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-  ->middleware('auth:users')
+  ->middleware('auth:companies')
   ->name('logout');
