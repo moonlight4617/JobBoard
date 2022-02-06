@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Companies;
 
 class CompaniesController extends Controller
 {
@@ -18,7 +19,8 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        dd('一覧画面');
+        $companies = Companies::select('name', 'email', 'created_at')->get();
+        return view('admin.company.index', compact('companies'));
     }
 
     /**
