@@ -16,7 +16,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.companies.index')" :active="request()->routeIs('admin.companies.index')">
-                        {{ __('企業一覧') }}
+                        企業一覧
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.companies.create')" :active="request()->routeIs('admin.companies.create')">
+                        企業登録
                     </x-nav-link>
                 </div>
             </div>
