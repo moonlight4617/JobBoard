@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Companies;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class CompaniesController extends Controller
 {
@@ -41,7 +43,21 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        Companies::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'intro' => $request->intro
+        ]);
+
+
+        return redirect()->route('admin.companies.index');
     }
 
     /**

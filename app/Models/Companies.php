@@ -15,6 +15,14 @@ class Companies extends Authenticatable
         'name',
         'email',
         'password',
+        'intro',
+        'image1',
+        'image2',
+        'tel',
+        'post_code',
+        'address',
+        'homepage',
+        'del_flg'
     ];
 
     /**
