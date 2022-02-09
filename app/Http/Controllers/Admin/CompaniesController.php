@@ -57,7 +57,7 @@ class CompaniesController extends Controller
         ]);
 
 
-        return redirect()->route('admin.companies.index');
+        return redirect()->route('admin.companies.index')->with('message', '企業を登録しました。');
     }
 
     /**
