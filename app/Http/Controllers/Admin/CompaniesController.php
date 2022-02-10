@@ -60,7 +60,7 @@ class CompaniesController extends Controller
         ]);
 
 
-        return redirect()->route('admin.companies.index')->with('message', '企業を登録しました。');
+        return redirect()->route('admin.companies.index')->with(['message' => '企業登録しました。', 'status' => 'info']);
     }
 
     /**
@@ -113,7 +113,7 @@ class CompaniesController extends Controller
         // dd($company);
         $company->save();
 
-        return redirect()->route('admin.companies.index')->with('message', '企業を更新しました。');
+        return redirect()->route('admin.companies.index')->with(['message' => '企業を更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -124,6 +124,7 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Companies::findOrFail($id)->delete();
+        return redirect()->route('admin.companies.index')->with(['message' => '企業を削除しました。', 'status' => 'alert']);
     }
 }

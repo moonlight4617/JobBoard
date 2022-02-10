@@ -28,8 +28,8 @@ class CreateCompaniesTable extends Migration
             $table->integer('post_code')->nullable();
             $table->string('address')->nullable();
             $table->string('homepage')->nullable();
-            $table->boolean('del_flg')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

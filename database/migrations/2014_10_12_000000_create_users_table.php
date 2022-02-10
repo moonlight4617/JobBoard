@@ -26,8 +26,8 @@ class CreateUsersTable extends Migration
             $table->string('license')->nullable();
             $table->text('career')->nullable();
             $table->string('hobby')->nullable();
-            $table->boolean('del_flg')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
