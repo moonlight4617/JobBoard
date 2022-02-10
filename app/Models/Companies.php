@@ -5,16 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Companies extends Authenticatable
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
         'email',
         'password',
+        'intro',
+        'image1',
+        'image2',
+        'tel',
+        'post_code',
+        'address',
+        'homepage',
+        'del_flg'
     ];
 
     /**

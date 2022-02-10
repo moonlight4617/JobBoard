@@ -20,16 +20,16 @@ class CreateCompaniesTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->text('intro');
-            $table->string('image1');
-            $table->string('image2');
-            $table->string('image3');
-            $table->string('tel');
-            $table->integer('post_code');
-            $table->string('address');
-            $table->string('homepage');
-            $table->boolean('del_flg');
+            $table->text('intro')->nullable();
+            $table->string('image1')->nullable();
+            $table->string('image2')->nullable();
+            $table->string('image3')->nullable();
+            $table->string('tel')->nullable();
+            $table->integer('post_code')->nullable();
+            $table->string('address')->nullable();
+            $table->string('homepage')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
