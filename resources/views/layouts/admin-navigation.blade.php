@@ -47,7 +47,7 @@
                             <x-dropdown-link :href="route('admin.logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                ログアウト
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -70,8 +70,18 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                {{ __('Dashboard') }}
+            {{ __('Dashboard') }}
             </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('admin.companies.index')" :active="request()->routeIs('admin.companies.index')">
+                企業一覧
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('admin.companies.create')" :active="request()->routeIs('admin.companies.create')">
+                企業登録
+            </x-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -89,7 +99,7 @@
                     <x-responsive-nav-link :href="route('admin.logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        ログアウト
                     </x-responsive-nav-link>
                 </form>
             </div>

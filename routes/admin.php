@@ -23,22 +23,22 @@ use App\Http\Controllers\Admin\CompaniesController;
 |
 */
 
-Route::get('/', function () {
-  return view('admin.welcome');
-});
+// Route::get('/', function () {
+//   return view('admin.welcome');
+// });
 
 Route::resource('companies', CompaniesController::class)->middleware('auth:admin');
 
-Route::get('/dashboard', function () {
+Route::get('/', function () {
   return view('admin.dashboard');
 })->middleware(['auth:admin'])->name('dashboard');
 
-Route::get('/register', [RegisteredUserController::class, 'create'])
-  ->middleware('guest')
-  ->name('register');
+// Route::get('/register', [RegisteredUserController::class, 'create'])
+//   ->middleware('guest')
+//   ->name('register');
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-  ->middleware('guest');
+// Route::post('/register', [RegisteredUserController::class, 'store'])
+//   ->middleware('guest');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
   ->middleware('guest')
