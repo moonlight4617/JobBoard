@@ -23,7 +23,7 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = Companies::select('id', 'name', 'email', 'created_at', 'updated_at')->get();
+        $companies = Companies::select('id', 'name', 'email', 'created_at', 'updated_at')->paginate(3);
         // dd($companies);
         return view('admin.company.index', compact('companies'));
     }
