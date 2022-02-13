@@ -141,6 +141,8 @@ class JobsController extends Controller
     public function destroy($id)
     {
         $this->correctCompany();
+        Jobs::findOrFail($id)->delete();
+        return redirect()->route('company.jobs.index')->with(['message' => '求人を削除しました。', 'status' => 'alert']);
     }
 
     // 企業が登録した求人一覧以外は編集できないようにする

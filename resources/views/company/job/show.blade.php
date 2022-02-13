@@ -61,7 +61,11 @@
                           <div class="p-2 w-full flex justify-around mt-4">
                           <button type="button" onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id ]) }}'" class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
                           <button type="button" onclick="location.href='{{ route('company.jobs.index') }}'" class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                          <button type="button" class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
+                          <form id="delete_{{$job->id}}" method="post" action="{{ route('company.jobs.destroy', ['job' => $job->id])}}">
+                            @csrf 
+                            @method('delete')
+                          <button type="button" href=“” data-id="{{ $job->id }}" onclick="deletePost(this)" class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
+                          </form>
                         </div>
                     </div>
                   </section>
@@ -69,4 +73,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+      function deletePost(e) {
+        'use strict';
+        if (confirm('本当に削除してもいいですか?')) { 
+          document.getElementById('delete_' + e.dataset.id).submit();
+        }
+      } 
+    </script>
 </x-app-layout>
