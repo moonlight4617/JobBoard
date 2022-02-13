@@ -20,7 +20,8 @@ class JobsController extends Controller
      */
     public function index()
     {
-        dd('一覧');
+        $jobs = Jobs::where('companies_id', Auth::id())->get();
+        return view('company.job.index', compact('jobs'));
     }
 
     /**
