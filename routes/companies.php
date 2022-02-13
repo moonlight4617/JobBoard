@@ -9,6 +9,7 @@ use App\Http\Controllers\Companies\Auth\NewPasswordController;
 use App\Http\Controllers\Companies\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Companies\Auth\RegisteredUserController;
 use App\Http\Controllers\Companies\Auth\VerifyEmailController;
+use App\Http\Controllers\Companies\JobsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,13 @@ use App\Http\Controllers\Companies\Auth\VerifyEmailController;
 |
 */
 
-Route::get('/', function () {
-  return view('company.welcome');
-});
+Route::resource('jobs', JobsController::class)->middleware('auth:companies');
 
-Route::get('/dashboard', function () {
+// Route::get('/', function () {
+//   return view('company.welcome');
+// });
+
+Route::get('/', function () {
   return view('company.dashboard');
 })->middleware(['auth:companies'])->name('dashboard');
 
