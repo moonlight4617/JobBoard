@@ -45,12 +45,12 @@ class JobsController extends Controller
         $request->validate([
             'job_name' => ['required', 'string', 'max:255'],
             'detail' => ['required', 'string'],
-            'conditions' => ['string', 'max:255'],
-            'duty_hours' => ['string', 'max:255'],
-            'low_salary' => ['integer'],
-            'high_salary' => ['integer'],
-            'holiday' => ['string', 'max:255'],
-            'benefits' => ['string', 'max:255']
+            'conditions' => ['nullable', 'string', 'max:255'],
+            'duty_hours' => ['nullable', 'string', 'max:255'],
+            'low_salary' => ['nullable', 'integer'],
+            'high_salary' => ['nullable', 'integer'],
+            'holiday' => ['nullable', 'string', 'max:255'],
+            'benefits' => ['nullable', 'string', 'max:255']
         ]);
 
         Jobs::create([
@@ -105,6 +105,31 @@ class JobsController extends Controller
     public function update(Request $request, $id)
     {
         $this->correctCompany();
+
+        $request->validate([
+            'job_name' => ['required', 'string', 'max:255'],
+            'detail' => ['required', 'string'],
+            'conditions' => ['nullable', 'string', 'max:255'],
+            'duty_hours' => ['nullable', 'string', 'max:255'],
+            'low_salary' => ['nullable', 'integer'],
+            'high_salary' => ['nullable', 'integer'],
+            'holiday' => ['nullable', 'string', 'max:255'],
+            'benefits' => ['nullable', 'string', 'max:255']
+        ]);
+
+        $job = Jobs::findOrFail($id);
+        $job->job_name = $request->job_name;
+        $job->detail = $request->detail;
+        $job->conditions = $request->conditions;
+        $job->duty_hours = $request->duty_hours;
+        $job->low_salary = $request->low_salary;
+        $job->high_salary = $request->high_salary;
+        $job->holiday = $request->holiday;
+        $job->benefits = $request->benefits;
+
+        $job->save();
+
+        return redirect()->route('company.jobs.show', compact('job'))->with(['message' => '求人更新しました。', 'status' => 'info']);
     }
 
     /**
