@@ -14,4 +14,20 @@ class Jobs extends Model
     {
         return $this->belongsTo(Companies::class);
     }
+
+    protected $fillable = [
+        'companies_id',
+        'job_name',
+        'detail',
+        'conditions',
+        'duty_hours',
+        'low_salary',
+        'high_salary',
+        'holiday',
+        'benefits',
+        'rec_status',
+        'image1',
+        'image2',
+        'image3'
+    ];
 }

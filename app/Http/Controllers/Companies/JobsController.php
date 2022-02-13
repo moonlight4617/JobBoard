@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Companies;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Jobs;
+use Illuminate\Support\Facades\Auth;
 
 class JobsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:companies');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +41,31 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $request->validate([
+            'job_name' => ['required', 'string', 'max:255'],
+            'detail' => ['required', 'string'],
+            'conditions' => ['string', 'max:255'],
+            'duty_hours' => ['string', 'max:255'],
+            'low_salary' => ['integer'],
+            'high_salary' => ['integer'],
+            'holiday' => ['string', 'max:255'],
+            'benefits' => ['string', 'max:255']
+        ]);
+
+        Jobs::create([
+            'companies_id' => Auth::id(),
+            'job_name' => $request->job_name,
+            'detail' => $request->detail,
+            'conditions' => $request->conditions,
+            'duty_hours' => $request->duty_hours,
+            'low_salary' => $request->low_salary,
+            'high_salary' => $request->high_salary,
+            'holiday' => $request->holiday,
+            'benefits' => $request->benefits,
+        ]);
+
+
+        return redirect()->route('company.jobs.index')->with(['message' => '求人登録しました。', 'status' => 'info']);
     }
 
     /**
