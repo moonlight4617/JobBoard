@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            登録求人一覧
+            求人詳細
         </h2>
     </x-slot>
 
@@ -12,11 +12,9 @@
                   <section class="text-gray-600 body-font relative">
                     <div class="container px-5 py-4 mx-auto">
                       <div class="flex flex-col text-center w-full mb-12">
-                        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">登録求人一覧</h1>
+                        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">求人詳細</h1>
                       </div>
                       <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                      @if ($jobs)
-                        @foreach ( $jobs as $job )
                         <div class="lg md:w-2/3 mx-auto">
                             <div class="p-2">
                               <div class="relative">
@@ -59,14 +57,11 @@
                               </div>
                             </div>
                           </div>
-                          <button type="button" onclick="location.href='{{ route('company.jobs.show', ['job' => $job->id ]) }}'" class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">詳細</button>
-                        @endforeach
-                        @endif
-                        <div class="p-2 w-full flex justify-around mt-4">
-                          <button type="button" onclick="location.href='{{ route('company.dashboard') }}'" class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                          {{-- <button type="submit" class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">登録</button> --}}
+                          <div class="p-2 w-full flex justify-around mt-4">
+                          <button type="button" onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id ]) }}'" class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
+                          <button type="button" onclick="location.href='{{ route('company.jobs.index') }}'" class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                          <button type="button" class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
                         </div>
-
                     </div>
                   </section>
                 </div>

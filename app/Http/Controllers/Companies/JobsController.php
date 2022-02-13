@@ -77,7 +77,8 @@ class JobsController extends Controller
      */
     public function show($id)
     {
-        //
+        $job = Jobs::findOrFail($id);
+        return view('company.job.show', compact('job'));
     }
 
     /**
