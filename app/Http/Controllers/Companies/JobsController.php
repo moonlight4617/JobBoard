@@ -91,6 +91,8 @@ class JobsController extends Controller
     public function edit($id)
     {
         $this->correctCompany();
+        $job = Jobs::findOrFail($id);
+        return view('company.job.edit', compact('job'));
     }
 
     /**
