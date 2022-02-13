@@ -77,6 +77,7 @@ class JobsController extends Controller
      */
     public function show($id)
     {
+        $this->correctCompany();
         $job = Jobs::findOrFail($id);
         return view('company.job.show', compact('job'));
     }
@@ -89,7 +90,7 @@ class JobsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->correctCompany();
     }
 
     /**
@@ -101,7 +102,7 @@ class JobsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->correctCompany();
     }
 
     /**
@@ -112,6 +113,24 @@ class JobsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->correctCompany();
+    }
+
+    // 企業が登録した求人一覧以外は編集できないようにする
+    private function correctCompany()
+    {
+        $this->middleware(function ($request, $next) {
+            $id = $request->route()->parameter('job'); //jobのid取得
+            if (!is_null($id)) {
+                $jobCompanyId = Jobs::findOrFail($id)->companies->id;
+                $jobId = (int)$jobCompanyId; // キャスト 文字列→数値に型変換
+                $companyId = Auth::id();
+                if ($jobId !== $companyId) {
+                    abort(404); // 404画面表示 }
+                }
+
+                return $next($request);
+            }
+        });
     }
 }
