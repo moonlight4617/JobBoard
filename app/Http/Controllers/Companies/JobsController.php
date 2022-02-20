@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
+use InterventionImage;
+use Illuminate\Support\Facades\Storage;
 
 class JobsController extends Controller
 {
@@ -55,16 +57,28 @@ class JobsController extends Controller
         ]);
 
         if ($request->imgpath1) {
-            $filename1 = $request->imgpath1->getClientOriginalName();
-            $request->imgpath1->storeAs('public/jobs', $filename1, 'public');
+            $imageFile = $request->imgpath1;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore1 = $fileName . '.'  . $extension;
+            $resizedImage1 = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
+            Storage::put('public/jobs/' . $fileNameToStore1, $resizedImage1);
         }
         if ($request->imgpath2) {
-            $filename2 = $request->imgpath2->getClientOriginalName();
-            $request->imgpath2->storeAs('public/jobs', $filename2, 'public');
+            $imageFile = $request->imgpath2;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore2 = $fileName . '.'  . $extension;
+            $resizedImage2 = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
+            Storage::put('public/jobs/' . $fileNameToStore2, $resizedImage2);
         }
         if ($request->imgpath3) {
-            $filename3 = $request->imgpath3->getClientOriginalName();
-            $request->imgpath3->storeAs('public/jobs', $filename3, 'public');
+            $imageFile = $request->imgpath3;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore3 = $fileName . '.'  . $extension;
+            $resizedImage3 = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
+            Storage::put('public/jobs/' . $fileNameToStore3, $resizedImage3);
         }
 
         Jobs::create([
@@ -77,9 +91,9 @@ class JobsController extends Controller
             'high_salary' => $request->high_salary,
             'holiday' => $request->holiday,
             'benefits' => $request->benefits,
-            'image1' => $filename1,
-            'image2' => $filename2,
-            'image3' => $filename3,
+            'image1' => $fileNameToStore1,
+            'image2' => $fileNameToStore2,
+            'image3' => $fileNameToStore3,
         ]);
 
 

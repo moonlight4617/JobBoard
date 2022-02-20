@@ -66,9 +66,9 @@
                               <input type="text" id="benefits" name="benefits" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" value="{{ old('benefits') }}">
                             </div>
                           </div>
-                          <p>画像１　<input type="file" name="imgpath1"></p>
-                          <p>画像２　<input type="file" name="imgpath2"></p>
-                          <p>画像３　<input type="file" name="imgpath3"></p>
+                          <p>画像１　<input type="file" name="imgpath1" accept="image/png,image/jpeg,image/jpg"></p>
+                          <p>画像２　<input type="file" name="imgpath2" accept="image/png,image/jpeg,image/jpg"></p>
+                          <p>画像３　<input type="file" name="imgpath3" accept="image/png,image/jpeg,image/jpg"></p>
                           <div class="p-2 w-full flex justify-around mt-4">
                             <button type="button" onclick="location.href='{{ route('company.dashboard') }}'" class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
                             <button type="submit" class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">登録</button>

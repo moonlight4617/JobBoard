@@ -20,17 +20,17 @@
                           @if(empty($job->image1))
                             <img src="{{asset('images/noimage.png')}}">
                             @else
-                            <img src="{{asset('storage/public/jobs/' . $job->image1)}}">
+                            <img src="{{asset('storage/jobs/' . $job->image1)}}">
                           @endif
                           @if(empty($job->image2))
                             <img src="{{asset('images/noimage.png')}}">
                             @else
-                            <img src="{{asset('storage/public/jobs/' . $job->image2)}}">
+                            <img src="{{asset('storage/jobs/' . $job->image2)}}">
                           @endif
                           @if(empty($job->image3))
                             <img src="{{asset('images/noimage.png')}}">
                             @else
-                            <img src="{{asset('storage/public/jobs/' . $job->image3)}}">
+                            <img src="{{asset('storage/jobs/' . $job->image3)}}">
                           @endif
 
 <div id="carouselExampleIndicators" class="carousel slide relative" data-bs-ride="carousel">
