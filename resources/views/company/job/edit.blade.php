@@ -14,6 +14,7 @@
                       <div class="flex flex-col text-center w-full mb-12">
                         <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">求人更新</h1>
                       </div>
+                      画像が入る
                       <x-auth-validation-errors class="mb-4" :errors="$errors" />
                       <form method="POST" action="{{ route('company.jobs.update', ['job' => $job->id ]) }}">
                       @csrf

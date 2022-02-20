@@ -42,6 +42,7 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'job_name' => ['required', 'string', 'max:255'],
             'detail' => ['required', 'string'],
@@ -53,6 +54,19 @@ class JobsController extends Controller
             'benefits' => ['nullable', 'string', 'max:255']
         ]);
 
+        if ($request->imgpath1) {
+            $filename1 = $request->imgpath1->getClientOriginalName();
+            $request->imgpath1->storeAs('public/jobs', $filename1, 'public');
+        }
+        if ($request->imgpath2) {
+            $filename2 = $request->imgpath2->getClientOriginalName();
+            $request->imgpath2->storeAs('public/jobs', $filename2, 'public');
+        }
+        if ($request->imgpath3) {
+            $filename3 = $request->imgpath3->getClientOriginalName();
+            $request->imgpath3->storeAs('public/jobs', $filename3, 'public');
+        }
+
         Jobs::create([
             'companies_id' => Auth::id(),
             'job_name' => $request->job_name,
@@ -63,6 +77,9 @@ class JobsController extends Controller
             'high_salary' => $request->high_salary,
             'holiday' => $request->holiday,
             'benefits' => $request->benefits,
+            'image1' => $filename1,
+            'image2' => $filename2,
+            'image3' => $filename3,
         ]);
 
 
