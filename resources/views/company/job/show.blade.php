@@ -17,6 +17,49 @@
                       </div>
                       <x-auth-validation-errors class="mb-4" :errors="$errors" />
                         <div class="lg md:w-2/3 mx-auto">
+                          
+                          
+                          
+
+                          <!-- Slider main container -->
+                          <div class="swiper-container">
+                            <!-- Additional required wrapper -->
+                            <div class="swiper-wrapper">
+                              <!-- Slides -->
+                              <div class="swiper-slide">
+                                @if(empty($job->image1))
+                                  <img src="{{asset('images/noimage.png')}}">
+                                @else
+                                  <img src="{{asset('storage/jobs/' . $job->image1)}}">
+                                @endif
+                              </div>
+                              <div class="swiper-slide">
+                                @if(empty($job->image2))
+                                  <img src="{{asset('images/noimage.png')}}">
+                                @else
+                                  <img src="{{asset('storage/jobs/' . $job->image2)}}">
+                                @endif
+                              </div>
+                              <div class="swiper-slide">
+                                @if(empty($job->image3))
+                                  <img src="{{asset('images/noimage.png')}}">
+                                @else
+                                  <img src="{{asset('storage/jobs/' . $job->image3)}}">
+                                @endif
+                              </div>
+                            </div>
+                            <!-- If we need pagination -->
+                            <div class="swiper-pagination"></div>
+
+                            <!-- If we need navigation buttons -->
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+
+                            <!-- If we need scrollbar -->
+                            <div class="swiper-scrollbar"></div>
+                          </div>
+
+
                             <div class="p-2">
                               <div class="relative">
                                 求人名：{{ $job->job_name}}
@@ -61,7 +104,11 @@
                           <div class="p-2 w-full flex justify-around mt-4">
                           <button type="button" onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id ]) }}'" class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
                           <button type="button" onclick="location.href='{{ route('company.jobs.index') }}'" class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                          <button type="button" class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
+                          <form id="delete_{{$job->id}}" method="post" action="{{ route('company.jobs.destroy', ['job' => $job->id])}}">
+                            @csrf 
+                            @method('delete')
+                          <button type="button" href=“” data-id="{{ $job->id }}" onclick="deletePost(this)" class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
+                          </form>
                         </div>
                     </div>
                   </section>
@@ -69,4 +116,14 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ mix('js/swiper.js') }}"></script>
+    <script>
+      function deletePost(e) {
+        'use strict';
+        if (confirm('本当に削除してもいいですか?')) { 
+          document.getElementById('delete_' + e.dataset.id).submit();
+        }
+      } 
+    </script>
 </x-app-layout>
