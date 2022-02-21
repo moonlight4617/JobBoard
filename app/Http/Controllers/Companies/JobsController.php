@@ -44,7 +44,7 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
         $request->validate([
             'job_name' => ['required', 'string', 'max:255'],
             'detail' => ['required', 'string'],
@@ -157,6 +157,49 @@ class JobsController extends Controller
         $job->high_salary = $request->high_salary;
         $job->holiday = $request->holiday;
         $job->benefits = $request->benefits;
+
+        // dd($request);
+        // image1,2,3がparamsにあれば、一旦削除した後に、登録
+
+        if ($request->imgpath1) {
+            $filePath1 = 'public/jobs/' . $job->image1;
+            if (Storage::exists($filePath1)) {
+                Storage::delete($filePath1);
+            }
+            $imageFile1 = $request->imgpath1;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile1->extension();
+            $fileNameToStore1 = $fileName . '.'  . $extension;
+            $resizedImage1 = InterventionImage::make($imageFile1)->resize(1920, 1080)->encode();
+            Storage::put('public/jobs/' . $fileNameToStore1, $resizedImage1);
+            $job->image1 = $fileNameToStore1;
+        }
+        if ($request->imgpath2) {
+            $filePath2 = 'public/jobs/' . $job->image2;
+            if (Storage::exists($filePath2)) {
+                Storage::delete($filePath2);
+            }
+            $imageFile2 = $request->imgpath2;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile2->extension();
+            $fileNameToStore2 = $fileName . '.'  . $extension;
+            $resizedImage2 = InterventionImage::make($imageFile2)->resize(1920, 1080)->encode();
+            Storage::put('public/jobs/' . $fileNameToStore2, $resizedImage2);
+            $job->image2 = $fileNameToStore2;
+        }
+        if ($request->imgpath3) {
+            $filePath3 = 'public/jobs/' . $job->image3;
+            if (Storage::exists($filePath3)) {
+                Storage::delete($filePath3);
+            }
+            $imageFile3 = $request->imgpath3;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile3->extension();
+            $fileNameToStore3 = $fileName . '.'  . $extension;
+            $resizedImage3 = InterventionImage::make($imageFile3)->resize(1920, 1080)->encode();
+            Storage::put('public/jobs/' . $fileNameToStore3, $resizedImage3);
+            $job->image3 = $fileNameToStore3;
+        }
 
         $job->save();
 

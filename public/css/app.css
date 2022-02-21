@@ -641,17 +641,11 @@ select {
 .left-0 {
   left: 0px;
 }
-.bottom-0 {
-  bottom: 0px;
-}
 .z-0 {
   z-index: 0;
 }
 .z-50 {
   z-index: 50;
-}
-.float-left {
-  float: left;
 }
 .-m-2 {
   margin: -0.5rem;
@@ -713,9 +707,6 @@ select {
 }
 .block {
   display: block;
-}
-.inline-block {
-  display: inline-block;
 }
 .flex {
   display: flex;
@@ -977,15 +968,8 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
-}
-.bg-no-repeat {
-  background-repeat: no-repeat;
 }
 .fill-current {
   fill: currentColor;
@@ -995,9 +979,6 @@ select {
 }
 .p-2 {
   padding: 0.5rem;
-}
-.p-0 {
-  padding: 0px;
 }
 .px-4 {
   padding-left: 1rem;
@@ -1050,6 +1031,10 @@ select {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 .pt-8 {
   padding-top: 2rem;
@@ -1426,6 +1411,10 @@ select {
 .micromodal-slide .modal__overlay {
   will-change: transform;
 }
+.swiper {
+  /* width: 600px; */
+  height: 300px;
+}
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -1477,14 +1466,6 @@ select {
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-.hover\:no-underline:hover {
-  -webkit-text-decoration-line: none;
-          text-decoration-line: none;
-}
-.hover\:outline-none:hover {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
 }
 .focus\:z-10:focus {
   z-index: 10;
@@ -1544,10 +1525,6 @@ select {
 .focus\:text-gray-500:focus {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-.focus\:no-underline:focus {
-  -webkit-text-decoration-line: none;
-          text-decoration-line: none;
 }
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
@@ -1716,6 +1693,10 @@ select {
     width: 66.666667%;
   }
 
+  .md\:w-1\/4 {
+    width: 25%;
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1732,10 +1713,6 @@ select {
     padding: 1.5rem;
   }
 
-  .md\:p-4 {
-    padding: 1rem;
-  }
-
   .md\:px-5 {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -1750,6 +1727,14 @@ select {
 
   .lg\:w-1\/2 {
     width: 50%;
+  }
+
+  .lg\:w-1\/4 {
+    width: 25%;
+  }
+
+  .lg\:w-4\/5 {
+    width: 80%;
   }
 
   .lg\:px-8 {
