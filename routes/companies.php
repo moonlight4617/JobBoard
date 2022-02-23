@@ -10,6 +10,7 @@ use App\Http\Controllers\Companies\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Companies\Auth\RegisteredUserController;
 use App\Http\Controllers\Companies\Auth\VerifyEmailController;
 use App\Http\Controllers\Companies\JobsController;
+use App\Http\Controllers\Companies\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,13 +25,15 @@ use App\Http\Controllers\Companies\JobsController;
 
 Route::resource('jobs', JobsController::class)->middleware('auth:companies');
 
+Route::resource('company', CompanyController::class, ['except' => 'index'])->middleware('auth:companies');
+
 // Route::get('/', function () {
 //   return view('company.welcome');
 // });
 
 Route::get('/', function () {
   return view('company.dashboard');
-})->middleware(['auth:companies'])->name('dashboard');
+})->middleware('auth:companies')->name('dashboard');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
   ->middleware('guest')

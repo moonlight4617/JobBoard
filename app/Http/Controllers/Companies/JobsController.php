@@ -44,7 +44,7 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $request->validate([
             'job_name' => ['required', 'string', 'max:255'],
             'detail' => ['required', 'string'],
@@ -53,7 +53,10 @@ class JobsController extends Controller
             'low_salary' => ['nullable', 'integer'],
             'high_salary' => ['nullable', 'integer'],
             'holiday' => ['nullable', 'string', 'max:255'],
-            'benefits' => ['nullable', 'string', 'max:255']
+            'benefits' => ['nullable', 'string', 'max:255'],
+            'image1' => ['nullable', 'file', 'size:1024'],
+            'image2' => ['nullable', 'file', 'size:1024'],
+            'image3' => ['nullable', 'file', 'size:1024']
         ]);
 
         if ($request->imgpath1) {
@@ -61,24 +64,30 @@ class JobsController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore1 = $fileName . '.'  . $extension;
-            $resizedImage1 = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
+            $resizedImage1 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
             Storage::put('public/jobs/' . $fileNameToStore1, $resizedImage1);
+        } else {
+            $fileNameToStore1 = null;
         }
         if ($request->imgpath2) {
             $imageFile = $request->imgpath2;
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore2 = $fileName . '.'  . $extension;
-            $resizedImage2 = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
+            $resizedImage2 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
             Storage::put('public/jobs/' . $fileNameToStore2, $resizedImage2);
+        } else {
+            $fileNameToStore2 = null;
         }
         if ($request->imgpath3) {
             $imageFile = $request->imgpath3;
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore3 = $fileName . '.'  . $extension;
-            $resizedImage3 = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
+            $resizedImage3 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
             Storage::put('public/jobs/' . $fileNameToStore3, $resizedImage3);
+        } else {
+            $fileNameToStore3 = null;
         }
 
         Jobs::create([
@@ -145,7 +154,10 @@ class JobsController extends Controller
             'low_salary' => ['nullable', 'integer'],
             'high_salary' => ['nullable', 'integer'],
             'holiday' => ['nullable', 'string', 'max:255'],
-            'benefits' => ['nullable', 'string', 'max:255']
+            'benefits' => ['nullable', 'string', 'max:255'],
+            'image1' => ['nullable', 'file', 'size:1024'],
+            'image2' => ['nullable', 'file', 'size:1024'],
+            'image3' => ['nullable', 'file', 'size:1024']
         ]);
 
         $job = Jobs::findOrFail($id);
@@ -170,7 +182,7 @@ class JobsController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile1->extension();
             $fileNameToStore1 = $fileName . '.'  . $extension;
-            $resizedImage1 = InterventionImage::make($imageFile1)->resize(1920, 1080)->encode();
+            $resizedImage1 = InterventionImage::make($imageFile1)->fit(1920, 1080)->encode();
             Storage::put('public/jobs/' . $fileNameToStore1, $resizedImage1);
             $job->image1 = $fileNameToStore1;
         }
@@ -183,7 +195,7 @@ class JobsController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile2->extension();
             $fileNameToStore2 = $fileName . '.'  . $extension;
-            $resizedImage2 = InterventionImage::make($imageFile2)->resize(1920, 1080)->encode();
+            $resizedImage2 = InterventionImage::make($imageFile2)->fit(1920, 1080)->encode();
             Storage::put('public/jobs/' . $fileNameToStore2, $resizedImage2);
             $job->image2 = $fileNameToStore2;
         }
@@ -196,7 +208,7 @@ class JobsController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile3->extension();
             $fileNameToStore3 = $fileName . '.'  . $extension;
-            $resizedImage3 = InterventionImage::make($imageFile3)->resize(1920, 1080)->encode();
+            $resizedImage3 = InterventionImage::make($imageFile3)->fit(1920, 1080)->encode();
             Storage::put('public/jobs/' . $fileNameToStore3, $resizedImage3);
             $job->image3 = $fileNameToStore3;
         }

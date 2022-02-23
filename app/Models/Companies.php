@@ -26,11 +26,11 @@ class Companies extends Authenticatable
         'intro',
         'image1',
         'image2',
+        'image3',
         'tel',
         'post_code',
         'address',
-        'homepage',
-        'del_flg'
+        'homepage'
     ];
 
     /**

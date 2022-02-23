@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
-    public const COMPANY_HOME = '/company/dashboard';
+    public const COMPANY_HOME = '/company';
     public const ADMIN_HOME = '/admin/companies';
 
     /**
@@ -51,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
 
-            Route::prefix('/company')
+            Route::prefix('company')
                 ->as('company.')
                 ->middleware('web')
                 ->namespace($this->namespace)

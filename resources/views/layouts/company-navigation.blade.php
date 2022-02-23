@@ -26,6 +26,11 @@
                         求人登録
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.company.show', ['company' => Auth::id()])" :active="request()->routeIs('company.company.show')">
+                        企業情報
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
