@@ -15,6 +15,17 @@ class CompanyController extends Controller
     public function __construct()
     {
         $this->middleware('auth:companies');
+
+        $this->middleware(function ($request, $next) {
+            $id = $request->route()->parameter('company'); //jobのid取得
+            if (!is_null($id)) {
+                $companyId = Companies::findOrFail($id)->id;
+                if ($companyId !== Auth::id()) {
+                    abort(404); // 404画面表示 }
+                }
+                return $next($request);
+            }
+        });
     }
 
     public function create()
@@ -80,25 +91,22 @@ class CompanyController extends Controller
         return redirect()->route('company.company.show', compact('company'))->with(['message' => '登録しました。', 'status' => 'info']);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $this->loginCompany();
         $company = Companies::findOrFail($id);
         return view('company.mypage.show', compact('company'));
     }
 
     public function edit($id)
     {
-        $this->loginCompany();
         $company = Companies::findOrFail($id);
         return view('company.mypage.edit', compact('company'));
     }
 
     public function update(Request $request, $id)
     {
-        $this->loginCompany();
-
         $request->validate([
+            'name' => ['required', 'string'],
             'intro' => ['required', 'string'],
             'image1' => ['nullable', 'file', 'size:1024'],
             'image2' => ['nullable', 'file', 'size:1024'],
@@ -161,6 +169,7 @@ class CompanyController extends Controller
         }
 
         $company = Companies::findOrFail($id);
+        $company->name = $request->name;
         $company->intro = $request->intro;
         $company->tel = $request->tel;
         $company->post_code = $request->post_code;
@@ -177,15 +186,15 @@ class CompanyController extends Controller
 
     public function destroy($id)
     {
-        $this->loginCompany();
         Companies::findOrFail($id)->delete();
         return redirect()->route('company.register')->with(['message' => '企業情報を削除しました。', 'status' => 'alert']);
     }
 
-    public function loginCompany()
+    private function loginCompany()
     {
         // $request->route()->parameter('company') == Auth::id()以外だったらabort発生させる
         $this->middleware(function ($request, $next) {
+            dd('login');
             $id = $request->route()->parameter('company'); //jobのid取得
             if (!is_null($id)) {
                 $companyId = Companies::findOrFail($id)->id;

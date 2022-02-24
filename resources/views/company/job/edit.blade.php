@@ -89,7 +89,7 @@
                             @else
                               <img src="{{asset('storage/jobs/' . $job->image3)}}" class="w-1/4">
                             @endif
-                            <input type="file" name="imgpath3" accept="image/png,image/jpeg,image/jpg"></p>
+                            <input type="file" name="imgpath3" accept="image/png,image/jpeg,image/jpg">
                             </div>
                           <div class="p-2 w-full flex justify-around mt-4">
                             <button type="button" onclick="location.href='{{ route('company.dashboard') }}'" class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
