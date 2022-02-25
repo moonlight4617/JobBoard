@@ -8,6 +8,7 @@ use App\Http\Controllers\User\Auth\NewPasswordController;
 use App\Http\Controllers\User\Auth\PasswordResetLinkController;
 use App\Http\Controllers\User\Auth\RegisteredUserController;
 use App\Http\Controllers\User\Auth\VerifyEmailController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -16,6 +17,8 @@ Route::get('/register', [RegisteredUserController::class, 'create'])
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
   ->middleware('guest');
+
+Route::resource('user', UserController::class, ['except' => 'index'])->middleware('auth:users');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
   ->middleware('guest')

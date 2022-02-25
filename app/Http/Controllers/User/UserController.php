@@ -1,38 +1,60 @@
 <?php
 
-namespace App\Http\Controllers\Companies;
+namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Models\Companies;
 use Illuminate\Http\Request;
-use App\Models\Jobs;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\InterventionImage;
 use Illuminate\Support\Facades\Storage;
 
-class CompanyController extends Controller
+
+class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:companies');
+        $this->middleware('auth:users');
 
-        $this->middleware(function ($request, $next) {
-            $id = $request->route()->parameter('company'); //jobのid取得
-            if (!is_null($id)) {
-                $companyId = Companies::findOrFail($id)->id;
-                if ($companyId !== Auth::id()) {
-                    abort(404); // 404画面表示 }
-                }
-                return $next($request);
-            }
-        });
+        // $this->middleware(function ($request, $next) {
+        //     $id = $request->route()->parameter('user'); 
+        //     if (!is_null($id)) {
+        //         $userId = User::findOrFail($id)->id;
+        //         if ($userId !== Auth::id()) {
+        //             abort(404); // 404画面表示 }
+        //         }
+        //         return $next($request);
+        //     }
+        // });
     }
 
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-        return view('company.mypage.create');
+        return view('user.mypage.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -91,18 +113,37 @@ class CompanyController extends Controller
         return redirect()->route('company.company.show', compact('company'))->with(['message' => '登録しました。', 'status' => 'info']);
     }
 
-    public function show(Request $request, $id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
         $company = Companies::findOrFail($id);
         return view('company.mypage.show', compact('company'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         $company = Companies::findOrFail($id);
         return view('company.mypage.edit', compact('company'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -184,6 +225,12 @@ class CompanyController extends Controller
         return redirect()->route('company.company.show', compact('company'))->with(['message' => '更新しました。', 'status' => 'info']);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         Companies::findOrFail($id)->delete();
