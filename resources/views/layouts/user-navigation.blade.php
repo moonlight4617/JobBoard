@@ -16,6 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('user.user.show', ['user' => Auth::id()])" :active="request()->routeIs('user.user.show')">
+                        プロフィール
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

@@ -7,7 +7,7 @@ use App\Models\Companies;
 use Illuminate\Http\Request;
 use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\InterventionImage;
+use InterventionImage;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
@@ -37,9 +37,9 @@ class CompanyController extends Controller
     {
         $request->validate([
             'intro' => ['required', 'string'],
-            'image1' => ['nullable', 'file', 'size:1024'],
-            'image2' => ['nullable', 'file', 'size:1024'],
-            'image3' => ['nullable', 'file', 'size:1024'],
+            'image1' => ['nullable', 'file', 'max:1024'],
+            'image2' => ['nullable', 'file', 'max:1024'],
+            'image3' => ['nullable', 'file', 'max:1024'],
             'tel' => ['nullable', 'string'],
             'post_code' => ['nullable', 'integer'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -108,14 +108,16 @@ class CompanyController extends Controller
         $request->validate([
             'name' => ['required', 'string'],
             'intro' => ['required', 'string'],
-            'image1' => ['nullable', 'file', 'size:1024'],
-            'image2' => ['nullable', 'file', 'size:1024'],
-            'image3' => ['nullable', 'file', 'size:1024'],
+            'image1' => ['nullable', 'file', 'max:1024'],
+            'image2' => ['nullable', 'file', 'max:1024'],
+            'image3' => ['nullable', 'file', 'max:1024'],
             'tel' => ['nullable', 'string'],
             'post_code' => ['nullable', 'integer'],
             'address' => ['nullable', 'string', 'max:255'],
             'homepage' => ['nullable', 'string', 'max:255']
         ]);
+
+        $company = Companies::findOrFail($id);
 
         // dd($request);
         // image1,2,3がparamsにあれば、一旦削除した後に、登録
@@ -168,7 +170,6 @@ class CompanyController extends Controller
             $fileNameToStore3 = null;
         }
 
-        $company = Companies::findOrFail($id);
         $company->name = $request->name;
         $company->intro = $request->intro;
         $company->tel = $request->tel;
@@ -188,21 +189,5 @@ class CompanyController extends Controller
     {
         Companies::findOrFail($id)->delete();
         return redirect()->route('company.register')->with(['message' => '企業情報を削除しました。', 'status' => 'alert']);
-    }
-
-    private function loginCompany()
-    {
-        // $request->route()->parameter('company') == Auth::id()以外だったらabort発生させる
-        $this->middleware(function ($request, $next) {
-            dd('login');
-            $id = $request->route()->parameter('company'); //jobのid取得
-            if (!is_null($id)) {
-                $companyId = Companies::findOrFail($id)->id;
-                if ($companyId !== Auth::id()) {
-                    abort(404); // 404画面表示 }
-                }
-                return $next($request);
-            }
-        });
     }
 }
