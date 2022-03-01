@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\InterventionImage;
+use InterventionImage;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -58,59 +58,36 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'intro' => ['required', 'string'],
-            'image1' => ['nullable', 'file', 'size:1024'],
-            'image2' => ['nullable', 'file', 'size:1024'],
-            'image3' => ['nullable', 'file', 'size:1024'],
-            'tel' => ['nullable', 'string'],
-            'post_code' => ['nullable', 'integer'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'homepage' => ['nullable', 'string', 'max:255']
+            'catch' => ['nullable', 'string', 'max:255'],
+            'intro' => ['nullable', 'string'],
+            'license' => ['nullable', 'string'],
+            'career' => ['nullable', 'string'],
+            'hobby' => ['nullable', 'string'],
+            'pro_image' => ['nullable', 'file', 'max:1024'],
         ]);
 
-        $company = Companies::findOrFail(Auth::id());
-        $company->intro = $request->intro;
-        $company->tel = $request->tel;
-        $company->post_code = $request->post_code;
-        $company->address = $request->address;
-        $company->homepage = $request->homepage;
+        $user = User::findOrFail(Auth::id());
+        $user->catch = $request->catch;
+        $user->intro = $request->intro;
+        $user->license = $request->license;
+        $user->career = $request->career;
+        $user->hobby = $request->hobby;
 
         // dd($request);
-        // image1,2,3がparamsにあれば、一旦削除した後に、登録
-        if ($request->imgpath1) {
-            $imageFile = $request->imgpath1;
+        if ($request->pro_image) {
+            $imageFile = $request->pro_image;
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
-            $fileNameToStore1 = $fileName . '.'  . $extension;
-            $resizedImage1 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
-            Storage::put('public/companies/' . $fileNameToStore1, $resizedImage1);
+            $fileNameToStore = $fileName . '.'  . $extension;
+            $resizedImage = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            Storage::put('public/users/' . $fileNameToStore, $resizedImage);
         } else {
             $fileNameToStore1 = null;
         }
-        if ($request->imgpath2) {
-            $imageFile = $request->imgpath2;
-            $fileName = uniqid(rand() . '_');
-            $extension = $imageFile->extension();
-            $fileNameToStore2 = $fileName . '.'  . $extension;
-            $resizedImage2 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
-            Storage::put('public/companies/' . $fileNameToStore2, $resizedImage2);
-        } else {
-            $fileNameToStore2 = null;
-        }
-        if ($request->imgpath3) {
-            $imageFile = $request->imgpath3;
-            $fileName = uniqid(rand() . '_');
-            $extension = $imageFile->extension();
-            $fileNameToStore3 = $fileName . '.'  . $extension;
-            $resizedImage3 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
-            Storage::put('public/companies/' . $fileNameToStore3, $resizedImage3);
-        } else {
-            $fileNameToStore3 = null;
-        }
 
-        $company->save();
+        $user->save();
 
-        return redirect()->route('company.company.show', compact('company'))->with(['message' => '登録しました。', 'status' => 'info']);
+        return redirect()->route('user.user.show', compact('user'))->with(['message' => 'ユーザー情報を登録しました。', 'status' => 'info']);
     }
 
     /**
@@ -121,8 +98,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $company = Companies::findOrFail($id);
-        return view('company.mypage.show', compact('company'));
+        $user = User::findOrFail($id);
+        return view('user.mypage.show', compact('user'));
     }
 
     /**
@@ -133,8 +110,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $company = Companies::findOrFail($id);
-        return view('company.mypage.edit', compact('company'));
+        $user = User::findOrFail($id);
+        return view('user.mypage.edit', compact('user'));
     }
 
     /**
@@ -147,82 +124,49 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'string'],
-            'intro' => ['required', 'string'],
-            'image1' => ['nullable', 'file', 'size:1024'],
-            'image2' => ['nullable', 'file', 'size:1024'],
-            'image3' => ['nullable', 'file', 'size:1024'],
-            'tel' => ['nullable', 'string'],
-            'post_code' => ['nullable', 'integer'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'homepage' => ['nullable', 'string', 'max:255']
+            'catch' => ['nullable', 'string', 'max:255'],
+            'intro' => ['nullable', 'string'],
+            'license' => ['nullable', 'string'],
+            'career' => ['nullable', 'string'],
+            'hobby' => ['nullable', 'string'],
+            // 'pro_image' => ['nullable', 'file', 'max:1024'],
         ]);
 
+        $user = User::findOrFail($id);
+
         // dd($request);
-        // image1,2,3がparamsにあれば、一旦削除した後に、登録
-        if ($request->imgpath1) {
-            // 画像が既に登録ずみであれば削除
-            $filePath1 = 'public/companies/' . $company->image1;
-            if (Storage::exists($filePath1)) {
-                Storage::delete($filePath1);
+        // 画像が既に登録ずみであれば削除
+        if ($request->pro_image) {
+            $filePath = 'public/users/' . $user->pro_image;
+            if (Storage::exists($filePath)) {
+                Storage::delete($filePath);
             }
             // 改めて画像登録
-            $imageFile = $request->imgpath1;
+            $imageFile = $request->pro_image;
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
-            $fileNameToStore1 = $fileName . '.'  . $extension;
-            $resizedImage1 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
-            Storage::put('public/companies/' . $fileNameToStore1, $resizedImage1);
+            $fileNameToStore = $fileName . '.'  . $extension;
+            $resizedImage = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage->validate(
+                'nullable',
+                'file',
+                'max:1024'
+            );
+            Storage::put('public/users/' . $fileNameToStore, $resizedImage);
         } else {
-            $fileNameToStore1 = null;
-        }
-        if ($request->imgpath2) {
-            // 画像が既に登録ずみであれば削除
-            $filePath2 = 'public/companies/' . $company->image2;
-            if (Storage::exists($filePath2)) {
-                Storage::delete($filePath2);
-            }
-            // 改めて画像登録
-            $imageFile = $request->imgpath2;
-            $fileName = uniqid(rand() . '_');
-            $extension = $imageFile->extension();
-            $fileNameToStore2 = $fileName . '.'  . $extension;
-            $resizedImage2 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
-            Storage::put('public/companies/' . $fileNameToStore2, $resizedImage2);
-        } else {
-            $fileNameToStore2 = null;
-        }
-        if ($request->imgpath3) {
-            // 画像が既に登録ずみであれば削除
-            $filePath3 = 'public/companies/' . $company->image3;
-            if (Storage::exists($filePath3)) {
-                Storage::delete($filePath3);
-            }
-            // 改めて画像登録
-            $imageFile = $request->imgpath3;
-            $fileName = uniqid(rand() . '_');
-            $extension = $imageFile->extension();
-            $fileNameToStore3 = $fileName . '.'  . $extension;
-            $resizedImage3 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
-            Storage::put('public/companies/' . $fileNameToStore3, $resizedImage3);
-        } else {
-            $fileNameToStore3 = null;
+            $fileNameToStore = null;
         }
 
-        $company = Companies::findOrFail($id);
-        $company->name = $request->name;
-        $company->intro = $request->intro;
-        $company->tel = $request->tel;
-        $company->post_code = $request->post_code;
-        $company->address = $request->address;
-        $company->homepage = $request->homepage;
-        $company->image1 = $fileNameToStore1;
-        $company->image2 = $fileNameToStore2;
-        $company->image3 = $fileNameToStore3;
+        $user->catch = $request->catch;
+        $user->intro = $request->intro;
+        $user->license = $request->license;
+        $user->career = $request->career;
+        $user->hobby = $request->hobby;
+        $user->pro_image = $fileNameToStore;
 
-        $company->save();
+        $user->save();
 
-        return redirect()->route('company.company.show', compact('company'))->with(['message' => '更新しました。', 'status' => 'info']);
+        return redirect()->route('user.user.show', compact('user'))->with(['message' => '更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -233,7 +177,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        Companies::findOrFail($id)->delete();
-        return redirect()->route('company.register')->with(['message' => '企業情報を削除しました。', 'status' => 'alert']);
+        User::findOrFail($id)->delete();
+        return redirect()->route('user.register')->with(['message' => 'ユーザー情報を削除しました。', 'status' => 'alert']);
     }
 }

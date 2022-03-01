@@ -49,7 +49,7 @@
                             </div>
                           </div>
                           <div class="my-4">
-                            <p>プロフィール画像　<input type="file" name="imgpath1" accept="image/png,image/jpeg,image/jpg"></p>
+                            <p>プロフィール画像　<input type="file" name="pro_image" accept="image/png,image/jpeg,image/jpg"></p>
                           </div>
                           <div class="p-2 w-full flex justify-around mt-4">
                             <button type="button" onclick="location.href='{{ route('user.dashboard') }}'" class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
