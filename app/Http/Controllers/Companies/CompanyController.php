@@ -9,6 +9,7 @@ use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UploadImageRequest;
 
 class CompanyController extends Controller
 {
@@ -33,13 +34,13 @@ class CompanyController extends Controller
         return view('company.mypage.create');
     }
 
-    public function store(Request $request)
+    public function store(UploadImageRequest $request)
     {
         $request->validate([
             'intro' => ['required', 'string'],
-            'image1' => ['nullable', 'file', 'max:1024'],
-            'image2' => ['nullable', 'file', 'max:1024'],
-            'image3' => ['nullable', 'file', 'max:1024'],
+            // 'image1' => ['nullable', 'file', 'max:1024'],
+            // 'image2' => ['nullable', 'file', 'max:1024'],
+            // 'image3' => ['nullable', 'file', 'max:1024'],
             'tel' => ['nullable', 'string'],
             'post_code' => ['nullable', 'integer'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -86,6 +87,10 @@ class CompanyController extends Controller
             $fileNameToStore3 = null;
         }
 
+        $company->image1 = $fileNameToStore1;
+        $company->image2 = $fileNameToStore2;
+        $company->image3 = $fileNameToStore3;
+
         $company->save();
 
         return redirect()->route('company.company.show', compact('company'))->with(['message' => '登録しました。', 'status' => 'info']);
@@ -103,14 +108,14 @@ class CompanyController extends Controller
         return view('company.mypage.edit', compact('company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UploadImageRequest $request, $id)
     {
         $request->validate([
             'name' => ['required', 'string'],
             'intro' => ['required', 'string'],
-            'image1' => ['nullable', 'file', 'max:1024'],
-            'image2' => ['nullable', 'file', 'max:1024'],
-            'image3' => ['nullable', 'file', 'max:1024'],
+            // 'image1' => ['nullable', 'file', 'max:1024'],
+            // 'image2' => ['nullable', 'file', 'max:1024'],
+            // 'image3' => ['nullable', 'file', 'max:1024'],
             'tel' => ['nullable', 'string'],
             'post_code' => ['nullable', 'integer'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -134,8 +139,7 @@ class CompanyController extends Controller
             $fileNameToStore1 = $fileName . '.'  . $extension;
             $resizedImage1 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore1, $resizedImage1);
-        } else {
-            $fileNameToStore1 = null;
+            $company->image1 = $fileNameToStore1;
         }
         if ($request->imgpath2) {
             // 画像が既に登録ずみであれば削除
@@ -150,8 +154,7 @@ class CompanyController extends Controller
             $fileNameToStore2 = $fileName . '.'  . $extension;
             $resizedImage2 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore2, $resizedImage2);
-        } else {
-            $fileNameToStore2 = null;
+            $company->image2 = $fileNameToStore2;
         }
         if ($request->imgpath3) {
             // 画像が既に登録ずみであれば削除
@@ -166,8 +169,7 @@ class CompanyController extends Controller
             $fileNameToStore3 = $fileName . '.'  . $extension;
             $resizedImage3 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore3, $resizedImage3);
-        } else {
-            $fileNameToStore3 = null;
+            $company->image3 = $fileNameToStore3;
         }
 
         $company->name = $request->name;
@@ -176,9 +178,6 @@ class CompanyController extends Controller
         $company->post_code = $request->post_code;
         $company->address = $request->address;
         $company->homepage = $request->homepage;
-        $company->image1 = $fileNameToStore1;
-        $company->image2 = $fileNameToStore2;
-        $company->image3 = $fileNameToStore3;
 
         $company->save();
 
