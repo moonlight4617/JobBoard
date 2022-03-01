@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UploadImageRequest;
 
 
 class UserController extends Controller
@@ -121,7 +122,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UploadImageRequest $request, $id)
     {
         $request->validate([
             'catch' => ['nullable', 'string', 'max:255'],
@@ -147,14 +148,8 @@ class UserController extends Controller
             $extension = $imageFile->extension();
             $fileNameToStore = $fileName . '.'  . $extension;
             $resizedImage = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
-            $resizedImage->validate(
-                'nullable',
-                'file',
-                'max:1024'
-            );
             Storage::put('public/users/' . $fileNameToStore, $resizedImage);
-        } else {
-            $fileNameToStore = null;
+            $user->pro_image = $fileNameToStore;
         }
 
         $user->catch = $request->catch;
@@ -162,7 +157,6 @@ class UserController extends Controller
         $user->license = $request->license;
         $user->career = $request->career;
         $user->hobby = $request->hobby;
-        $user->pro_image = $fileNameToStore;
 
         $user->save();
 

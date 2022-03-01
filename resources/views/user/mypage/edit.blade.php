@@ -23,7 +23,7 @@
                             @if(empty($user->pro_image))
                               プロフィール画像
                             @else
-                              <img src="{{asset('storage/users/' . $company->image1)}}" class="w-1/4">
+                              <img src="{{asset('storage/users/' . $user->pro_image)}}" class="w-1/4">
                             @endif
                             <input type="file" name="pro_image" accept="image/png,image/jpeg,image/jpg">
                           </div>
