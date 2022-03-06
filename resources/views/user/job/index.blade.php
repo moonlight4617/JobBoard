@@ -59,8 +59,8 @@
                             </div>
                         </div>
                     @endforeach
+                    {{ $jobs->links() }}
                 @endif
-
             </div>
         </div>
     </section>

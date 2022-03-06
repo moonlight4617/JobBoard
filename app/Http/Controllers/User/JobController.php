@@ -11,8 +11,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = DB::table('jobs')->where('rec_status', null)->get();
-        // dd($jobs);
+        $jobs = DB::table('jobs')->where('rec_status', null)->paginate(12);
         return view('user.job.index', compact('jobs'));
     }
 
