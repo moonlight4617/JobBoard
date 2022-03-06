@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\JobController;
+use App\Http\Controllers\User\Company;
 
 
 /*
@@ -28,6 +29,7 @@ Route::resource('user', UserController::class, ['except' => 'index'])->middlewar
 
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::get('/company/{company}', Company::class)->name('company.show');
 
 
 require __DIR__ . '/auth.php';

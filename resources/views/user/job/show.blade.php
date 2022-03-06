@@ -103,7 +103,7 @@
                                 <div class="p-2">
                                     <div class="relative">
                                         企業名：<a
-                                            href="{{ route('company.company.show', ['company' => $job->companies->id]) }}">{{ $job->companies->name }}</a>
+                                            href="{{ route('user.company.show', ['company' => $job->companies->id]) }}">{{ $job->companies->name }}</a>
                                     </div>
                                 </div>
 
