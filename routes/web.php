@@ -29,13 +29,13 @@ Route::resource('user', UserController::class, ['except' => 'index'])->middlewar
 
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::get('/jobs/{job}/application', [JobController::class, 'application'])->name('jobs.application');
+
 Route::get('/company/{company}', Company::class)->name('company.show');
 
 
 
 
-//ログイン中のユーザーのみアクセス可能
-//「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
 Route::post('favorite', [JobController::class, 'favorite'])->middleware('auth:users')->name('posts.ajaxlike');
 
 

@@ -24,10 +24,32 @@ class JobController extends Controller
     public function show($id)
     {
         $job = Jobs::findOrFail($id);
+        return view('user.job.show', compact('job'));
+    }
 
-        $favorite = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id());
+    public function application($id)
+    {
+        $job = Jobs::findOrFail($id);
 
-        return view('user.job.show', compact('job', 'favorite'));
+        // まだAppStatusesテーブルにデータなければ
+        $app = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id())->first();
+        if (!$app) {
+            $app = new AppStatus();
+            $app->users_id = Auth::id();
+            $app->jobs_id = $id;
+            $app->app_flag = true;
+            $app->save();
+        } else {
+            // 既に応募済み
+            if ($app->app_flag = true) {
+                return back()->with(['message' => '既に応募済みです', 'status' => 'info']);
+            } else {
+                $app->app_flag = true;
+                $app->save();
+            }
+        }
+        // return view('user.job.show', compact('job'))->with(['message' => '応募しました', 'status' => 'info']);
+        return redirect()->route('user.jobs.show', ['job' => $id])->with(['message' => '応募しました', 'status' => 'info']);
     }
 
 

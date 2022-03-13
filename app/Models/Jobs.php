@@ -40,4 +40,9 @@ class Jobs extends Model
     {
         return AppStatus::where('users_id', $user->id)->where('jobs_id', $this->id)->where('favorite', true)->first() !== null;
     }
+
+    public function isApplied($user): bool
+    {
+        return AppStatus::where('users_id', $user->id)->where('jobs_id', $this->id)->where('app_flag', true)->first() !== null;
+    }
 }

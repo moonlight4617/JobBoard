@@ -116,9 +116,16 @@
 
                             </div>
                             <div class="p-2 w-full flex justify-around mt-4">
-                                {{-- <button type="button"
-                                    onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id]) }}'"
-                                    class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button> --}}
+                                {{-- まだ応募してなければ --}}
+                                @if (!$job->isApplied(Auth::user()))
+                                    <button type="button"
+                                        onclick="location.href='{{ route('user.jobs.application', ['job' => $job->id]) }}'"
+                                        class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募する</button>
+                                @else
+                                    {{-- もう応募してれば --}}
+                                    <button type="button" disabled
+                                        class="bg-gray-300 border-0 py-2 px-8 focus:outline-none rounded text-lg">応募済み</button>
+                                @endif
                                 <button type="button" onclick="location.href='{{ route('user.jobs.index') }}'"
                                     class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
 
