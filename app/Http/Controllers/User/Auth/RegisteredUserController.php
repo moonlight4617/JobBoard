@@ -49,6 +49,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('user.user.edit', ['user' => $user->id])->with(['message' => 'ユーザー登録完了しました。続けてプロフィールの登録をお願いします。', 'status' => 'info']);
     }
 }
