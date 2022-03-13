@@ -57,20 +57,19 @@
                                 </div>
 
 
-                                <div class="p-2">
+                                <div class="pl-2 pr-2 pt-2 pb-1">
                                     <div class="relative">
-                                        求人名：{{ $job->job_name }}
-
+                                        <span class="align-bottom">
+                                            求人名：{{ $job->job_name }}</span>
                                         @auth('users')
                                             @if (!$job->isLikedBy(Auth::user()))
-                                                <span class="material-icons favorite"
+                                                <span class="material-icons favorite align-bottom ml-4"
                                                     data-job-id="{{ $job->id }}">favorite_border</span>
                                             @else
-                                                <span class="material-icons favorite"
+                                                <span class="material-icons favorite align-bottom ml-4"
                                                     data-job-id="{{ $job->id }}">favorite</span>
                                             @endif
                                         @endauth
-
                                     </div>
                                 </div>
                                 <div class="p-2">
