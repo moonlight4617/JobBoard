@@ -8,12 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\AppStatus;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
 
+
+    public function appStatus()
+    {
+        return $this->hasMany(AppStatus::class);
+    }
     /**
      * The attributes that are mass assignable.
      *

@@ -32,4 +32,12 @@ Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/company/{company}', Company::class)->name('company.show');
 
 
+
+
+//ログイン中のユーザーのみアクセス可能
+//「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
+Route::post('favorite', [JobController::class, 'favorite'])->middleware('auth:users')->name('posts.ajaxlike');
+
+
+
 require __DIR__ . '/auth.php';

@@ -18,9 +18,6 @@
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <div class="lg md:w-2/3 mx-auto">
 
-
-
-
                                 <!-- Slider main container -->
                                 <div class="swiper-container">
                                     <!-- Additional required wrapper -->
@@ -63,6 +60,17 @@
                                 <div class="p-2">
                                     <div class="relative">
                                         求人名：{{ $job->job_name }}
+
+                                        @auth('users')
+                                            @if (!$job->isLikedBy(Auth::user()))
+                                                <span class="material-icons favorite"
+                                                    data-job-id="{{ $job->id }}">favorite_border</span>
+                                            @else
+                                                <span class="material-icons favorite"
+                                                    data-job-id="{{ $job->id }}">favorite</span>
+                                            @endif
+                                        @endauth
+
                                     </div>
                                 </div>
                                 <div class="p-2">
