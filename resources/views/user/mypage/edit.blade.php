@@ -67,6 +67,10 @@
                                         </div>
                                     </div>
 
+
+                                    {{-- <x-select-image :images="$images" name="image1" /> --}}
+
+
                                     <div class="p-2 w-full flex justify-around mt-4">
                                         <button type="button"
                                             onclick="location.href='{{ route('user.user.show', ['user' => $user->id]) }}'"
@@ -82,4 +86,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        'use strict'
+        const images = document.querySelectorAll('.image')
+
+        images.forEach(image => {
+            image.addEventListener('click', function(e) {
+                const imageName = e.target.dataset.id.substr(0, 6)
+                const imageId = e.target.dataset.id.replace(imageName + '_', '')
+                const imageFile = e.target.dataset.file
+                const imagePath = e.target.dataset.path
+                const modal = e.target.dataset.modal
+                document.getElementById(imageName + '_thumbnail').src = imagePath + '/' + imageFile
+                document.getElementById(imageName + '_hidden').value = imageId
+                MicroModal.close(modal);
+            }, )
+        })
+    </script>
+
 </x-app-layout>
