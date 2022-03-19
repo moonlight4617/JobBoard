@@ -84,13 +84,13 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
   ->middleware('auth:companies')
   ->name('logout');
 
-// Route::get('/jobs', [JobsController::class, 'index'])->middleware('auth:companies')->name('job.index');
-// Route::get('/jobs/create', [JobsController::class, 'create'])->middleware('auth:companies')->name('job.create');
-// Route::post('/jobs/store', [JobsController::class, 'store'])->middleware('auth:companies')->name('job.store');
-// Route::get('/jobs/{job}', [JobsController::class, 'show'])->middleware('auth:companies')->name('job.show');
-// Route::get('/jobs/{job}/edit', [JobsController::class, 'edit'])->middleware('auth:companies')->name('job.edit');
-// Route::post('/jobs/{job}/update', [JobsController::class, 'update'])->middleware('auth:companies')->name('job.update');
-// Route::post('/jobs/{job}/destroy', [JobsController::class, 'destroy'])->middleware('auth:companies')->name('job.destroy');
-Route::resource('jobs', JobsController::class)->middleware('auth:companies');
+Route::get('/jobs', [JobsController::class, 'index'])->middleware('auth:companies')->name('jobs.index');
+Route::get('/jobs/create', [JobsController::class, 'create'])->middleware('auth:companies')->name('jobs.create');
+Route::post('/jobs', [JobsController::class, 'store'])->middleware('auth:companies')->name('jobs.store');
+Route::get('/jobs/{job}', [JobsController::class, 'show'])->middleware(['ensure.company', 'auth:companies'])->name('jobs.show');
+Route::get('/jobs/{job}/edit', [JobsController::class, 'edit'])->middleware(['ensure.company', 'auth:companies'])->name('jobs.edit');
+Route::put('/jobs/{job}', [JobsController::class, 'update'])->middleware(['ensure.company', 'auth:companies'])->name('jobs.update');
+Route::delete('/jobs/{job}', [JobsController::class, 'destroy'])->middleware(['ensure.company', 'auth:companies'])->name('jobs.destroy');
+// Route::resource('jobs', JobsController::class)->middleware('auth:companies');
 
 Route::resource('company', CompanyController::class, ['except' => 'index'])->middleware('auth:companies');
