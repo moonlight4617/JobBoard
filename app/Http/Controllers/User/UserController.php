@@ -17,16 +17,16 @@ class UserController extends Controller
     {
         $this->middleware('auth:users');
 
-        // $this->middleware(function ($request, $next) {
-        //     $id = $request->route()->parameter('user'); 
-        //     if (!is_null($id)) {
-        //         $userId = User::findOrFail($id)->id;
-        //         if ($userId !== Auth::id()) {
-        //             abort(404); // 404画面表示 }
-        //         }
-        //         return $next($request);
-        //     }
-        // });
+        $this->middleware(function ($request, $next) {
+            $id = $request->route()->parameter('user');
+            if (!is_null($id)) {
+                $userId = User::findOrFail($id)->id;
+                if ($userId !== Auth::id()) {
+                    abort(404); // 404画面表示 }
+                }
+                return $next($request);
+            }
+        });
     }
 
 

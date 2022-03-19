@@ -18,9 +18,6 @@
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <div class="lg md:w-2/3 mx-auto">
 
-
-
-
                                 <!-- Slider main container -->
                                 <div class="swiper-container">
                                     <!-- Additional required wrapper -->
@@ -60,9 +57,19 @@
                                 </div>
 
 
-                                <div class="p-2">
+                                <div class="pl-2 pr-2 pt-2 pb-1">
                                     <div class="relative">
-                                        求人名：{{ $job->job_name }}
+                                        <span class="align-bottom">
+                                            求人名：{{ $job->job_name }}</span>
+                                        @auth('users')
+                                            @if (!$job->isLikedBy(Auth::user()))
+                                                <span class="material-icons favorite align-bottom ml-4"
+                                                    data-job-id="{{ $job->id }}">favorite_border</span>
+                                            @else
+                                                <span class="material-icons favorite align-bottom ml-4"
+                                                    data-job-id="{{ $job->id }}">favorite</span>
+                                            @endif
+                                        @endauth
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -100,21 +107,28 @@
                                         福利厚生：{{ $job->benefits }}
                                     </div>
                                 </div>
+                                <div class="p-2">
+                                    <div class="relative">
+                                        企業名：<a
+                                            href="{{ route('user.company.show', ['company' => $job->companies->id]) }}">{{ $job->companies->name }}</a>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="p-2 w-full flex justify-around mt-4">
-                                <button type="button"
-                                    onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id]) }}'"
-                                    class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
-                                <button type="button" onclick="location.href='{{ route('company.jobs.index') }}'"
+                                {{-- まだ応募してなければ --}}
+                                @if (!$job->isApplied(Auth::user()))
+                                    <button type="button"
+                                        onclick="location.href='{{ route('user.jobs.application', ['job' => $job->id]) }}'"
+                                        class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募する</button>
+                                @else
+                                    {{-- もう応募してれば --}}
+                                    <button type="button" disabled
+                                        class="bg-gray-300 border-0 py-2 px-8 focus:outline-none rounded text-lg">応募済み</button>
+                                @endif
+                                <button type="button" onclick="location.href='{{ route('user.jobs.index') }}'"
                                     class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                                <form id="delete_{{ $job->id }}" method="post"
-                                    action="{{ route('company.jobs.destroy', ['job' => $job->id]) }}">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="button" href=“” data-id="{{ $job->id }}"
-                                        onclick="deletePost(this)"
-                                        class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
-                                </form>
+
                             </div>
                         </div>
                     </section>
@@ -124,12 +138,4 @@
     </div>
 
     <script src="{{ mix('js/swiper.js') }}"></script>
-    <script>
-        function deletePost(e) {
-            'use strict';
-            if (confirm('本当に削除してもいいですか?')) {
-                document.getElementById('delete_' + e.dataset.id).submit();
-            }
-        }
-    </script>
 </x-app-layout>

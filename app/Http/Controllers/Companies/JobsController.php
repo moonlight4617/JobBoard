@@ -8,6 +8,8 @@ use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UploadImageRequest;
+use Closure;
 
 class JobsController extends Controller
 {
@@ -15,19 +17,19 @@ class JobsController extends Controller
     {
         $this->middleware('auth:companies');
 
-        $this->middleware(function ($request, $next) {
-            $id = $request->route()->parameter('job'); //jobのid取得
-            if (!is_null($id)) {
-                $jobCompanyId = Jobs::findOrFail($id)->companies->id;
-                $jobId = (int)$jobCompanyId; // キャスト 文字列→数値に型変換
-                $companyId = Auth::id();
-                if ($jobId !== $companyId) {
-                    abort(404); // 404画面表示 }
-                }
+        // $this->middleware(function ($request, $next) {
+        //     $id = $request->route()->parameter('job'); //jobのid取得
+        //     if (!is_null($id)) {
+        //         $jobCompanyId = Jobs::findOrFail($id)->companies->id;
+        //         $jobId = (int)$jobCompanyId; // キャスト 文字列→数値に型変換
+        //         $companyId = Auth::id();
+        //         if ($jobId !== $companyId) {
+        //             abort(404); // 404画面表示 }
+        //         }
 
-                return $next($request);
-            }
-        });
+        //         return $next($request);
+        //     }
+        // });
     }
     /**
      * Display a listing of the resource.
@@ -56,7 +58,7 @@ class JobsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UploadImageRequest $request)
     {
         // dd($request);
         $request->validate([
@@ -68,9 +70,9 @@ class JobsController extends Controller
             'high_salary' => ['nullable', 'integer'],
             'holiday' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string', 'max:255'],
-            'image1' => ['nullable', 'file', 'size:1024'],
-            'image2' => ['nullable', 'file', 'size:1024'],
-            'image3' => ['nullable', 'file', 'size:1024']
+            // 'image1' => ['nullable', 'file', 'size:1024'],
+            // 'image2' => ['nullable', 'file', 'size:1024'],
+            // 'image3' => ['nullable', 'file', 'size:1024']
         ]);
 
         if ($request->imgpath1) {
@@ -154,7 +156,7 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UploadImageRequest $request, $id)
     {
         $request->validate([
             'job_name' => ['required', 'string', 'max:255'],
@@ -165,9 +167,9 @@ class JobsController extends Controller
             'high_salary' => ['nullable', 'integer'],
             'holiday' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string', 'max:255'],
-            'image1' => ['nullable', 'file', 'size:1024'],
-            'image2' => ['nullable', 'file', 'size:1024'],
-            'image3' => ['nullable', 'file', 'size:1024']
+            // 'image1' => ['nullable', 'file', 'size:1024'],
+            // 'image2' => ['nullable', 'file', 'size:1024'],
+            // 'image3' => ['nullable', 'file', 'size:1024']
         ]);
 
         $job = Jobs::findOrFail($id);

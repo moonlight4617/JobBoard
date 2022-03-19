@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            求人詳細
+            企業情報
         </h2>
     </x-slot>
 
@@ -13,13 +13,10 @@
                     <section class="text-gray-600 body-font relative">
                         <div class="container px-5 py-4 mx-auto">
                             <div class="flex flex-col text-center w-full mb-12">
-                                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">求人詳細</h1>
+                                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">企業情報</h1>
                             </div>
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <div class="lg md:w-2/3 mx-auto">
-
-
-
 
                                 <!-- Slider main container -->
                                 <div class="swiper-container">
@@ -27,24 +24,24 @@
                                     <div class="swiper-wrapper">
                                         <!-- Slides -->
                                         <div class="swiper-slide">
-                                            @if (empty($job->image1))
+                                            @if (empty($company->image1))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/jobs/' . $job->image1) }}">
+                                                <img src="{{ asset('storage/companies/' . $company->image1) }}">
                                             @endif
                                         </div>
                                         <div class="swiper-slide">
-                                            @if (empty($job->image2))
+                                            @if (empty($company->image2))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/jobs/' . $job->image2) }}">
+                                                <img src="{{ asset('storage/companies/' . $company->image2) }}">
                                             @endif
                                         </div>
                                         <div class="swiper-slide">
-                                            @if (empty($job->image3))
+                                            @if (empty($company->image3))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/jobs/' . $job->image3) }}">
+                                                <img src="{{ asset('storage/companies/' . $company->image3) }}">
                                             @endif
                                         </div>
                                     </div>
@@ -59,62 +56,39 @@
                                     <div class="swiper-scrollbar"></div>
                                 </div>
 
-
                                 <div class="p-2">
                                     <div class="relative">
-                                        求人名：{{ $job->job_name }}
+                                        企業名：{{ $company->name }}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        仕事内容：{{ $job->detail }}
+                                        企業詳細：{{ $company->intro }}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        応募条件：{{ $job->conditions }}
+                                        郵便番号：{{ $company->post_code }}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        勤務時間：{{ $job->duty_hours }}
+                                        住所：{{ $company->address }}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        下限給与：{{ $job->low_salary }}
-                                    </div>
-                                </div>
-                                <div class="p-2">
-                                    <div class="relative">
-                                        上限給与：{{ $job->high_salary }}
-                                    </div>
-                                </div>
-                                <div class="p-2">
-                                    <div class="relative">
-                                        休日・休暇：{{ $job->holiday }}
-                                    </div>
-                                </div>
-                                <div class="p-2">
-                                    <div class="relative">
-                                        福利厚生：{{ $job->benefits }}
+                                        ホームページ：
+                                        <a href="https://{{ $company->homepage }}">{{ $company->homepage }}</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="p-2 w-full flex justify-around mt-4">
-                                <button type="button"
-                                    onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id]) }}'"
-                                    class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
-                                <button type="button" onclick="location.href='{{ route('company.jobs.index') }}'"
+                                {{-- <button type="button"
+                                    onclick="location.href='{{ route('company.company.edit', ['company' => $company->id]) }}'"
+                                    class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button> --}}
+                                <button type="button" onClick="history.back()"
                                     class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                                <form id="delete_{{ $job->id }}" method="post"
-                                    action="{{ route('company.jobs.destroy', ['job' => $job->id]) }}">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="button" href=“” data-id="{{ $job->id }}"
-                                        onclick="deletePost(this)"
-                                        class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
-                                </form>
                             </div>
                         </div>
                     </section>
@@ -124,12 +98,5 @@
     </div>
 
     <script src="{{ mix('js/swiper.js') }}"></script>
-    <script>
-        function deletePost(e) {
-            'use strict';
-            if (confirm('本当に削除してもいいですか?')) {
-                document.getElementById('delete_' + e.dataset.id).submit();
-            }
-        }
-    </script>
+
 </x-app-layout>
