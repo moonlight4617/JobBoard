@@ -31,7 +31,7 @@ Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/{job}/application', [JobController::class, 'application'])->name('jobs.application');
 
-Route::get('/user/{company}', Company::class)->name('company.show');
+Route::get('/user/company/{company}', Company::class)->name('company.show');
 
 
 
