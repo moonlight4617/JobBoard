@@ -15,7 +15,7 @@ class JobsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:companies');
+        // $this->middleware('auth:companies');
 
         // $this->middleware(function ($request, $next) {
         //     $id = $request->route()->parameter('job'); //jobのid取得
