@@ -35,7 +35,6 @@ class RedirectIfAuthenticated
         }
         if (Auth::guard(self::GUARD_COMPANIES)->check() && $request->routeIs('company.*')) {
             return redirect(RouteServiceProvider::COMPANY_HOME);
-            // return redirect()->route('company.company.create');
         }
         if (Auth::guard(self::GUARD_ADMIN)->check() && $request->routeIs('admin.*')) {
             return redirect(RouteServiceProvider::ADMIN_HOME);

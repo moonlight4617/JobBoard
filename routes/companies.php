@@ -23,10 +23,6 @@ use App\Http\Controllers\Companies\CompanyController;
 |
 */
 
-Route::resource('jobs', JobsController::class)->middleware('auth:companies');
-
-Route::resource('company', CompanyController::class, ['except' => 'index'])->middleware('auth:companies');
-
 // Route::get('/', function () {
 //   return view('company.welcome');
 // });
@@ -87,3 +83,14 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
   ->middleware('auth:companies')
   ->name('logout');
+
+// Route::get('/jobs', [JobsController::class, 'index'])->middleware('auth:companies')->name('job.index');
+// Route::get('/jobs/create', [JobsController::class, 'create'])->middleware('auth:companies')->name('job.create');
+// Route::post('/jobs/store', [JobsController::class, 'store'])->middleware('auth:companies')->name('job.store');
+// Route::get('/jobs/{job}', [JobsController::class, 'show'])->middleware('auth:companies')->name('job.show');
+// Route::get('/jobs/{job}/edit', [JobsController::class, 'edit'])->middleware('auth:companies')->name('job.edit');
+// Route::post('/jobs/{job}/update', [JobsController::class, 'update'])->middleware('auth:companies')->name('job.update');
+// Route::post('/jobs/{job}/destroy', [JobsController::class, 'destroy'])->middleware('auth:companies')->name('job.destroy');
+Route::resource('jobs', JobsController::class)->middleware('auth:companies');
+
+Route::resource('company', CompanyController::class, ['except' => 'index'])->middleware('auth:companies');
