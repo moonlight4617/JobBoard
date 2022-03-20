@@ -68,7 +68,33 @@
                                     </div>
 
 
-                                    {{-- <x-select-image :images="$images" name="image1" /> --}}
+                                    <div class="p-2">
+                                        <div class="relative">
+                                            <p>ポートフォリオ</p>
+
+                                            {{-- ユーザーアップロード画像 --}}
+                                            @if ($pictures)
+                                                <section class="text-gray-600 body-font">
+                                                    <div class="container px-5 pb-8 mx-auto">
+                                                        <div class="flex flex-wrap -m-4">
+                                                            @foreach ($pictures as $picture)
+                                                                <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
+                                                                    <a
+                                                                        class="block relative h-48 rounded overflow-hidden">
+                                                                        <img alt="userPictures"
+                                                                            class="object-cover object-center w-full h-full block"
+                                                                            src="{{ asset('storage/users/portfolio/' . $picture->filename) }}">
+                                                                    </a>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            @endif
+                                            <p>画像を追加する　<input type="file" name="portfolio1"
+                                                    accept="image/png,image/jpeg,image/jpg"></p>
+                                        </div>
+                                    </div>
 
 
                                     <div class="p-2 w-full flex justify-around mt-4">

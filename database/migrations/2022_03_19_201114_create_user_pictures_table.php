@@ -1,33 +1,33 @@
-<?php
+App\Models\User<?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+                use Illuminate\Database\Migrations\Migration;
+                use Illuminate\Database\Schema\Blueprint;
+                use Illuminate\Support\Facades\Schema;
 
-class CreateUserPicturesTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('user_pictures', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('users_id')->constrained()->onDelete('cascade');
-            $table->string('filename');
-            $table->timestamps();
-        });
-    }
+                class CreateUserPicturesTable extends Migration
+                {
+                    /**
+                     * Run the migrations.
+                     *
+                     * @return void
+                     */
+                    public function up()
+                    {
+                        Schema::create('user_pictures', function (Blueprint $table) {
+                            $table->id();
+                            $table->foreignId('users_id')->constrained()->onDelete('cascade');
+                            $table->string('filename');
+                            $table->timestamps();
+                        });
+                    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('user_pictures');
-    }
-}
+                    /**
+                     * Reverse the migrations.
+                     *
+                     * @return void
+                     */
+                    public function down()
+                    {
+                        Schema::dropIfExists('user_pictures');
+                    }
+                }

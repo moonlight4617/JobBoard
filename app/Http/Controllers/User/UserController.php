@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserPictures;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
@@ -65,6 +66,7 @@ class UserController extends Controller
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
             'pro_image' => ['nullable', 'file', 'max:1024'],
+            'portfolio1' => ['nullable', 'file', 'max:1024'],
         ]);
 
         $user = User::findOrFail(Auth::id());
@@ -80,13 +82,25 @@ class UserController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore = $fileName . '.'  . $extension;
-            $resizedImage = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/users/' . $fileNameToStore, $resizedImage);
         } else {
             $fileNameToStore1 = null;
         }
-
         $user->save();
+
+        if ($request->portfolio1) {
+            $imagePortfolio = $request->portfolio1;
+            $portfolioName = uniqid(rand() . '_');
+            $extension = $imagePortfolio->extension();
+            $portfolioToStore = $portfolioName . '.'  . $extension;
+            $resizedPortfolio = InterventionImage::make($imagePortfolio)->orientate()->fit(200, 200)->encode();
+            Storage::put('public/users/portfolio/' . $portfolioToStore, $resizedPortfolio);
+
+            // 新たにUserPicturesに画像登録
+            UserPictures::create(['users_id' => $user->id, 'filename' => $portfolioToStore]);
+        }
+
 
         return redirect()->route('user.user.show', compact('user'))->with(['message' => 'ユーザー情報を登録しました。', 'status' => 'info']);
     }
@@ -100,7 +114,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('user.mypage.show', compact('user'));
+        $pictures = UserPictures::where('users_id', '=', $id)->get();
+        return view('user.mypage.show', compact('user', 'pictures'));
     }
 
     /**
@@ -112,7 +127,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('user.mypage.edit', compact('user'));
+        $pictures = UserPictures::where('users_id', '=', $id)->get();
+        return view('user.mypage.edit', compact('user', 'pictures'));
     }
 
     /**
@@ -147,9 +163,28 @@ class UserController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore = $fileName . '.'  . $extension;
-            $resizedImage = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/users/' . $fileNameToStore, $resizedImage);
             $user->pro_image = $fileNameToStore;
+        }
+
+        if ($request->portfolio1) {
+            // 画像削除の際
+            // $portfolioPath = 'public/users/portfolio' . $user->portfolio1;
+            // if (Storage::exists($portfolioPath)) {
+            //     Storage::delete($portfolioPath);
+            // }
+
+            // 改めてstorageに画像登録
+            $imagePortfolio = $request->portfolio1;
+            $portfolioName = uniqid(rand() . '_');
+            $extension = $imagePortfolio->extension();
+            $portfolioToStore = $portfolioName . '.'  . $extension;
+            $resizedPortfolio = InterventionImage::make($imagePortfolio)->orientate()->fit(200, 200)->encode();
+            Storage::put('public/users/portfolio/' . $portfolioToStore, $resizedPortfolio);
+
+            // 新たにUserPicturesに画像登録
+            UserPictures::create(['users_id' => $id, 'filename' => $portfolioToStore]);
         }
 
         $user->catch = $request->catch;
