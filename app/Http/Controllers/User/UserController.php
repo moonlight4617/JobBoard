@@ -18,16 +18,16 @@ class UserController extends Controller
     {
         $this->middleware('auth:users');
 
-        $this->middleware(function ($request, $next) {
-            $id = $request->route()->parameter('user');
-            if (!is_null($id)) {
-                $userId = User::findOrFail($id)->id;
-                if ($userId !== Auth::id()) {
-                    abort(404); // 404画面表示 }
-                }
-                return $next($request);
-            }
-        });
+        // $this->middleware(function ($request, $next) {
+        //     $id = $request->route()->parameter('user');
+        //     if (!is_null($id)) {
+        //         $userId = User::findOrFail($id)->id;
+        //         if ($userId !== Auth::id()) {
+        //             abort(404); // 404画面表示 }
+        //         }
+        //         return $next($request);
+        //     }
+        // });
     }
 
 
@@ -208,5 +208,17 @@ class UserController extends Controller
     {
         User::findOrFail($id)->delete();
         return redirect()->route('user.register')->with(['message' => 'ユーザー情報を削除しました。', 'status' => 'alert']);
+    }
+
+    public function pictureDestroy(Request $request)
+    {
+        $picture_id = $request->pic_id;
+        $picture = UserPictures::findOrFail($picture_id);
+        $filePath = 'public/users/portfolio/' . $picture->filename;
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
+        $picture->delete();
+        return;
     }
 }

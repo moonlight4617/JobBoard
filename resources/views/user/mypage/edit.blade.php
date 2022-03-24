@@ -78,13 +78,16 @@
                                                     <div class="container px-5 pb-8 mx-auto">
                                                         <div class="flex flex-wrap -m-4">
                                                             @foreach ($pictures as $picture)
-                                                                <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
+                                                                <div class="lg:w-1/3 md:w-1/2 p-4 w-full"
+                                                                    id="picture-{{ $picture->id }}">
                                                                     <a
                                                                         class="block relative h-48 rounded overflow-hidden">
                                                                         <img alt="userPictures"
                                                                             class="object-cover object-center w-full h-full block"
                                                                             src="{{ asset('storage/users/portfolio/' . $picture->filename) }}">
                                                                     </a>
+                                                                    <span data-picture-id="{{ $picture->id }}"
+                                                                        class="deletePicture">削除</span>
                                                                 </div>
                                                             @endforeach
                                                         </div>
@@ -113,22 +116,15 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         'use strict'
-        const images = document.querySelectorAll('.image')
 
-        images.forEach(image => {
-            image.addEventListener('click', function(e) {
-                const imageName = e.target.dataset.id.substr(0, 6)
-                const imageId = e.target.dataset.id.replace(imageName + '_', '')
-                const imageFile = e.target.dataset.file
-                const imagePath = e.target.dataset.path
-                const modal = e.target.dataset.modal
-                document.getElementById(imageName + '_thumbnail').src = imagePath + '/' + imageFile
-                document.getElementById(imageName + '_hidden').value = imageId
-                MicroModal.close(modal);
-            }, )
-        })
-    </script>
+        function deletePicture(e) {
+            if (confirm('本当に画像を削除してもいいですか?')) {
+                console.log(document.getElementById('delete_picture_3'))
+                document.getElementById('delete_picture_' + e.dataset.id).submit();
+            }
+        }
+    </script> --}}
 
 </x-app-layout>
