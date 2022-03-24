@@ -78,7 +78,7 @@
                                                     <div class="container px-5 pb-8 mx-auto">
                                                         <div class="flex flex-wrap -m-4">
                                                             @foreach ($pictures as $picture)
-                                                                <div class="lg:w-1/3 md:w-1/2 p-4 w-full"
+                                                                <div class="lg:w-1/3 md:w-1/2 p-4 w-full image-box"
                                                                     id="picture-{{ $picture->id }}">
                                                                     <a
                                                                         class="block relative h-48 rounded overflow-hidden">
@@ -86,8 +86,12 @@
                                                                             class="object-cover object-center w-full h-full block"
                                                                             src="{{ asset('storage/users/portfolio/' . $picture->filename) }}">
                                                                     </a>
-                                                                    <span data-picture-id="{{ $picture->id }}"
-                                                                        class="deletePicture">削除</span>
+                                                                    {{-- <span data-picture-id="{{ $picture->id }}"
+                                                                        class="deletePicture delete">削除</span> --}}
+                                                                    <span class="material-icons deletePicture delete"
+                                                                        data-picture-id="{{ $picture->id }}">
+                                                                        highlight_off
+                                                                    </span>
                                                                 </div>
                                                             @endforeach
                                                         </div>

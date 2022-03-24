@@ -1498,6 +1498,15 @@ select {
   /* width: 600px; */
   height: 300px;
 }
+.image-box {
+    position: relative;
+}
+.delete {
+  color: rgb(250, 250, 250);
+    position: absolute;
+    top: 10%;
+    left: 75%;
+}
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -1845,4 +1854,3 @@ select {
     padding-right: 2rem;
   }
 }
-
