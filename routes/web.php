@@ -27,6 +27,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('user', UserController::class, ['except' => 'index'])->middleware(['auth:users', 'ensure.user']);
 Route::post('deletepicture', [UserController::class, 'pictureDestroy'])->middleware('auth:users')->name('picture.delete');
+Route::post('addpicture', [UserController::class, 'pictureAdd'])->middleware('auth:users')->name('picture.add');
 
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');

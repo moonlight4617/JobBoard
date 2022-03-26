@@ -16,7 +16,7 @@
                             </div>
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <form method="POST" enctype="multipart/form-data"
-                                action="{{ route('user.user.update', ['user' => $user->id]) }}">
+                                action="{{ route('user.user.update', ['user' => $user->id]) }}" id="profile">
                                 @csrf
                                 @method('put')
                                 <div class="lg md:w-2/3 mx-auto">
@@ -86,8 +86,6 @@
                                                                             class="object-cover object-center w-full h-full block"
                                                                             src="{{ asset('storage/users/portfolio/' . $picture->filename) }}">
                                                                     </a>
-                                                                    {{-- <span data-picture-id="{{ $picture->id }}"
-                                                                        class="deletePicture delete">削除</span> --}}
                                                                     <span class="material-icons deletePicture delete"
                                                                         data-picture-id="{{ $picture->id }}">
                                                                         highlight_off
@@ -98,8 +96,9 @@
                                                     </div>
                                                 </section>
                                             @endif
-                                            <p>画像を追加する　<input type="file" name="portfolio1"
-                                                    accept="image/png,image/jpeg,image/jpg"></p>
+                                            <p>画像を追加する　<input type="file" name="portfolio[]"
+                                                    accept="image/png,image/jpeg,image/jpg" class="addPic"
+                                                    multiple></p>
                                         </div>
                                     </div>
 
@@ -119,16 +118,5 @@
             </div>
         </div>
     </div>
-
-    {{-- <script>
-        'use strict'
-
-        function deletePicture(e) {
-            if (confirm('本当に画像を削除してもいいですか?')) {
-                console.log(document.getElementById('delete_picture_3'))
-                document.getElementById('delete_picture_' + e.dataset.id).submit();
-            }
-        }
-    </script> --}}
 
 </x-app-layout>

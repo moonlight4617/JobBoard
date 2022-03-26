@@ -5479,7 +5479,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./favorite */ "./resources/js/favorite.js");
 
-__webpack_require__(/*! ./deletePicture */ "./resources/js/deletePicture.js");
+__webpack_require__(/*! ./deletePicture */ "./resources/js/deletePicture.js"); // require('./addPicture');
+
 
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
@@ -5537,7 +5538,7 @@ $(function () {
   var delpic = $('.deletePicture');
   var picId;
   delpic.on('click', function () {
-    if (confirm('削除してもいいですか？')) {
+    if (confirm('削除すると元に戻せません。本当に削除してもいいですか？')) {
       var $this = $(this); //this=イベントの発火した要素を代入
 
       picId = $this.data('picture-id'); //data-picture-idの値を取得

@@ -4,7 +4,7 @@ $(function () {
   let picId;
 
   delpic.on('click', function () {
-    if (confirm('削除してもいいですか？')) {
+    if (confirm('削除すると元に戻せません。本当に削除してもいいですか？')) {
       let $this = $(this); //this=イベントの発火した要素を代入
       picId = $this.data('picture-id'); //data-picture-idの値を取得
 

@@ -168,23 +168,26 @@ class UserController extends Controller
             $user->pro_image = $fileNameToStore;
         }
 
-        if ($request->portfolio1) {
+
+        if ($request->portfolio) {
             // 画像削除の際
             // $portfolioPath = 'public/users/portfolio' . $user->portfolio1;
             // if (Storage::exists($portfolioPath)) {
             //     Storage::delete($portfolioPath);
             // }
 
-            // 改めてstorageに画像登録
-            $imagePortfolio = $request->portfolio1;
-            $portfolioName = uniqid(rand() . '_');
-            $extension = $imagePortfolio->extension();
-            $portfolioToStore = $portfolioName . '.'  . $extension;
-            $resizedPortfolio = InterventionImage::make($imagePortfolio)->orientate()->fit(200, 200)->encode();
-            Storage::put('public/users/portfolio/' . $portfolioToStore, $resizedPortfolio);
+            foreach ($request->portfolio as $userPic) {
+                // 改めてstorageに画像登録
+                // $imagePortfolio = $request->portfolio1;
+                $userPicName = uniqid(rand() . '_');
+                $extension = $userPic->extension();
+                $userPicNameToStore = $userPicName . '.'  . $extension;
+                $resizedUserPic = InterventionImage::make($userPic)->orientate()->fit(200, 200)->encode();
+                Storage::put('public/users/portfolio/' . $userPicNameToStore, $resizedUserPic);
 
-            // 新たにUserPicturesに画像登録
-            UserPictures::create(['users_id' => $id, 'filename' => $portfolioToStore]);
+                // 新たにUserPicturesに画像登録
+                UserPictures::create(['users_id' => $id, 'filename' => $userPicNameToStore]);
+            }
         }
 
         $user->catch = $request->catch;
@@ -192,7 +195,6 @@ class UserController extends Controller
         $user->license = $request->license;
         $user->career = $request->career;
         $user->hobby = $request->hobby;
-
         $user->save();
 
         return redirect()->route('user.user.show', compact('user'))->with(['message' => '更新しました。', 'status' => 'info']);
@@ -208,6 +210,21 @@ class UserController extends Controller
     {
         User::findOrFail($id)->delete();
         return redirect()->route('user.register')->with(['message' => 'ユーザー情報を削除しました。', 'status' => 'alert']);
+    }
+
+
+    public function pictureAdd(UploadImageRequest $request)
+    {
+        $imagePortfolio = $request->portfolio;
+        $portfolioName = uniqid(rand() . '_');
+        $extension = $imagePortfolio->extension();
+        $portfolioToStore = $portfolioName . '.'  . $extension;
+        $resizedPortfolio = InterventionImage::make($imagePortfolio)->orientate()->fit(200, 200)->encode();
+        Storage::put('public/users/portfolio/' . $portfolioToStore, $resizedPortfolio);
+
+        // 新たにUserPicturesに画像登録
+        UserPictures::create(['users_id' => Auth::id(), 'filename' => $portfolioToStore]);
+        return;
     }
 
     public function pictureDestroy(Request $request)
