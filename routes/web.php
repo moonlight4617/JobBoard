@@ -26,6 +26,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth:users'])->name('dashboard');
 
 Route::resource('user', UserController::class, ['except' => 'index'])->middleware(['auth:users', 'ensure.user']);
+
 Route::post('deletepicture', [UserController::class, 'pictureDestroy'])->middleware('auth:users')->name('picture.delete');
 Route::post('addpicture', [UserController::class, 'pictureAdd'])->middleware('auth:users')->name('picture.add');
 
@@ -36,10 +37,11 @@ Route::get('/jobs/{job}/application', [JobController::class, 'application'])->na
 Route::get('/user/company/{company}', Company::class)->name('company.show');
 
 
-
-
+// 応募済み一覧
+Route::get('user', [UserController::class, 'appliedIndex'])->middleware(['auth:users', 'ensure.user'])->name('jobs.applied');
 Route::post('favorite', [JobController::class, 'favorite'])->middleware('auth:users')->name('posts.ajaxlike');
-
+// お気に入り一覧
+Route::get('favorite/index', [JobController::class, 'favoriteIndex'])->middleware(['auth:users', 'ensure.user'])->name('favorite.index');
 
 
 require __DIR__ . '/auth.php';

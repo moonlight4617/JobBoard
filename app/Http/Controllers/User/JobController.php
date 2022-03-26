@@ -79,7 +79,16 @@ class JobController extends Controller
             $favorite->favorite = true;
             $favorite->save();
         }
-
         return;
+    }
+
+    public function favoriteIndex()
+    {
+        $user_id = Auth::id();
+        // $jobs = DB::table('app_statuses')->where('users_id', $user_id)->where('favorite', 1)->paginate(12);
+
+        $jobs = AppStatus::where('users_id', $user_id)->where('favorite', 1)->paginate(12);
+        // dd($jobs);
+        return view('user.job.favoriteIndex', compact('jobs'));
     }
 }
