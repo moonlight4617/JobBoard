@@ -84,16 +84,12 @@
                                     </section>
                                 @endif
                             </div>
-
-
-
-
                             <div class="p-2 w-full flex justify-around mt-4">
                                 <button type="button"
                                     onclick="location.href='{{ route('user.user.edit', ['user' => $user->id]) }}'"
                                     class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
-                                <button type="button" onclick="location.href='{{ route('user.dashboard') }}'"
-                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                {{-- <button type="button" onclick="location.href='{{ route('user.dashboard') }}'"
+                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button> --}}
                                 <form id="delete_{{ $user->id }}" method="post"
                                     action="{{ route('user.user.destroy', ['user' => $user->id]) }}">
                                     @csrf

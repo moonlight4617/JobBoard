@@ -63,3 +63,7 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
   ->middleware('auth:users')
   ->name('logout');
+
+Route::get('/loginToCompany', [AuthenticatedSessionController::class, 'loginToCompany'])
+  ->middleware('auth:users')
+  ->name('loginToCompany');

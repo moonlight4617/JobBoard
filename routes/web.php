@@ -38,7 +38,7 @@ Route::get('/user/company/{company}', Company::class)->name('company.show');
 
 
 // 応募済み一覧
-Route::get('user', [JobController::class, 'appliedIndex'])->middleware(['auth:users', 'ensure.user'])->name('jobs.applied');
+Route::get('appliedIndex', [JobController::class, 'appliedIndex'])->middleware(['auth:users', 'ensure.user'])->name('jobs.applied');
 Route::post('favorite', [JobController::class, 'favorite'])->middleware('auth:users')->name('posts.ajaxlike');
 // お気に入り一覧
 Route::get('favorite/index', [JobController::class, 'favoriteIndex'])->middleware(['auth:users', 'ensure.user'])->name('favorite.index');

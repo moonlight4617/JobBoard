@@ -12,19 +12,19 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('user.jobs.index')" :active="request()->routeIs('user.jobs.index')">
+                        求人一覧
+                    </x-nav-link>
+                </div>
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.user.show', ['user' => Auth::id()])"
                         :active="request()->routeIs('user.user.show')">
                         プロフィール
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.jobs.index')" :active="request()->routeIs('user.jobs.index')">
-                        求人一覧
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -66,9 +66,13 @@
 
                             <x-dropdown-link :href="route('user.logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('ログアウト') }}
                             </x-dropdown-link>
                         </form>
+                        <x-dropdown-link :href="route('user.loginToCompany')">
+                            {{ __('企業としてログインする') }}
+                        </x-dropdown-link>
+
                     </x-slot>
                 </x-dropdown>
             </div>
