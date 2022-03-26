@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\AppStatus;
+use App\Models\UserPictures;
 
 class User extends Authenticatable
 {
@@ -19,6 +20,11 @@ class User extends Authenticatable
     public function appStatus()
     {
         return $this->hasMany(AppStatus::class);
+    }
+
+    public function userPictures()
+    {
+        return $this->hasMany(UserPictures::class);
     }
     /**
      * The attributes that are mass assignable.

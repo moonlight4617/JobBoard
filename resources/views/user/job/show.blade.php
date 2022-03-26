@@ -126,8 +126,9 @@
                                     <button type="button" disabled
                                         class="bg-gray-300 border-0 py-2 px-8 focus:outline-none rounded text-lg">応募済み</button>
                                 @endif
-                                <button type="button" onclick="location.href='{{ route('user.jobs.index') }}'"
-                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                <button type="button"
+                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg"
+                                    onClick="history.back()">戻る</button>
 
                             </div>
                         </div>

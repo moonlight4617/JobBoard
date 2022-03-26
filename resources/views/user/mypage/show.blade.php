@@ -60,81 +60,36 @@
                                     </div>
                                 </div>
 
-
+                                <div class="p-2">
+                                    <div class="relative">
+                                        <p>ポートフォリオ</p>
+                                    </div>
+                                </div>
                                 {{-- ユーザーアップロード画像 --}}
-                                <section class="text-gray-600 body-font">
-                                    <div class="container px-5 py-24 mx-auto">
-                                        <div class="flex flex-wrap -m-4">
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/420x260">
-                                                </a>
-                                            </div>
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/421x261">
-                                                </a>
-                                            </div>
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/422x262">
-                                                </a>
-                                            </div>
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/423x263">
-                                                </a>
-                                            </div>
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/424x264">
-                                                </a>
-                                            </div>
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/425x265">
-                                                </a>
-                                            </div>
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/427x267">
-                                                </a>
-                                            </div>
-                                            <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
-                                                <a class="block relative h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce"
-                                                        class="object-cover object-center w-full h-full block"
-                                                        src="https://dummyimage.com/428x268">
-                                                </a>
+                                @if ($pictures)
+                                    <section class="text-gray-600 body-font">
+                                        <div class="container px-5 pb-24 mx-auto">
+                                            <div class="flex flex-wrap -m-4">
+                                                @foreach ($pictures as $picture)
+                                                    <div class="lg:w-1/3 md:w-1/2 p-4 w-full">
+                                                        <a class="block relative h-48 rounded overflow-hidden">
+                                                            <img alt="userPictures"
+                                                                class="object-cover object-center w-full h-full block"
+                                                                src="{{ asset('storage/users/portfolio/' . $picture->filename) }}">
+                                                        </a>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
-                                    </div>
-                                </section>
+                                    </section>
+                                @endif
                             </div>
-
-
-
-
                             <div class="p-2 w-full flex justify-around mt-4">
                                 <button type="button"
                                     onclick="location.href='{{ route('user.user.edit', ['user' => $user->id]) }}'"
                                     class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
-                                <button type="button" onclick="location.href='{{ route('user.dashboard') }}'"
-                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                {{-- <button type="button" onclick="location.href='{{ route('user.dashboard') }}'"
+                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button> --}}
                                 <form id="delete_{{ $user->id }}" method="post"
                                     action="{{ route('user.user.destroy', ['user' => $user->id]) }}">
                                     @csrf

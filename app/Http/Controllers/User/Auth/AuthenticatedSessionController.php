@@ -51,4 +51,15 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function loginToCompany(Request $request)
+    {
+        Auth::guard('users')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/company/login');
+    }
 }
