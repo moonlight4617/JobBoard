@@ -34,7 +34,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.jobs.index')" :active="request()->routeIs('user.jobs.index')">
+                    <x-nav-link :href="route('user.jobs.applied')" :active="request()->routeIs('user.jobs.applied')">
                         応募済み求人
                     </x-nav-link>
                 </div>

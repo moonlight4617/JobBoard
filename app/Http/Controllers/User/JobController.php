@@ -85,10 +85,15 @@ class JobController extends Controller
     public function favoriteIndex()
     {
         $user_id = Auth::id();
-        // $jobs = DB::table('app_statuses')->where('users_id', $user_id)->where('favorite', 1)->paginate(12);
-
         $jobs = AppStatus::where('users_id', $user_id)->where('favorite', 1)->paginate(12);
         // dd($jobs);
         return view('user.job.favoriteIndex', compact('jobs'));
+    }
+    public function appliedIndex()
+    {
+        $user_id = Auth::id();
+        $jobs = AppStatus::where('users_id', $user_id)->where('app_flag', 1)->paginate(12);
+        // dd($jobs);
+        return view('user.job.appliedIndex', compact('jobs'));
     }
 }
