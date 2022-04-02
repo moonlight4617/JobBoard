@@ -94,3 +94,8 @@ Route::delete('/jobs/{job}', [JobsController::class, 'destroy'])->middleware(['e
 // Route::resource('jobs', JobsController::class)->middleware('auth:companies');
 
 Route::resource('company', CompanyController::class, ['except' => 'index'])->middleware('auth:companies');
+
+// ユーザーとしてログイン
+Route::get('/loginTo User', [AuthenticatedSessionController::class, 'loginToUser'])
+  ->middleware('auth:companies')
+  ->name('loginToUser');
