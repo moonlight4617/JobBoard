@@ -11,6 +11,7 @@ use App\Http\Controllers\Companies\Auth\RegisteredUserController;
 use App\Http\Controllers\Companies\Auth\VerifyEmailController;
 use App\Http\Controllers\Companies\JobsController;
 use App\Http\Controllers\Companies\CompanyController;
+use App\Http\Controllers\Companies\JobSeeker;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,7 +96,10 @@ Route::delete('/jobs/{job}', [JobsController::class, 'destroy'])->middleware(['e
 
 Route::resource('company', CompanyController::class, ['except' => 'index'])->middleware('auth:companies');
 
+// 人材
+Route::get('/hresource', [JobSeeker::class, 'index'])->middleware('auth:companies')->name('user.index');
+
 // ユーザーとしてログイン
-Route::get('/loginTo User', [AuthenticatedSessionController::class, 'loginToUser'])
+Route::get('/loginToUser', [AuthenticatedSessionController::class, 'loginToUser'])
   ->middleware('auth:companies')
   ->name('loginToUser');
