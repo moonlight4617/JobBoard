@@ -10,68 +10,42 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <section class="text-gray-600 body-font relative">
-                        <div class="container px-5 py-4 mx-auto">
-                            <div class="flex flex-col text-center w-full mb-12">
-                                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">登録求人一覧</h1>
-                            </div>
-                            <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                            @if ($jobs)
-                                @foreach ($jobs as $job)
-                                    <div class="lg md:w-2/3 mx-auto">
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                求人名：{{ $job->job_name }}
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                仕事内容：{{ $job->detail }}
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                応募条件：{{ $job->conditions }}
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                勤務時間：{{ $job->duty_hours }}
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                下限給与：{{ $job->low_salary }}
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                上限給与：{{ $job->high_salary }}
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                休日・休暇：{{ $job->holiday }}
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="relative">
-                                                福利厚生：{{ $job->benefits }}
-                                            </div>
+
+                    <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                    <section class="text-gray-600 body-font">
+                        @if ($jobs)
+                            @foreach ($jobs as $job)
+                                <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+                                    @if (empty($job->image1))
+                                        <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
+                                            src="https://via.placeholder.com/1980x1080?text=No+Image" alt="No Image">
+                                    @else
+                                        <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
+                                            src="{{ asset('storage/jobs/' . $job->image1) }}" alt="job-image">
+                                    @endif
+                                    <div class="text-center lg:w-2/3 w-full">
+                                        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                                            Microdosing
+                                            synth tattooed vexillologist</h1>
+                                        <p class="mb-2 leading-relaxed">{{ $job->job_name }}</p>
+                                        <p class="mb-2 leading-relaxed">
+                                            給与：{{ $job->low_salary }}〜{{ $job->high_salary }}万円</p>
+                                        <p class="mb-8 leading-relaxed"> 仕事内容：{{ $job->detail }}
+                                        </p>
+                                        <div class="flex justify-center">
+                                            <button type="button"
+                                                onclick="location.href='{{ route('company.jobs.show', ['job' => $job->id]) }}'"
+                                                class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">詳細</button>
                                         </div>
                                     </div>
-                                    <button type="button"
-                                        onclick="location.href='{{ route('company.jobs.show', ['job' => $job->id]) }}'"
-                                        class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">詳細</button>
-                                @endforeach
-                            @endif
-                            <div class="p-2 w-full flex justify-around mt-4">
-                                <button type="button" onclick="location.href='{{ route('company.dashboard') }}'"
-                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                                {{-- <button type="submit" class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">登録</button> --}}
-                            </div>
-
-                        </div>
+                                </div>
+                                <hr>
+                            @endforeach
+                        @endif
+                        {{-- <div class="p-2 w-full flex justify-around mt-4">
+                            <button type="button" onclick="location.href='{{ route('company.dashboard') }}'"
+                                class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                        </div> --}}
                     </section>
                 </div>
             </div>
