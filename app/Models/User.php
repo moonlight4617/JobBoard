@@ -19,12 +19,12 @@ class User extends Authenticatable
 
     public function appStatus()
     {
-        return $this->hasMany(AppStatus::class);
+        return $this->hasMany(AppStatus::class, 'users_id');
     }
 
     public function userPictures()
     {
-        return $this->hasMany(UserPictures::class);
+        return $this->hasMany(UserPictures::class, 'users_id');
     }
     /**
      * The attributes that are mass assignable.
