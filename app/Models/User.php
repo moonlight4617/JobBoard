@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\AppStatus;
 use App\Models\UserPictures;
+use App\Models\ContactUsers;
 
 class User extends Authenticatable
 {
@@ -26,6 +27,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserPictures::class, 'users_id');
     }
+
+    public function ContactUsers()
+    {
+        return $this->hasMany(ContactUsers::class, 'users_id');
+    }
+
+    public function isFollowedBy($company): bool
+    {
+        return ContactUsers::where('users_id', $this->id)->where('companies_id', $company->id)->where('follow', true)->first() !== null;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

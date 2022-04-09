@@ -98,6 +98,10 @@ Route::resource('company', CompanyController::class, ['except' => 'index'])->mid
 
 // 人材
 Route::get('/hresource', [JobSeeker::class, 'index'])->middleware('auth:companies')->name('user.index');
+Route::get('/hresource/followIndex', [JobSeeker::class, 'followIndex'])->middleware('auth:companies')->name('user.followIndex');
+
+// フォロー機能
+Route::post('/hresource/follow', [JobSeeker::class, 'follow'])->middleware('auth:companies')->name('user.follow');
 
 // ユーザーとしてログイン
 Route::get('/loginToUser', [AuthenticatedSessionController::class, 'loginToUser'])
