@@ -128,5 +128,8 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    'attributes'           => [],
+    'attributes'           => [
+        'detail' => '仕事内容',
+        'job_name' => '求人名'
+    ],
 ];

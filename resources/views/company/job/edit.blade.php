@@ -38,17 +38,17 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="conditions" class="leading-7 text-sm text-gray-600">応募条件</label>
-                                            <input type="text" id="conditions" name="conditions"
+                                            <textarea type="text" id="conditions" name="conditions"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                value="{{ $job->conditions }}">
+                                                value="{{ $job->conditions }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="duty_hours" class="leading-7 text-sm text-gray-600">勤務時間</label>
-                                            <input type="text" id="duty_hours" name="duty_hours"
+                                            <textarea type="text" id="duty_hours" name="duty_hours"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                value="{{ $job->duty_hours }}">
+                                                value="{{ $job->duty_hours }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="p-2">
@@ -71,17 +71,17 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="holiday" class="leading-7 text-sm text-gray-600">休日・休暇</label>
-                                            <input type="text" id="holiday" name="holiday"
+                                            <textarea type="text" id="holiday" name="holiday"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                value="{{ $job->holiday }}">
+                                                value="{{ $job->holiday }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="benefits" class="leading-7 text-sm text-gray-600">福利厚生</label>
-                                            <input type="text" id="benefits" name="benefits"
+                                            <textarea type="text" id="benefits" name="benefits"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                                value="{{ $job->benefits }}">
+                                                value="{{ $job->benefits }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="p-2 w-full flex justify-around mt-4">

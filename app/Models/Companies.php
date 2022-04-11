@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Jobs;
+use App\Models\ContactUsers;
 
 
 class Companies extends Authenticatable
@@ -17,6 +18,11 @@ class Companies extends Authenticatable
     public function jobs()
     {
         return $this->hasMany(Jobs::class);
+    }
+
+    public function ContactUsers()
+    {
+        return $this->hasMany(ContactUsers::class);
     }
 
     protected $fillable = [

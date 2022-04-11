@@ -100,8 +100,8 @@
                                 <button type="button"
                                     onclick="location.href='{{ route('company.company.edit', ['company' => $company->id]) }}'"
                                     class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
-                                <button type="button" onclick="location.href='{{ route('company.dashboard') }}'"
-                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                {{-- <button type="button" onclick="location.href='{{ route('company.dashboard') }}'"
+                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button> --}}
                                 <form id="delete_{{ $company->id }}" method="post"
                                     action="{{ route('company.company.destroy', ['company' => $company->id]) }}">
                                     @csrf
@@ -122,7 +122,7 @@
     <script>
         function deletePost(e) {
             'use strict';
-            if (confirm('本当に削除してもいいですか?')) {
+            if (confirm('削除すると元に戻せません。本当に削除してもいいですか?')) {
                 document.getElementById('delete_' + e.dataset.id).submit();
             }
         }

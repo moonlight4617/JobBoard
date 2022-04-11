@@ -89,6 +89,7 @@ class JobController extends Controller
         // dd($jobs);
         return view('user.job.favoriteIndex', compact('jobs'));
     }
+
     public function appliedIndex()
     {
         $user_id = Auth::id();
