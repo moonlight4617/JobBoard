@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Companies;
 use App\Models\AppStatus;
+use App\Models\TagToJob;
 
 class Jobs extends Model
 {
@@ -18,6 +19,11 @@ class Jobs extends Model
     public function appStatus()
     {
         return $this->hasMany(AppStatus::class);
+    }
+
+    public function  TagToJob()
+    {
+        return $this->hasMany(TagToJob::class, 'jobs_id');
     }
 
     protected $fillable = [
