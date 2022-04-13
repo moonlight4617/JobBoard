@@ -20,4 +20,9 @@ class TagToUser extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    protected $fillable = [
+        'users_id',
+        'tags_id',
+    ];
 }

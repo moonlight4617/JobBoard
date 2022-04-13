@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserPictures;
+use App\Models\Tag;
+use App\Models\TagToUser;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
@@ -128,7 +130,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $pictures = UserPictures::where('users_id', '=', $id)->get();
-        return view('user.mypage.edit', compact('user', 'pictures'));
+        $tags = Tag::where('subject', '=', '0')->get();
+        return view('user.mypage.edit', compact('user', 'pictures', 'tags'));
     }
 
     /**
@@ -140,6 +143,7 @@ class UserController extends Controller
      */
     public function update(UploadImageRequest $request, $id)
     {
+        // dd($request);
         $request->validate([
             'catch' => ['nullable', 'string', 'max:255'],
             'intro' => ['nullable', 'string'],
@@ -151,7 +155,6 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        // dd($request);
         // 画像が既に登録ずみであれば削除
         if ($request->pro_image) {
             $filePath = 'public/users/' . $user->pro_image;
@@ -168,6 +171,11 @@ class UserController extends Controller
             $user->pro_image = $fileNameToStore;
         }
 
+        if ($request->tag) {
+            foreach ($request->tag as $tag) {
+                TagToUser::create(['users_id' => $id, 'tags_id' => $tag]);
+            }
+        }
 
         if ($request->portfolio) {
             // 画像削除の際
