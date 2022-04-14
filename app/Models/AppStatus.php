@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Jobs;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class AppStatus extends Model
 {

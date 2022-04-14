@@ -60,6 +60,19 @@
                                     </div>
                                 </div>
 
+                                @if ($tags)
+                                    <div class="p-2">
+                                        <p class="leading-7 text-sm text-gray-600">特徴タグ</p>
+                                        @foreach ($tags as $tag)
+                                            <div class="relative inline-block px-1 py-2">
+                                                <label for="checkbox1"
+                                                    class="text-white rounded-full bg-teal-500  cursor-pointer ease-in px-2 py-1">{{ $tag->tag_name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
                                 <div class="p-2">
                                     <div class="relative">
                                         <p>ポートフォリオ</p>
