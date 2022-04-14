@@ -10,14 +10,4 @@ use App\Models\Tag;
 class TagToJob extends Model
 {
     use HasFactory;
-
-    public function Tag()
-    {
-        return $this->hasMany(Tag::class);
-    }
-
-    public function Jobs()
-    {
-        return $this->hasMany(Jobs::class);
-    }
 }

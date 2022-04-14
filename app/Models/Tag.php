@@ -4,21 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\TagToJob;
-use App\Models\TagToUser;
 use App\Models\User;
+use App\Models\Jobs;
 
 class Tag extends Model
 {
     use HasFactory;
 
-    public function tagToJob()
+    public function Jobs()
     {
-        return $this->belongsTo(TagToJob::class);
+        return $this->belongsToMany(Jobs::class, 'tag_to_jobs', 'jobs_id', 'users_id');
     }
 
-    public function tagToUser()
+    public function  Users()
     {
-        return $this->belongsTo(TagToUser::class);
+        return $this->belongsToMany(User::class, 'tag_to_users', 'tags_id', 'users_id');
     }
 }

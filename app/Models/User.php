@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\AppStatus;
 use App\Models\UserPictures;
 use App\Models\ContactUsers;
-use App\Models\TagToUser;
+use App\Models\Tag;
 
 class User extends Authenticatable
 {
@@ -34,9 +34,9 @@ class User extends Authenticatable
         return $this->hasMany(ContactUsers::class, 'users_id');
     }
 
-    public function  TagToUser()
+    public function  Tags()
     {
-        return $this->hasMany(TagToUser::class, 'users_id');
+        return $this->belongsToMany(Tag::class, 'tag_to_users', 'users_id', 'tags_id');
     }
 
     public function isFollowedBy($company): bool

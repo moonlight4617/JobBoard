@@ -73,12 +73,24 @@
                                             <p for="career" class="leading-7 text-sm text-gray-600">特徴タグ</p>
                                             @foreach ($tags as $tag)
                                                 <div class="relative inline-block px-1 py-2">
-                                                    <input type="checkbox" id="checkbox{{ $tag->id }}"
-                                                        name="tag[{{ $tag->id }}]" value="{{ $tag->id }}"
-                                                        class="opacity-0 absolute w-full h-full left-0 peer cursor-pointer">
-                                                    <label for="checkbox1"
-                                                        class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
-                                                    </label>
+                                                    @if ($userTags->contains($tag))
+                                                        <input checked="checked" type="checkbox"
+                                                            id="checkbox{{ $tag->id }}"
+                                                            name="tag[{{ $tag->id }}]" value="{{ $tag->id }}"
+                                                            class="opacity-0 absolute w-full h-full left-0 peer cursor-pointer">
+                                                        <label for="checkbox1"
+                                                            class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
+                                                        </label>
+                                                    @else
+                                                        <input type="checkbox" id="checkbox{{ $tag->id }}"
+                                                            name="tag[{{ $tag->id }}]"
+                                                            value="{{ $tag->id }}"
+                                                            class="opacity-0 absolute w-full h-full left-0 peer cursor-pointer">
+                                                        <label for="checkbox1"
+                                                            class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
+                                                        </label>
+                                                    @endif
+
                                                 </div>
                                             @endforeach
                                         </div>

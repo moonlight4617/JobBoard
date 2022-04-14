@@ -19,17 +19,6 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
-
-        // $this->middleware(function ($request, $next) {
-        //     $id = $request->route()->parameter('user');
-        //     if (!is_null($id)) {
-        //         $userId = User::findOrFail($id)->id;
-        //         if ($userId !== Auth::id()) {
-        //             abort(404); // 404画面表示 }
-        //         }
-        //         return $next($request);
-        //     }
-        // });
     }
 
 
@@ -117,7 +106,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $pictures = UserPictures::where('users_id', '=', $id)->get();
-        return view('user.mypage.show', compact('user', 'pictures'));
+        $tags = $user->Tags;
+        return view('user.mypage.show', compact('user', 'pictures', 'tags'));
     }
 
     /**
@@ -131,7 +121,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $pictures = UserPictures::where('users_id', '=', $id)->get();
         $tags = Tag::where('subject', '=', '0')->get();
-        return view('user.mypage.edit', compact('user', 'pictures', 'tags'));
+        $userTags = $user->Tags;
+        return view('user.mypage.edit', compact('user', 'pictures', 'tags', 'userTags'));
     }
 
     /**
@@ -143,13 +134,13 @@ class UserController extends Controller
      */
     public function update(UploadImageRequest $request, $id)
     {
-        // dd($request);
         $request->validate([
             'catch' => ['nullable', 'string', 'max:255'],
             'intro' => ['nullable', 'string'],
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
+            'tag' => ['nullable', 'string'],
             // 'pro_image' => ['nullable', 'file', 'max:1024'],
         ]);
 
@@ -178,22 +169,15 @@ class UserController extends Controller
         }
 
         if ($request->portfolio) {
-            // 画像削除の際
-            // $portfolioPath = 'public/users/portfolio' . $user->portfolio1;
-            // if (Storage::exists($portfolioPath)) {
-            //     Storage::delete($portfolioPath);
-            // }
-
             foreach ($request->portfolio as $userPic) {
-                // 改めてstorageに画像登録
-                // $imagePortfolio = $request->portfolio1;
+                // storageに画像登録
                 $userPicName = uniqid(rand() . '_');
                 $extension = $userPic->extension();
                 $userPicNameToStore = $userPicName . '.'  . $extension;
                 $resizedUserPic = InterventionImage::make($userPic)->orientate()->fit(200, 200)->encode();
                 Storage::put('public/users/portfolio/' . $userPicNameToStore, $resizedUserPic);
 
-                // 新たにUserPicturesに画像登録
+                // UserPicturesに画像登録
                 UserPictures::create(['users_id' => $id, 'filename' => $userPicNameToStore]);
             }
         }
