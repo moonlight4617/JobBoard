@@ -52,6 +52,6 @@ class RegisteredUserController extends Controller
         // logger('test', ['ログインユーザー' => Auth::user(), 'チェック' => Auth::check()]);
 
         // return redirect(RouteServiceProvider::COMPANY_HOME);
-        return redirect()->route('company.company.create');
+        return redirect()->route('company.company.edit', ['company' => $user->id]);
     }
 }

@@ -17,16 +17,16 @@ class CompanyController extends Controller
     {
         $this->middleware('auth:companies');
 
-        $this->middleware(function ($request, $next) {
-            $id = $request->route()->parameter('company'); //jobのid取得
-            if (!is_null($id)) {
-                $companyId = Companies::findOrFail($id)->id;
-                if ($companyId !== Auth::id()) {
-                    abort(404); // 404画面表示 }
-                }
-                return $next($request);
-            }
-        });
+        // $this->middleware(function ($request, $next) {
+        //     $id = $request->route()->parameter('company'); //jobのid取得
+        //     if (!is_null($id)) {
+        //         $companyId = Companies::findOrFail($id)->id;
+        //         if ($companyId !== Auth::id()) {
+        //             abort(404); // 404画面表示 }
+        //         }
+        //         return $next($request);
+        //     }
+        // });
     }
 
     public function create()
