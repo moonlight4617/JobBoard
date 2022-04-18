@@ -79,18 +79,53 @@
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
                                         </div>
                                     </div>
-                                    <p>画像１　<input type="file" name="imgpath1" accept="image/png,image/jpeg,image/jpg">
-                                    </p>
-                                    <p>画像２　<input type="file" name="imgpath2" accept="image/png,image/jpeg,image/jpg">
-                                    </p>
-                                    <p>画像３　<input type="file" name="imgpath3" accept="image/png,image/jpeg,image/jpg">
-                                    </p>
-                                    <div class="p-2 w-full flex justify-around mt-4">
-                                        <button type="button"
-                                            onclick="location.href='{{ route('company.dashboard') }}'"
-                                            class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                                        <button type="button" onclick="jobPost(this)"
-                                            class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">登録</button>
+
+                                    {{-- タグ選択 --}}
+                                    @if ($tags)
+                                        <div class="p-2">
+                                            <p for="career" class="leading-7 text-sm text-gray-600">特徴タグ</p>
+                                            @foreach ($tags as $tag)
+                                                <div class="relative inline-block px-1 py-2">
+                                                    <input type="checkbox" id="checkbox{{ $tag->id }}"
+                                                        name="tag[{{ $tag->id }}]" value="{{ $tag->id }}"
+                                                        class="opacity-0 absolute w-full h-full left-0 peer cursor-pointer">
+                                                    <label for="checkbox1"
+                                                        class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    <div class="p-2">
+                                        <div class="relative">
+                                            <p class="leading-7 text-sm text-gray-600">求人画像</p>
+
+
+
+                                            <div class="w-full flex justify-around mt-4">
+                                                <p>画像１　<input type="file" name="imgpath1"
+                                                        accept="image/png,image/jpeg,image/jpg">
+                                                </p>
+                                            </div>
+                                            <div class="w-full flex justify-around mt-4">
+                                                <p>画像２　<input type="file" name="imgpath2"
+                                                        accept="image/png,image/jpeg,image/jpg">
+                                                </p>
+                                            </div>
+                                            <div class="w-full flex justify-around mt-4">
+                                                <p>画像３　<input type="file" name="imgpath3"
+                                                        accept="image/png,image/jpeg,image/jpg">
+                                                </p>
+                                            </div>
+                                            <div class="p-2 w-full flex justify-around mt-8">
+                                                <button type="button"
+                                                    onclick="location.href='{{ route('company.dashboard') }}'"
+                                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                                <button type="button" onclick="jobPost(this)"
+                                                    class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">登録</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>

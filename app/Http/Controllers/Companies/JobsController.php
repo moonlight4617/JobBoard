@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Companies;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Jobs;
+use App\Models\Tag;
+use App\Models\TagToJob;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +40,9 @@ class JobsController extends Controller
      */
     public function index()
     {
-        $jobs = Jobs::where('companies_id', Auth::id())->get();
+        $jobs = Jobs::where('companies_id', Auth::id())->with('tags')->get();
+        // $tags = Tag::where('subject', '=', '1')->get();
+        // dd($jobs);
         return view('company.job.index', compact('jobs'));
     }
 
@@ -49,7 +53,8 @@ class JobsController extends Controller
      */
     public function create()
     {
-        return view('company.job.create');
+        $tags = Tag::where('subject', '=', '1')->get();
+        return view('company.job.create', compact('tags'));
     }
 
     /**
@@ -146,7 +151,9 @@ class JobsController extends Controller
     public function edit($id)
     {
         $job = Jobs::findOrFail($id);
-        return view('company.job.edit', compact('job'));
+        $tags = Tag::where('subject', '=', '1')->get();
+        $jobTags = $job->Tags;
+        return view('company.job.edit', compact(['job', 'tags', 'jobTags']));
     }
 
     /**
@@ -169,7 +176,8 @@ class JobsController extends Controller
             'benefits' => ['nullable', 'string', 'max:255'],
             // 'image1' => ['nullable', 'file', 'size:1024'],
             // 'image2' => ['nullable', 'file', 'size:1024'],
-            // 'image3' => ['nullable', 'file', 'size:1024']
+            // 'image3' => ['nullable', 'file', 'size:1024'],
+            // 'tag' => ['nullable', 'string']
         ]);
 
         $job = Jobs::findOrFail($id);
@@ -182,9 +190,14 @@ class JobsController extends Controller
         $job->holiday = $request->holiday;
         $job->benefits = $request->benefits;
 
+        if ($request->tag) {
+            foreach ($request->tag as $tag) {
+                TagToJob::create(['jobs_id' => $id, 'tags_id' => $tag]);
+            }
+        }
+
         // dd($request);
         // image1,2,3がparamsにあれば、一旦削除した後に、登録
-
         if ($request->imgpath1) {
             $filePath1 = 'public/jobs/' . $job->image1;
             if (Storage::exists($filePath1)) {
