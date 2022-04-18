@@ -34,7 +34,6 @@
                                         </p>
 
                                         @if ($job->tags)
-                                            {{-- <div class="p-2"> --}}
                                             @foreach ($job->tags as $tag)
                                                 <div class="relative inline-block px-1 py-2">
                                                     <label for="checkbox1"
@@ -42,10 +41,7 @@
                                                     </label>
                                                 </div>
                                             @endforeach
-                                            {{-- </div> --}}
                                         @endif
-
-
 
                                         <div class="flex justify-center mt-4">
                                             <button type="button"

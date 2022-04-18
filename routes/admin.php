@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CompaniesController;
+use App\Http\Controllers\Admin\UsersController;
 
 
 /*
@@ -28,6 +29,7 @@ use App\Http\Controllers\Admin\CompaniesController;
 // });
 
 Route::resource('companies', CompaniesController::class)->middleware('auth:admin');
+Route::resource('users', UsersController::class)->middleware('auth:admin');
 
 Route::get('/', function () {
   return view('admin.dashboard');
