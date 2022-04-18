@@ -73,7 +73,7 @@
                                             <p for="career" class="leading-7 text-sm text-gray-600">特徴タグ</p>
                                             @foreach ($tags as $tag)
                                                 <div class="relative inline-block px-1 py-2">
-                                                    @if ($userTags->contains($tag))
+                                                    @if ($userTags && $userTags->contains($tag))
                                                         <input checked="checked" type="checkbox"
                                                             id="checkbox{{ $tag->id }}"
                                                             name="tag[{{ $tag->id }}]" value="{{ $tag->id }}"

@@ -13,7 +13,7 @@ class Tag extends Model
 
     public function Jobs()
     {
-        return $this->belongsToMany(Jobs::class, 'tag_to_jobs', 'jobs_id', 'users_id');
+        return $this->belongsToMany(Jobs::class, 'tag_to_jobs', 'tags_id', 'jobs_id');
     }
 
     public function  Users()

@@ -10,4 +10,9 @@ use App\Models\Tag;
 class TagToJob extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'jobs_id',
+        'tags_id',
+    ];
 }

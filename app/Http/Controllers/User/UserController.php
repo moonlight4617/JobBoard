@@ -92,7 +92,6 @@ class UserController extends Controller
             UserPictures::create(['users_id' => $user->id, 'filename' => $portfolioToStore]);
         }
 
-
         return redirect()->route('user.user.show', compact('user'))->with(['message' => 'ユーザー情報を登録しました。', 'status' => 'info']);
     }
 

@@ -84,41 +84,80 @@
                                                 value="{{ $job->benefits }}"></textarea>
                                         </div>
                                     </div>
-                                    <div class="p-2 w-full flex justify-around mt-4">
-                                        @if (empty($job->image1))
-                                            画像１
-                                        @else
-                                            <img src="{{ asset('storage/jobs/' . $job->image1) }}"
-                                                class="w-1/4">
-                                        @endif
-                                        <input type="file" name="imgpath1" accept="image/png,image/jpeg,image/jpg">
-                                    </div>
-                                    <div class="p-2 w-full flex justify-around mt-4">
-                                        @if (empty($job->image2))
-                                            画像２
-                                        @else
-                                            <img src="{{ asset('storage/jobs/' . $job->image2) }}"
-                                                class="w-1/4">
-                                        @endif
-                                        <input type="file" name="imgpath2" accept="image/png,image/jpeg,image/jpg">
-                                    </div>
-                                    <div class="p-2 w-full flex justify-around mt-4">
-                                        @if (empty($job->image3))
-                                            画像3
-                                        @else
-                                            <img src="{{ asset('storage/jobs/' . $job->image3) }}"
-                                                class="w-1/4">
-                                        @endif
-                                        <input type="file" name="imgpath3" accept="image/png,image/jpeg,image/jpg">
-                                    </div>
-                                    <div class="p-2 w-full flex justify-around mt-4">
-                                        <button type="button"
-                                            onclick="location.href='{{ route('company.jobs.show', ['job' => $job->id]) }}'"
-                                            class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                                        <button type="submit"
-                                            class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">更新</button>
+
+                                    {{-- タグ選択 --}}
+                                    @if ($tags)
+                                        <div class="p-2">
+                                            <p for="career" class="leading-7 text-sm text-gray-600">特徴タグ</p>
+                                            @foreach ($tags as $tag)
+                                                <div class="relative inline-block px-1 py-2">
+                                                    @if ($jobTags && $jobTags->contains($tag))
+                                                        <input checked="checked" type="checkbox"
+                                                            id="checkbox{{ $tag->id }}"
+                                                            name="tag[{{ $tag->id }}]"
+                                                            value="{{ $tag->id }}"
+                                                            class="opacity-0 absolute w-full h-full left-0 peer cursor-pointer">
+                                                        <label for="checkbox1"
+                                                            class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
+                                                        </label>
+                                                    @else
+                                                        <input type="checkbox" id="checkbox{{ $tag->id }}"
+                                                            name="tag[{{ $tag->id }}]"
+                                                            value="{{ $tag->id }}"
+                                                            class="opacity-0 absolute w-full h-full left-0 peer cursor-pointer">
+                                                        <label for="checkbox1"
+                                                            class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
+                                                        </label>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    <div class="pt-4">
+                                        <div class="relative">
+                                            <p class="leading-7 text-sm text-gray-600">求人画像</p>
+                                            <div class="w-full flex justify-around mt-4">
+                                                @if (empty($job->image1))
+                                                    画像１
+                                                @else
+                                                    <img src="{{ asset('storage/jobs/' . $job->image1) }}"
+                                                        class="w-1/4">
+                                                @endif
+                                                <input type="file" name="imgpath1"
+                                                    accept="image/png,image/jpeg,image/jpg">
+                                            </div>
+                                            <div class="w-full flex justify-around mt-4">
+                                                @if (empty($job->image2))
+                                                    画像２
+                                                @else
+                                                    <img src="{{ asset('storage/jobs/' . $job->image2) }}"
+                                                        class="w-1/4">
+                                                @endif
+                                                <input type="file" name="imgpath2"
+                                                    accept="image/png,image/jpeg,image/jpg">
+                                            </div>
+                                            <div class="w-full flex justify-around mt-4">
+                                                @if (empty($job->image3))
+                                                    画像3
+                                                @else
+                                                    <img src="{{ asset('storage/jobs/' . $job->image3) }}"
+                                                        class="w-1/4">
+                                                @endif
+                                                <input type="file" name="imgpath3"
+                                                    accept="image/png,image/jpeg,image/jpg">
+                                            </div>
+                                            <div class="p-2 w-full flex justify-around mt-4">
+                                                <button type="button"
+                                                    onclick="location.href='{{ route('company.jobs.show', ['job' => $job->id]) }}'"
+                                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                                <button type="submit"
+                                                    class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">更新</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </form>
                         </div>
                     </section>

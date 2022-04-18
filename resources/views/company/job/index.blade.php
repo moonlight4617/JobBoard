@@ -30,22 +30,34 @@
                                         <p class="mb-2 leading-relaxed">{{ $job->job_name }}</p>
                                         <p class="mb-2 leading-relaxed">
                                             給与：{{ $job->low_salary }}〜{{ $job->high_salary }}万円</p>
-                                        <p class="mb-8 leading-relaxed"> 仕事内容：{{ $job->detail }}
+                                        <p class="mb-2 leading-relaxed"> 仕事内容：{{ $job->detail }}
                                         </p>
-                                        <div class="flex justify-center">
+
+                                        @if ($job->tags)
+                                            {{-- <div class="p-2"> --}}
+                                            @foreach ($job->tags as $tag)
+                                                <div class="relative inline-block px-1 py-2">
+                                                    <label for="checkbox1"
+                                                        class="text-white rounded-full bg-teal-500 px-2 py-1">{{ $tag->tag_name }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                            {{-- </div> --}}
+                                        @endif
+
+
+
+                                        <div class="flex justify-center mt-4">
                                             <button type="button"
                                                 onclick="location.href='{{ route('company.jobs.show', ['job' => $job->id]) }}'"
                                                 class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">詳細</button>
                                         </div>
+
                                     </div>
                                 </div>
                                 <hr>
                             @endforeach
                         @endif
-                        {{-- <div class="p-2 w-full flex justify-around mt-4">
-                            <button type="button" onclick="location.href='{{ route('company.dashboard') }}'"
-                                class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                        </div> --}}
                     </section>
                 </div>
             </div>
