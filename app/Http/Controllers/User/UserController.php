@@ -139,7 +139,7 @@ class UserController extends Controller
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
-            'tag' => ['nullable', 'string'],
+            // 'tag' => ['nullable', 'integer'],
             // 'pro_image' => ['nullable', 'file', 'max:1024'],
         ]);
 
@@ -162,8 +162,11 @@ class UserController extends Controller
         }
 
         if ($request->tag) {
+            $userTags = TagToUser::where('users_id', $id)->get();
             foreach ($request->tag as $tag) {
-                TagToUser::create(['users_id' => $id, 'tags_id' => $tag]);
+                if ($userTags && !$userTags->contains($tag)) {
+                    TagToUser::create(['users_id' => $id, 'tags_id' => $tag]);
+                }
             }
         }
 
