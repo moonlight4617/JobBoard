@@ -54,6 +54,8 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -62,11 +64,9 @@ class UsersController extends Controller
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
-            'pro_image' => ['nullable', 'file', 'max:1024'],
-            'portfolio1' => ['nullable', 'file', 'max:1024'],
+            // 'pro_image' => ['nullable', 'file', 'max:1024'],
+            // 'portfolio1' => ['nullable', 'file', 'max:1024'],
         ]);
-
-        // dd($request);
 
         $user = User::create([
             'name' => $request->name,
@@ -76,7 +76,7 @@ class UsersController extends Controller
             'intro' => $request->intro,
             'license' => $request->license,
             'career' => $request->career,
-            'hobby' => $request->hobby
+            'hobby' => $request->hobby,
         ]);
 
         // タグ登録
@@ -196,6 +196,7 @@ class UsersController extends Controller
                 }
             }
         }
+        // もし、タグを外した場合はタグ削除
 
         if ($request->portfolio) {
             foreach ($request->portfolio as $userPic) {

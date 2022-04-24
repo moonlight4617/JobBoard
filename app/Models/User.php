@@ -53,6 +53,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'catch',
+        'intro',
+        'license',
+        'career',
+        'hobby',
     ];
 
     /**
