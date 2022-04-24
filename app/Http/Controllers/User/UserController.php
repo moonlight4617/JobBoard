@@ -75,6 +75,7 @@ class UserController extends Controller
             $fileNameToStore = $fileName . '.'  . $extension;
             $resizedImage = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/users/' . $fileNameToStore, $resizedImage);
+            $user->pro_image = $fileNameToStore;
         } else {
             $fileNameToStore1 = null;
         }

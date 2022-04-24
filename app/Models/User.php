@@ -58,6 +58,8 @@ class User extends Authenticatable
         'license',
         'career',
         'hobby',
+        'pro_image',
+        'portfolio1',
     ];
 
     /**
