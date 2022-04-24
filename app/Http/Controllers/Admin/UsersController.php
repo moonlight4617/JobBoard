@@ -156,18 +156,23 @@ class UsersController extends Controller
     public function update(UploadImageRequest $request, $id)
     {
         // dd($request);
-        $request->validate([
-            'catch' => ['nullable', 'string', 'max:255'],
-            'intro' => ['nullable', 'string'],
-            'license' => ['nullable', 'string'],
-            'career' => ['nullable', 'string'],
-            'hobby' => ['nullable', 'string'],
-            // 'tag' => ['nullable', 'string'],
-            // 'pro_image' => ['nullable', 'file', 'max:1024'],
-            'tag' => Rule::unique('users')->where(function ($query) {
-                return $query->where('account_id', 1);
-            })
-        ]);
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+                'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+                'catch' => ['nullable', 'string', 'max:255'],
+                'intro' => ['nullable', 'string'],
+                'license' => ['nullable', 'string'],
+                'career' => ['nullable', 'string'],
+                'hobby' => ['nullable', 'string'],
+                // 'tag' => ['nullable', 'string'],
+                // 'pro_image' => ['nullable', 'file', 'max:1024'],
+                'tag' => Rule::unique('users')->where(function ($query) {
+                    return $query->where('account_id', 1);
+                })
+            ]
+        );
 
         $user = User::findOrFail($id);
 
@@ -212,11 +217,16 @@ class UsersController extends Controller
             }
         }
 
+        $user->name = $request->name;
+        $user->email = $request->email;
         $user->catch = $request->catch;
         $user->intro = $request->intro;
         $user->license = $request->license;
         $user->career = $request->career;
         $user->hobby = $request->hobby;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
 
         return redirect()->route('admin.users.show', compact('user'))->with(['message' => '更新しました。', 'status' => 'info']);
