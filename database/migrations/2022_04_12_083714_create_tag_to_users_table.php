@@ -15,6 +15,7 @@ class CreateTagToUsersTable extends Migration
     {
         Schema::create('tag_to_users', function (Blueprint $table) {
             $table->id();
+            $table->unique(['users_id', 'tags_id']);
             $table->foreignId('users_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('tags_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

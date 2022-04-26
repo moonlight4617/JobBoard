@@ -36,7 +36,7 @@ class User extends Authenticatable
 
     public function  Tags()
     {
-        return $this->belongsToMany(Tag::class, 'tag_to_users', 'users_id', 'tags_id');
+        return $this->belongsToMany(Tag::class, 'tag_to_users', 'users_id', 'tags_id')->withTimestamps();
     }
 
     public function isFollowedBy($company): bool
@@ -53,6 +53,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'catch',
+        'intro',
+        'license',
+        'career',
+        'hobby',
+        'pro_image',
+        'portfolio1',
     ];
 
     /**

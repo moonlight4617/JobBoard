@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserPictures;
 use App\Models\Tag;
 use App\Models\TagToUser;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rule;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UploadImageRequest;
 
 
-class UserController extends Controller
+
+class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:users');
+        $this->middleware('auth:admin');
     }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +30,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::select('id', 'name', 'email', 'created_at', 'updated_at')->paginate(50);
+        // dd($companies);
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -39,7 +42,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.mypage.create');
+        $tags = Tag::where('subject', '=', '0')->get();
+        return view('admin.user.create', compact('tags'));
     }
 
     /**
@@ -48,25 +52,39 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UploadImageRequest $request)
     {
+        // dd($request);
+
         $request->validate([
-            'catch' => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'intro' => ['nullable', 'string'],
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
-            'pro_image' => ['nullable', 'file', 'max:1024'],
-            'portfolio1' => ['nullable', 'file', 'max:1024'],
         ]);
 
-        $user = User::findOrFail(Auth::id());
-        $user->catch = $request->catch;
-        $user->intro = $request->intro;
-        $user->license = $request->license;
-        $user->career = $request->career;
-        $user->hobby = $request->hobby;
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'catch' => $request->catch,
+            'intro' => $request->intro,
+            'license' => $request->license,
+            'career' => $request->career,
+            'hobby' => $request->hobby,
+        ]);
 
+        // タグ登録
+        if ($request->tags) {
+            foreach ($request->tags as $tag) {
+                TagToUser::create(['users_id' => $user->id, 'tags_id' => $tag]);
+            }
+        }
+
+        // プロフィール画像登録
         // dd($request);
         if ($request->pro_image) {
             $imageFile = $request->pro_image;
@@ -81,6 +99,7 @@ class UserController extends Controller
         }
         $user->save();
 
+        // ポートフォリオ画像登録
         if ($request->portfolio1) {
             $imagePortfolio = $request->portfolio1;
             $portfolioName = uniqid(rand() . '_');
@@ -93,7 +112,7 @@ class UserController extends Controller
             UserPictures::create(['users_id' => $user->id, 'filename' => $portfolioToStore]);
         }
 
-        return redirect()->route('user.user.show', compact('user'))->with(['message' => 'ユーザー情報を登録しました。', 'status' => 'info']);
+        return redirect()->route('admin.users.show', compact('user'))->with(['message' => 'ユーザー情報を登録しました。', 'status' => 'info']);
     }
 
     /**
@@ -105,9 +124,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $pictures = UserPictures::where('users_id', '=', $id)->get();
         $tags = $user->Tags;
-        return view('user.mypage.show', compact('user', 'pictures', 'tags'));
+        $pictures = UserPictures::where('users_id', '=', $id)->get();
+        return view('admin.user.show', compact('user', 'tags', 'pictures'));
     }
 
     /**
@@ -122,7 +141,8 @@ class UserController extends Controller
         $pictures = UserPictures::where('users_id', '=', $id)->get();
         $tags = Tag::where('subject', '=', '0')->get();
         $userTags = $user->Tags;
-        return view('user.mypage.edit', compact('user', 'pictures', 'tags', 'userTags'));
+
+        return view('admin.user.edit', compact('user', 'pictures', 'tags', 'userTags'));
     }
 
     /**
@@ -134,15 +154,23 @@ class UserController extends Controller
      */
     public function update(UploadImageRequest $request, $id)
     {
-        $request->validate([
-            'catch' => ['nullable', 'string', 'max:255'],
-            'intro' => ['nullable', 'string'],
-            'license' => ['nullable', 'string'],
-            'career' => ['nullable', 'string'],
-            'hobby' => ['nullable', 'string'],
-            // 'tag' => ['nullable', 'integer'],
-            // 'pro_image' => ['nullable', 'file', 'max:1024'],
-        ]);
+        // dd($request);
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+                'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+                'catch' => ['nullable', 'string', 'max:255'],
+                'intro' => ['nullable', 'string'],
+                'license' => ['nullable', 'string'],
+                'career' => ['nullable', 'string'],
+                'hobby' => ['nullable', 'string'],
+                // 'tag' => ['nullable', 'string'],
+                // 'tag' => Rule::unique('tag_to_users')->where(function ($query) {
+                //     return $query->where('tags_id', $request->);
+                // })
+            ]
+        );
 
         $user = User::findOrFail($id);
 
@@ -167,6 +195,7 @@ class UserController extends Controller
         $userTags = TagToUser::where('users_id', $id)->pluck('tags_id');
         if ($requestTags && $userTags) {
             foreach ($userTags as $tag) {
+                // if (!$requestTags->contains($tag)) {
                 if (!in_array($tag, $requestTags)) {
                     $user->tags()->detach($tag);
                 }
@@ -198,14 +227,19 @@ class UserController extends Controller
             }
         }
 
+        $user->name = $request->name;
+        $user->email = $request->email;
         $user->catch = $request->catch;
         $user->intro = $request->intro;
         $user->license = $request->license;
         $user->career = $request->career;
         $user->hobby = $request->hobby;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
 
-        return redirect()->route('user.user.show', compact('user'))->with(['message' => '更新しました。', 'status' => 'info']);
+        return redirect()->route('admin.users.show', compact('user'))->with(['message' => '更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -217,33 +251,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::findOrFail($id)->delete();
-        return redirect()->route('user.register')->with(['message' => 'ユーザー情報を削除しました。', 'status' => 'alert']);
-    }
-
-
-    public function pictureAdd(UploadImageRequest $request)
-    {
-        $imagePortfolio = $request->portfolio;
-        $portfolioName = uniqid(rand() . '_');
-        $extension = $imagePortfolio->extension();
-        $portfolioToStore = $portfolioName . '.'  . $extension;
-        $resizedPortfolio = InterventionImage::make($imagePortfolio)->orientate()->fit(200, 200)->encode();
-        Storage::put('public/users/portfolio/' . $portfolioToStore, $resizedPortfolio);
-
-        // 新たにUserPicturesに画像登録
-        UserPictures::create(['users_id' => Auth::id(), 'filename' => $portfolioToStore]);
-        return;
-    }
-
-    public function pictureDestroy(Request $request)
-    {
-        $picture_id = $request->pic_id;
-        $picture = UserPictures::findOrFail($picture_id);
-        $filePath = 'public/users/portfolio/' . $picture->filename;
-        if (Storage::exists($filePath)) {
-            Storage::delete($filePath);
-        }
-        $picture->delete();
-        return;
+        return redirect()->route('admin.companies.index')->with(['message' => '企業を削除しました。', 'status' => 'alert']);
     }
 }

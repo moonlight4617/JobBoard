@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CompaniesController;
+use App\Http\Controllers\Admin\UsersController;
 
 
 /*
@@ -28,17 +29,18 @@ use App\Http\Controllers\Admin\CompaniesController;
 // });
 
 Route::resource('companies', CompaniesController::class)->middleware('auth:admin');
+Route::resource('users', UsersController::class)->middleware('auth:admin');
 
 Route::get('/', function () {
   return view('admin.dashboard');
 })->middleware(['auth:admin'])->name('dashboard');
 
-// Route::get('/register', [RegisteredUserController::class, 'create'])
-//   ->middleware('guest')
-//   ->name('register');
+Route::get('/register', [RegisteredUserController::class, 'create'])
+  ->middleware('guest')
+  ->name('register');
 
-// Route::post('/register', [RegisteredUserController::class, 'store'])
-//   ->middleware('guest');
+Route::post('/register', [RegisteredUserController::class, 'store'])
+  ->middleware('guest');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
   ->middleware('guest')
