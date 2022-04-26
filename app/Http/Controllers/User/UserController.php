@@ -140,8 +140,6 @@ class UserController extends Controller
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
-            // 'tag' => ['nullable', 'integer'],
-            // 'pro_image' => ['nullable', 'file', 'max:1024'],
         ]);
 
         $user = User::findOrFail($id);
