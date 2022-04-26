@@ -162,13 +162,26 @@ class UserController extends Controller
             $user->pro_image = $fileNameToStore;
         }
 
-        if ($request->tag) {
-            $userTags = TagToUser::where('users_id', $id)->get();
-            foreach ($request->tag as $tag) {
-                if ($userTags && !$userTags->contains($tag)) {
-                    TagToUser::create(['users_id' => $id, 'tags_id' => $tag]);
+        // タグを登録から外した場合
+        $requestTags = $request->tag;
+        $userTags = TagToUser::where('users_id', $id)->pluck('tags_id');
+        if ($requestTags && $userTags) {
+            foreach ($userTags as $tag) {
+                if (!in_array($tag, $requestTags)) {
+                    $user->tags()->detach($tag);
                 }
             }
+            foreach ($requestTags as $tag) {
+                if (!$userTags->contains($tag)) {
+                    $user->tags()->attach($tag);
+                }
+            }
+        } elseif ($requestTags) {
+            foreach ($requestTags as $tag) {
+                $user->tags()->attach($tag);
+            }
+        } elseif ($userTags) {
+            $user->tags()->detach();
         }
 
         if ($request->portfolio) {

@@ -64,8 +64,6 @@ class UsersController extends Controller
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
-            // 'pro_image' => ['nullable', 'file', 'max:1024'],
-            // 'portfolio1' => ['nullable', 'file', 'max:1024'],
         ]);
 
         $user = User::create([
@@ -168,10 +166,9 @@ class UsersController extends Controller
                 'career' => ['nullable', 'string'],
                 'hobby' => ['nullable', 'string'],
                 // 'tag' => ['nullable', 'string'],
-                // 'pro_image' => ['nullable', 'file', 'max:1024'],
-                'tag' => Rule::unique('users')->where(function ($query) {
-                    return $query->where('account_id', 1);
-                })
+                // 'tag' => Rule::unique('tag_to_users')->where(function ($query) {
+                //     return $query->where('tags_id', $request->);
+                // })
             ]
         );
 
@@ -193,16 +190,28 @@ class UsersController extends Controller
             $user->pro_image = $fileNameToStore;
         }
 
-        if ($request->tag) {
-            $userTags = TagToUser::where('users_id', $id)->get();
-            foreach ($request->tag as $tag) {
-                if ($userTags && !$userTags->contains($tag)) {
-                    dd($request->tag, $userTags);
-                    TagToUser::create(['users_id' => $id, 'tags_id' => $tag]);
+        // タグを登録から外した場合
+        $requestTags = $request->tag;
+        $userTags = TagToUser::where('users_id', $id)->pluck('tags_id');
+        if ($requestTags && $userTags) {
+            foreach ($userTags as $tag) {
+                // if (!$requestTags->contains($tag)) {
+                if (!in_array($tag, $requestTags)) {
+                    $user->tags()->detach($tag);
                 }
             }
+            foreach ($requestTags as $tag) {
+                if (!$userTags->contains($tag)) {
+                    $user->tags()->attach($tag);
+                }
+            }
+        } elseif ($requestTags) {
+            foreach ($requestTags as $tag) {
+                $user->tags()->attach($tag);
+            }
+        } elseif ($userTags) {
+            $user->tags()->detach();
         }
-        // もし、タグを外した場合はタグ削除
 
         if ($request->portfolio) {
             foreach ($request->portfolio as $userPic) {
