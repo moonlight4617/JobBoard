@@ -55,7 +55,6 @@ class UsersController extends Controller
     public function store(UploadImageRequest $request)
     {
         // dd($request);
-
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -148,7 +147,6 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -165,7 +163,6 @@ class UsersController extends Controller
                 'license' => ['nullable', 'string'],
                 'career' => ['nullable', 'string'],
                 'hobby' => ['nullable', 'string'],
-                // 'tag' => ['nullable', 'string'],
                 // 'tag' => Rule::unique('tag_to_users')->where(function ($query) {
                 //     return $query->where('tags_id', $request->);
                 // })
@@ -251,6 +248,6 @@ class UsersController extends Controller
     public function destroy($id)
     {
         User::findOrFail($id)->delete();
-        return redirect()->route('admin.companies.index')->with(['message' => '企業を削除しました。', 'status' => 'alert']);
+        return redirect()->route('admin.users.index')->with(['message' => 'ユーザーを削除しました。', 'status' => 'alert']);
     }
 }
