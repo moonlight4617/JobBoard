@@ -28,6 +28,7 @@
                                             Microdosing
                                             synth tattooed vexillologist</h1>
                                         <p class="mb-2 leading-relaxed">{{ $job->job_name }}</p>
+                                        <p class="mb-2 leading-relaxed">{{ $job->empStatus() }}</p>
                                         <p class="mb-2 leading-relaxed">
                                             給与：{{ $job->low_salary }}〜{{ $job->high_salary }}万円</p>
                                         <p class="mb-2 leading-relaxed"> 仕事内容：{{ $job->detail }}

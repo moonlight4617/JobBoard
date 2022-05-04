@@ -44,10 +44,7 @@ class JobsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage. 
      */
     public function store(UploadImageRequest $request)
     {
@@ -64,7 +61,6 @@ class JobsController extends Controller
             'benefits' => ['nullable', 'string', 'max:255'],
         ]);
         $emp_status = intval($request->emp_status);
-        // $emp_status = $request->emp_status;
         if (!EmpStatus::hasValue($emp_status)) {
             return redirect()
                 ->route('company.jobs.create')
@@ -147,7 +143,8 @@ class JobsController extends Controller
         $job = Jobs::findOrFail($id);
         $tags = Tag::where('subject', '=', '1')->get();
         $jobTags = $job->Tags;
-        return view('company.job.edit', compact(['job', 'tags', 'jobTags']));
+        $emp_statuses = EmpStatus::asSelectArray();
+        return view('company.job.edit', compact(['job', 'tags', 'jobTags', 'emp_statuses']));
     }
 
     /**
@@ -161,6 +158,7 @@ class JobsController extends Controller
     {
         $request->validate([
             'job_name' => ['required', 'string', 'max:255'],
+            'catch' => ['required', 'string', 'max:255'],
             'detail' => ['required', 'string'],
             'conditions' => ['nullable', 'string', 'max:255'],
             'duty_hours' => ['nullable', 'string', 'max:255'],
@@ -169,9 +167,18 @@ class JobsController extends Controller
             'holiday' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string', 'max:255'],
         ]);
+        $emp_status = intval($request->emp_status);
+        if (!EmpStatus::hasValue($emp_status)) {
+            return redirect()
+                ->route('company.jobs.create')
+                ->withErrors("雇用形態で不正な値が選択されています")
+                ->withInput();
+        }
 
         $job = Jobs::findOrFail($id);
         $job->job_name = $request->job_name;
+        $job->catch = $request->catch;
+        $job->emp_status = $emp_status;
         $job->detail = $request->detail;
         $job->conditions = $request->conditions;
         $job->duty_hours = $request->duty_hours;
