@@ -30,6 +30,8 @@ class Jobs extends Model
     protected $fillable = [
         'companies_id',
         'job_name',
+        'catch',
+        'emp_status',
         'detail',
         'conditions',
         'duty_hours',

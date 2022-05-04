@@ -130,6 +130,7 @@ return [
     ],
     'attributes'           => [
         'detail' => '仕事内容',
-        'job_name' => '求人名'
+        'job_name' => '求人名',
+        'catch' => '呼びかけ文'
     ],
 ];

@@ -27,9 +27,6 @@ class CompanyController extends Controller
     {
         $request->validate([
             'intro' => ['required', 'string'],
-            // 'image1' => ['nullable', 'file', 'max:1024'],
-            // 'image2' => ['nullable', 'file', 'max:1024'],
-            // 'image3' => ['nullable', 'file', 'max:1024'],
             'tel' => ['nullable', 'string'],
             'post_code' => ['nullable', 'integer'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -43,14 +40,13 @@ class CompanyController extends Controller
         $company->address = $request->address;
         $company->homepage = $request->homepage;
 
-        // dd($request);
         // image1,2,3がparamsにあれば、一旦削除した後に、登録
         if ($request->imgpath1) {
             $imageFile = $request->imgpath1;
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore1 = $fileName . '.'  . $extension;
-            $resizedImage1 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage1 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore1, $resizedImage1);
         } else {
             $fileNameToStore1 = null;
@@ -60,7 +56,7 @@ class CompanyController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore2 = $fileName . '.'  . $extension;
-            $resizedImage2 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage2 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore2, $resizedImage2);
         } else {
             $fileNameToStore2 = null;
@@ -70,7 +66,7 @@ class CompanyController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore3 = $fileName . '.'  . $extension;
-            $resizedImage3 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage3 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore3, $resizedImage3);
         } else {
             $fileNameToStore3 = null;
@@ -102,9 +98,6 @@ class CompanyController extends Controller
         $request->validate([
             'name' => ['required', 'string'],
             'intro' => ['required', 'string'],
-            // 'image1' => ['nullable', 'file', 'max:1024'],
-            // 'image2' => ['nullable', 'file', 'max:1024'],
-            // 'image3' => ['nullable', 'file', 'max:1024'],
             'tel' => ['nullable', 'string'],
             'post_code' => ['nullable', 'integer'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -113,7 +106,6 @@ class CompanyController extends Controller
 
         $company = Companies::findOrFail($id);
 
-        // dd($request);
         // image1,2,3がparamsにあれば、一旦削除した後に、登録
         if ($request->imgpath1) {
             // 画像が既に登録ずみであれば削除
@@ -126,7 +118,7 @@ class CompanyController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore1 = $fileName . '.'  . $extension;
-            $resizedImage1 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage1 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore1, $resizedImage1);
             $company->image1 = $fileNameToStore1;
         }
@@ -141,7 +133,7 @@ class CompanyController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore2 = $fileName . '.'  . $extension;
-            $resizedImage2 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage2 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore2, $resizedImage2);
             $company->image2 = $fileNameToStore2;
         }
@@ -156,7 +148,7 @@ class CompanyController extends Controller
             $fileName = uniqid(rand() . '_');
             $extension = $imageFile->extension();
             $fileNameToStore3 = $fileName . '.'  . $extension;
-            $resizedImage3 = InterventionImage::make($imageFile)->fit(1920, 1080)->encode();
+            $resizedImage3 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
             Storage::put('public/companies/' . $fileNameToStore3, $resizedImage3);
             $company->image3 = $fileNameToStore3;
         }
