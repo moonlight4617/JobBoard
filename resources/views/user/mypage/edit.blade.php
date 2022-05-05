@@ -127,7 +127,7 @@
                                             <p>画像を追加する　<input type="file" name="portfolio[]"
                                                     accept="image/png,image/jpeg,image/jpg" class="addPic"
                                                     multiple></p>
-                                            <small>一度に複数枚選択可能です</small>
+                                            <small>* 1度に複数枚選択可能です</small>
 
                                         </div>
                                     </div>
