@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Jobs;
 use App\Models\Tag;
 use App\Models\TagToJob;
+use App\Models\Prefecture;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
@@ -39,8 +40,9 @@ class JobsController extends Controller
     public function create()
     {
         $tags = Tag::where('subject', '=', '1')->get();
+        $prefectures = Prefecture::all();
         $emp_statuses = EmpStatus::asSelectArray();
-        return view('company.job.create', compact(['tags', 'emp_statuses']));
+        return view('company.job.create', compact(['tags', 'emp_statuses', 'prefectures']));
     }
 
     /**
@@ -48,7 +50,6 @@ class JobsController extends Controller
      */
     public function store(UploadImageRequest $request)
     {
-        // dd($request);
         $request->validate([
             'job_name' => ['required', 'string', 'max:255'],
             'catch' => ['required', 'string', 'max:255'],
@@ -60,12 +61,27 @@ class JobsController extends Controller
             'holiday' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string', 'max:255'],
         ]);
+
+        // 雇用形態のバリデーション
         $emp_status = intval($request->emp_status);
         if (!EmpStatus::hasValue($emp_status)) {
             return redirect()
                 ->route('company.jobs.create')
                 ->withErrors("雇用形態で不正な値が選択されています")
                 ->withInput();
+        }
+        // 勤務地のバリデーション
+        $prefectures = $request->prefecture;
+        if ($prefectures) {
+            $correctPrefectures = Prefecture::all()->pluck("id");
+            foreach ($prefectures as $prefecture) {
+                if (!$correctPrefectures->contains($prefecture)) {
+                    return redirect()
+                        ->route('company.jobs.create')
+                        ->withErrors("勤務地で不正な値が選択されています")
+                        ->withInput();
+                }
+            }
         }
 
         if ($request->imgpath1) {
@@ -99,7 +115,7 @@ class JobsController extends Controller
             $fileNameToStore3 = null;
         }
 
-        Jobs::create([
+        $job = Jobs::create([
             'companies_id' => Auth::id(),
             'job_name' => $request->job_name,
             'catch' => $request->catch,
@@ -116,6 +132,11 @@ class JobsController extends Controller
             'image3' => $fileNameToStore3,
         ]);
 
+        if ($prefectures) {
+            foreach ($prefectures as $prefecture) {
+                $job->Prefectures()->attach($prefecture);
+            }
+        }
 
         return redirect()->route('company.jobs.index')->with(['message' => '求人登録しました。', 'status' => 'info']);
     }
@@ -143,8 +164,10 @@ class JobsController extends Controller
         $job = Jobs::findOrFail($id);
         $tags = Tag::where('subject', '=', '1')->get();
         $jobTags = $job->Tags;
+        $prefectures = Prefecture::all();
+        $jobPrefs = $job->Prefectures->pluck("id");
         $emp_statuses = EmpStatus::asSelectArray();
-        return view('company.job.edit', compact(['job', 'tags', 'jobTags', 'emp_statuses']));
+        return view('company.job.edit', compact(['job', 'tags', 'jobTags', 'emp_statuses', 'prefectures', 'jobPrefs']));
     }
 
     /**
@@ -167,12 +190,27 @@ class JobsController extends Controller
             'holiday' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string', 'max:255'],
         ]);
+
+        // 雇用形態のバリデーション
         $emp_status = intval($request->emp_status);
         if (!EmpStatus::hasValue($emp_status)) {
             return redirect()
                 ->route('company.jobs.create')
                 ->withErrors("雇用形態で不正な値が選択されています")
                 ->withInput();
+        }
+        // 勤務地のバリデーション
+        $prefectures = $request->prefecture;
+        if ($prefectures) {
+            $correctPrefectures = Prefecture::all()->pluck("id");
+            foreach ($prefectures as $prefecture) {
+                if (!$correctPrefectures->contains($prefecture)) {
+                    return redirect()
+                        ->route('company.jobs.edit', ['job' => $id])
+                        ->withErrors("勤務地で不正な値が選択されています")
+                        ->withInput();
+                }
+            }
         }
 
         $job = Jobs::findOrFail($id);
@@ -191,6 +229,26 @@ class JobsController extends Controller
             foreach ($request->tag as $tag) {
                 TagToJob::create(['jobs_id' => $id, 'tags_id' => $tag]);
             }
+        }
+
+        $jobPrefs = $job->Prefectures->pluck('id');
+        if ($prefectures && $jobPrefs) {
+            foreach ($jobPrefs as $jobPref) {
+                if (!in_array($jobPref, $prefectures)) {
+                    $job->Prefectures()->detach($jobPref);
+                }
+            }
+            foreach ($prefectures as $pref) {
+                if (!$jobPrefs->contains($pref)) {
+                    $job->Prefectures()->attach($pref);
+                }
+            }
+        } elseif ($prefectures) {
+            foreach ($prefectures as $pref) {
+                $job->Prefectures()->attach($pref);
+            }
+        } elseif ($jobPrefs) {
+            $job->Prefectures()->detach();
         }
 
         // image1,2,3がparamsにあれば、一旦削除した後に、登録

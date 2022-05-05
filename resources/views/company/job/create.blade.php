@@ -66,6 +66,19 @@
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
+                                            <label for="prefecture" class="leading-7 text-sm text-gray-600">勤務地</label>
+                                            <br />
+                                            @foreach ($prefectures as $prefecture)
+                                                <input type="checkbox" id="prefecture" name="prefecture[]"
+                                                    value={{ $prefecture->id }}
+                                                    class="bg-gray-100 bg-opacity-50 border-gray-300 ml-3">
+                                                <label for="prefecture"
+                                                    class="leading-7 text-sm text-gray-600">{{ $prefecture->prefecture }}</label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <div class="relative">
                                             <label for="duty_hours" class="leading-7 text-sm text-gray-600">勤務時間</label>
                                             <textarea type="text" id="duty_hours" name="duty_hours"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>

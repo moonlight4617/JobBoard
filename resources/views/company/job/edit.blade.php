@@ -73,7 +73,25 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                    <div class="p-2">
+                                        <div class="relative">
+                                            <label for="prefecture" class="leading-7 text-sm text-gray-600">勤務地</label>
+                                            <br />
+                                            @foreach ($prefectures as $prefecture)
+                                                @if ($jobPrefs->contains($prefecture->id))
+                                                    <input checked type="checkbox" id="prefecture" name="prefecture[]"
+                                                        value={{ $prefecture->id }}
+                                                        class="bg-gray-100 bg-opacity-50 border-gray-300 ml-3">
+                                                @else
+                                                    <input type="checkbox" id="prefecture" name="prefecture[]"
+                                                        value={{ $prefecture->id }}
+                                                        class="bg-gray-100 bg-opacity-50 border-gray-300 ml-3">
+                                                @endif
+                                                <label for="prefecture"
+                                                    class="leading-7 text-sm text-gray-600">{{ $prefecture->prefecture }}</label>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="duty_hours" class="leading-7 text-sm text-gray-600">勤務時間</label>
