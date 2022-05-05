@@ -1212,6 +1212,9 @@ select {
 .pr-3 {
   padding-right: 0.75rem;
 }
+.pl-11 {
+  padding-left: 2.75rem;
+}
 .text-left {
   text-align: left;
 }

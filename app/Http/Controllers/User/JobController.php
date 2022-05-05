@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Jobs;
 use App\Models\AppStatus;
+use App\Models\Prefecture;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -18,7 +19,8 @@ class JobController extends Controller
     public function index()
     {
         $jobs = DB::table('jobs')->where('rec_status', null)->paginate(12);
-        return view('user.job.index', compact('jobs'));
+        $prefectures = Prefecture::all();
+        return view('user.job.index', compact(['jobs', 'prefectures']));
     }
 
     public function show($id)

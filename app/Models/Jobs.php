@@ -9,6 +9,7 @@ use App\Models\AppStatus;
 use App\Models\TagToJob;
 use App\Models\Tag;
 use App\Models\Prefecture;
+use App\Models\Occupation;
 use App\Enums\EmpStatus;
 
 class Jobs extends Model
@@ -65,6 +66,11 @@ class Jobs extends Model
     public function  Prefectures()
     {
         return $this->belongsToMany(Prefecture::class, 'job_locations', 'jobs_id', 'prefectures_id');
+    }
+
+    public function  occupations()
+    {
+        return $this->belongsToMany(Occupation::class, 'job_occupations', 'jobs_id', 'occupations_id');
     }
 
     public function  empStatus()
