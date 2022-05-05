@@ -72,6 +72,14 @@
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
+                                        職種：
+                                        @foreach ($job->occupations as $occupation)
+                                            {{ $occupation->name }}
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="relative">
                                         勤務地：
                                         @foreach ($job->Prefectures as $prefecture)
                                             {{ $prefecture->prefecture }}

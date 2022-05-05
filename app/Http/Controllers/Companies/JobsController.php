@@ -8,6 +8,7 @@ use App\Models\Jobs;
 use App\Models\Tag;
 use App\Models\TagToJob;
 use App\Models\Prefecture;
+use App\Models\Occupation;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
@@ -41,8 +42,9 @@ class JobsController extends Controller
     {
         $tags = Tag::where('subject', '=', '1')->get();
         $prefectures = Prefecture::all();
+        $occupations = Occupation::all();
         $emp_statuses = EmpStatus::asSelectArray();
-        return view('company.job.create', compact(['tags', 'emp_statuses', 'prefectures']));
+        return view('company.job.create', compact(['tags', 'emp_statuses', 'prefectures', 'occupations']));
     }
 
     /**
@@ -79,6 +81,19 @@ class JobsController extends Controller
                     return redirect()
                         ->route('company.jobs.create')
                         ->withErrors("勤務地で不正な値が選択されています")
+                        ->withInput();
+                }
+            }
+        }
+        // 職種のバリデーション
+        $occupations = $request->occupation;
+        if ($occupations) {
+            $correctOccupations = Occupation::all()->pluck("id");
+            foreach ($occupations as $occupation) {
+                if (!$correctOccupations->contains($occupation)) {
+                    return redirect()
+                        ->route('company.jobs.create')
+                        ->withErrors("職種で不正な値が選択されています")
                         ->withInput();
                 }
             }
@@ -138,6 +153,12 @@ class JobsController extends Controller
             }
         }
 
+        if ($occupations) {
+            foreach ($occupations as $occupation) {
+                $job->occupations()->attach($occupation);
+            }
+        }
+
         return redirect()->route('company.jobs.index')->with(['message' => '求人登録しました。', 'status' => 'info']);
     }
 
@@ -166,16 +187,15 @@ class JobsController extends Controller
         $jobTags = $job->Tags;
         $prefectures = Prefecture::all();
         $jobPrefs = $job->Prefectures->pluck("id");
+        $occupations = Occupation::all();
+        $jobOccus = $job->occupations->pluck("id");
         $emp_statuses = EmpStatus::asSelectArray();
-        return view('company.job.edit', compact(['job', 'tags', 'jobTags', 'emp_statuses', 'prefectures', 'jobPrefs']));
+        return view('company.job.edit', compact(['job', 'tags', 'jobTags', 'emp_statuses', 'prefectures', 'jobPrefs', 'occupations', 'jobOccus']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UploadImageRequest $request, $id)
     {
@@ -212,6 +232,19 @@ class JobsController extends Controller
                 }
             }
         }
+        // 職種のバリデーション
+        $occupations = $request->occupation;
+        if ($occupations) {
+            $correctOccupations = Occupation::all()->pluck("id");
+            foreach ($occupations as $occupation) {
+                if (!$correctOccupations->contains($occupation)) {
+                    return redirect()
+                        ->route('company.jobs.create')
+                        ->withErrors("職種で不正な値が選択されています")
+                        ->withInput();
+                }
+            }
+        }
 
         $job = Jobs::findOrFail($id);
         $job->job_name = $request->job_name;
@@ -231,6 +264,7 @@ class JobsController extends Controller
             }
         }
 
+        // 条件分岐して勤務地を紐付け
         $jobPrefs = $job->Prefectures->pluck('id');
         if ($prefectures && $jobPrefs) {
             foreach ($jobPrefs as $jobPref) {
@@ -249,6 +283,27 @@ class JobsController extends Controller
             }
         } elseif ($jobPrefs) {
             $job->Prefectures()->detach();
+        }
+
+        // 条件分岐して職種を紐付け
+        $jobOccus = $job->occupations->pluck('id');
+        if ($occupations && $jobOccus) {
+            foreach ($jobOccus as $jobOccu) {
+                if (!in_array($jobOccu, $occupations)) {
+                    $job->occupations()->detach($jobOccu);
+                }
+            }
+            foreach ($occupations as $occu) {
+                if (!$jobOccus->contains($occu)) {
+                    $job->occupations()->attach($occu);
+                }
+            }
+        } elseif ($occupations) {
+            foreach ($occupations as $occu) {
+                $job->occupations()->attach($occu);
+            }
+        } elseif ($jobOccus) {
+            $job->occupations()->detach();
         }
 
         // image1,2,3がparamsにあれば、一旦削除した後に、登録

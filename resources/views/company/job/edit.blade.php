@@ -75,6 +75,27 @@
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
+                                            <label for="occupation" class="leading-7 text-sm text-gray-600">職種</label>
+                                            <br />
+                                            <div class="m-2">
+                                                @foreach ($occupations as $occupation)
+                                                    @if ($jobOccus->contains($occupation->id))
+                                                        <input checked type="checkbox" id="occupation"
+                                                            name="occupation[]" value={{ $occupation->id }}
+                                                            class="bg-gray-100 bg-opacity-50 border-gray-300" />
+                                                    @else
+                                                        <input type="checkbox" id="occupation" name="occupation[]"
+                                                            value={{ $occupation->id }}
+                                                            class="bg-gray-100 bg-opacity-50 border-gray-300" />
+                                                    @endif
+                                                    <label for="prefecture"
+                                                        class="leading-7 text-sm text-gray-600 mr-3">{{ $occupation->name }}</label>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <div class="relative">
                                             <label for="prefecture" class="leading-7 text-sm text-gray-600">勤務地</label>
                                             <br />
                                             @foreach ($prefectures as $prefecture)
