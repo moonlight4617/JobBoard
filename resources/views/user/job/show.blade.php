@@ -74,6 +74,24 @@
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
+                                        雇用形態：{{ $job->empStatus() }}
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="relative">
+                                        職種：
+                                        @foreach ($job->occupations as $occupation)
+                                            {{ $occupation->name }}
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="relative">
+                                        呼びかけ文：{{ $job->catch }}
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <div class="relative">
                                         仕事内容：{{ $job->detail }}
                                     </div>
                                 </div>

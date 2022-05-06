@@ -37,8 +37,13 @@
                                 @if ($prefectures)
                                     @foreach ($prefectures as $prefecture)
                                         <li class="flex items-center p-2 pl-11 w-full ">
-                                            <input type="checkbox" value="{{ $prefecture->id }}" name="prefectures[]"
-                                                class="mr-2">
+                                            @if ($requestPrefs && in_array($prefecture->id, $requestPrefs))
+                                                <input checked type="checkbox" value="{{ $prefecture->id }}"
+                                                    name="prefectures[]" class="mr-2">
+                                            @else
+                                                <input type="checkbox" value="{{ $prefecture->id }}"
+                                                    name="prefectures[]" class="mr-2">
+                                            @endif
                                             <label
                                                 class="text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ $prefecture->prefecture }}
                                             </label>
@@ -69,8 +74,13 @@
                                 @if ($occupations)
                                     @foreach ($occupations as $occupation)
                                         <li class="flex items-center p-2 pl-11 w-full ">
-                                            <input type="checkbox" value="{{ $occupation->id }}" name="occupations[]"
-                                                class="mr-2">
+                                            @if ($requestOccupations && in_array($occupation->id, $requestOccupations))
+                                                <input checked type="checkbox" value="{{ $occupation->id }}"
+                                                    name="occupations[]" class="mr-2">
+                                            @else
+                                                <input type="checkbox" value="{{ $occupation->id }}"
+                                                    name="occupations[]" class="mr-2">
+                                            @endif
                                             <label
                                                 class="text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ $occupation->name }}</label>
                                         </li>
@@ -104,15 +114,25 @@
                                     <label
                                         class="text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">下限年収
                                         <small>(万円)</small></label>
-                                    <input type="number" id="low_salary" name="low_salary"
-                                        class="leading-7 text-sm text-gray-600">
+                                    @if ($requestLowSalary)
+                                        <input type="number" id="low_salary" name="low_salary"
+                                            class="leading-7 text-sm text-gray-600" value="{{ $requestLowSalary }}">
+                                    @else
+                                        <input type="number" id="low_salary" name="low_salary"
+                                            class="leading-7 text-sm text-gray-600">
+                                    @endif
                                 </li>
                                 <li class="items-center pl-8">
                                     <label
                                         class="text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">上限年収
                                         <small>(万円)</small></label>
-                                    <input type="number" id="high_salary" name="high_salary"
-                                        class="leading-7 text-sm text-gray-600">
+                                    @if ($requestHighSalary)
+                                        <input type="number" id="high_salary" name="high_salary"
+                                            class="leading-7 text-sm text-gray-600" value="{{ $requestHighSalary }}">
+                                    @else
+                                        <input type="number" id="high_salary" name="high_salary"
+                                            class="leading-7 text-sm text-gray-600">
+                                    @endif
                                 </li>
                             </ul>
 
@@ -138,8 +158,13 @@
                                 @if ($tags)
                                     @foreach ($tags as $tag)
                                         <li class="flex items-center p-2 pl-11 w-full">
-                                            <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
-                                                class="mr-2">
+                                            @if ($requestTags && in_array($tag->id, $requestTags))
+                                                <input checked type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                                    class="mr-2">
+                                            @else
+                                                <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                                    class="mr-2">
+                                            @endif
                                             <label
                                                 class="text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ $tag->tag_name }}
                                             </label>
@@ -170,8 +195,6 @@
                                         <img src="{{ asset('storage/jobs/' . $job->image1) }}">
                                     @endif
                                     <div class="p-6">
-                                        {{-- <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                                        CATEGORY</h2> --}}
                                         <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
                                             {{ $job->job_name }}
                                         </h1>
@@ -186,24 +209,6 @@
                                                     <path d="M12 5l7 7-7 7"></path>
                                                 </svg>
                                             </a>
-                                            {{-- <span
-                                            class="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
-                                            <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                                viewBox="0 0 24 24">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>1.2K
-                                        </span>
-                                        <span class="text-gray-400 inline-flex items-center leading-none text-sm">
-                                            <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                                viewBox="0 0 24 24">
-                                                <path
-                                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z">
-                                                </path>
-                                            </svg>6
-                                        </span> --}}
                                         </div>
                                     </div>
                                 </div>

@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             companySeeder::class,
             JobSeeder::class,
-            OccupationSeeder::class
+            OccupationSeeder::class,
+            TagSeeder::class
         ]);
     }
 }
