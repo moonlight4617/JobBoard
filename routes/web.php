@@ -31,7 +31,7 @@ Route::post('deletepicture', [UserController::class, 'pictureDestroy'])->middlew
 Route::post('addpicture', [UserController::class, 'pictureAdd'])->middleware('auth:users')->name('picture.add');
 
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
+Route::get('/jobs/search', [JobController::class, 'query'])->name('jobs.query');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/{job}/application', [JobController::class, 'application'])->name('jobs.application');
 

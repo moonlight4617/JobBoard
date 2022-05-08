@@ -88,13 +88,15 @@ class JobController extends Controller
         return;
     }
 
-    public function search(Request $request)
+    public function query(Request $request)
     {
         $requestPrefs = $request->prefectures;
         $requestOccupations = $request->occupations;
         $requestLowSalary = $request->low_salary;
         $requestHighSalary = $request->high_salary;
         $requestTags = $request->tags;
+        $requestSearch = $request->search;
+        // dd($requestSearch);
 
         $jobs = DB::table('jobs')
             ->when($requestPrefs, function ($query, $requestPrefs) {
@@ -115,12 +117,27 @@ class JobController extends Controller
                 return $query->leftJoin('tag_to_jobs', 'jobs.id', '=', 'tag_to_jobs.jobs_id')
                     ->whereIn('tag_to_jobs.tags_id', $requestTags);
             })
+            ->when($requestSearch, function ($query, $requestSearch) {
+                $spaceConversion = mb_convert_kana($requestSearch, 's');
+                $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($wordArraySearched as $word) {
+                    return $query->where(function ($query) use ($word) {
+                        $query->where('job_name', 'like', '%' . $word . '%')
+                            ->orWhere('detail', 'like', '%' . $word . '%')
+                            ->orWhere('catch', 'like', '%' . $word . '%');
+                    });
+                }
+            })
             ->paginate(12, ['jobs.*']);
 
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
-        return view('user.job.searchIndex', compact(['jobs', 'prefectures', 'occupations', 'tags', 'requestPrefs', 'requestOccupations', 'requestLowSalary', 'requestHighSalary', 'requestTags']));
+        return view('user.job.search', compact(['jobs', 'prefectures', 'occupations', 'tags', 'requestPrefs', 'requestOccupations', 'requestLowSalary', 'requestHighSalary', 'requestTags', 'requestSearch']));
+    }
+
+    public function search()
+    {
     }
 
     public function favoriteIndex()

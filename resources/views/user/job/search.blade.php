@@ -7,12 +7,10 @@
 
 
     <div class="flex">
-
-
         {{-- サイドバー --}}
         <aside class="w-64 hidden sm:inline-block" aria-label="Sidebar">
             <div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
-                <form method="GET" action="{{ route('user.jobs.search') }}">
+                <form method="GET" action="{{ route('user.jobs.query') }}">
                     @csrf
                     <ul class="space-y-2">
                         <li>
@@ -37,7 +35,7 @@
                                 @if ($prefectures)
                                     @foreach ($prefectures as $prefecture)
                                         <li class="flex items-center p-2 pl-11 w-full ">
-                                            @if ($requestPrefs && in_array($prefecture->id, $requestPrefs))
+                                            @if (!$requestPrefs == null && in_array($prefecture->id, $requestPrefs))
                                                 <input checked type="checkbox" value="{{ $prefecture->id }}"
                                                     name="prefectures[]" class="mr-2">
                                             @else
@@ -170,6 +168,18 @@
                                             </label>
                                     @endforeach
                                 @endif
+                            </ul>
+                        </li>
+                        <li>
+                            @if ($requestSearch)
+                                <input type="text" id="search" name="search"
+                                    class="w-48 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 mr-2 leading-8 transition-colors duration-200 ease-in-out"
+                                    placeholder="キーワード検索" value="{{ $requestSearch }}">
+                            @else
+                                <input type="text" id="search" name="search"
+                                    class="w-48 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 mr-2 leading-8 transition-colors duration-200 ease-in-out"
+                                    placeholder="キーワード検索">
+                            @endif
                         </li>
                     </ul>
                     <button
