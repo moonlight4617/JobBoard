@@ -19,7 +19,11 @@ class DatabaseSeeder extends Seeder
             companySeeder::class,
             JobSeeder::class,
             OccupationSeeder::class,
-            TagSeeder::class
+            TagSeeder::class,
+            PrefecturesSeeder::class,
+            JobLocationSeeder::class,
+            JobOccupationsSeeder::class,
+            UsersSeeder::class,
         ]);
     }
 }

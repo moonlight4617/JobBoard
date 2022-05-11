@@ -26,6 +26,10 @@ class CreateUsersTable extends Migration
             $table->string('license')->nullable();
             $table->text('career')->nullable();
             $table->string('hobby')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('insta')->nullable();
+            $table->string('blog')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

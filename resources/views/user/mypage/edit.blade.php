@@ -99,7 +99,7 @@
 
                                     <div class="p-2">
                                         <p class="leading-7 text-sm text-gray-600">SNS</p>
-                                        <div class="flex">
+                                        <div class="flex items-center">
                                             <div class="mx-4">
                                                 <!-- Modal toggle -->
                                                 <a data-modal-toggle="twitterModal">
@@ -130,10 +130,16 @@
                                                             <!-- Modal body -->
                                                             <div class="p-6 space-y-6">
                                                                 <p>twitter</p>
+                                                                @if ($user->twitter)
+                                                                    <input name="twitter" id="twitter" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->twitter }}" />
+                                                                @else
+                                                                    <input name="twitter" id="twitter" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
                                                                 <label for="twitter"
                                                                     class="leading-7 text-sm text-gray-600">URLを入力してください</label>
-                                                                <input name="twitter" id="twitter" type="text"
-                                                                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                             </div>
                                                             <!-- Modal footer -->
                                                             <div
@@ -177,8 +183,14 @@
                                                                 <p>youtube</p>
                                                                 <label for="youtube"
                                                                     class="leading-7 text-sm text-gray-600">URLを入力してください</label>
-                                                                <input name="youtube" id="youtube" type="text"
-                                                                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @if ($user->youtube)
+                                                                    <input name="youtube" id="youtube" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->youtube }}" />
+                                                                @else
+                                                                    <input name="youtube" id="youtube" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
                                                             </div>
                                                             <!-- Modal footer -->
                                                             <div
@@ -222,8 +234,14 @@
                                                                 <p>instagram</p>
                                                                 <label for="insta"
                                                                     class="leading-7 text-sm text-gray-600">URLを入力してください</label>
-                                                                <input name="insta" id="insta" type="text"
-                                                                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @if ($user->insta)
+                                                                    <input name="insta" id="insta" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->insta }}" />
+                                                                @else
+                                                                    <input name="insta" id="insta" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
                                                             </div>
                                                             <!-- Modal footer -->
                                                             <div
@@ -268,8 +286,14 @@
                                                                 <p>ブログ</p>
                                                                 <label for="blog"
                                                                     class="leading-7 text-sm text-gray-600">URLを入力してください</label>
-                                                                <input name="blog" id="blog" type="text"
-                                                                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @if ($user->blog)
+                                                                    <input name="blog" id="blog" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->blog }}" />
+                                                                @else
+                                                                    <input name="blog" id="blog" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
                                                             </div>
                                                             <!-- Modal footer -->
                                                             <div

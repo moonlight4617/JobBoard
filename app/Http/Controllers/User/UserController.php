@@ -140,6 +140,10 @@ class UserController extends Controller
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
+            'twitter' => ['nullable', 'string'],
+            'youtube' => ['nullable', 'string'],
+            'insta' => ['nullable', 'string'],
+            'blog' => ['nullable', 'string'],
         ]);
 
         $user = User::findOrFail($id);
@@ -201,6 +205,10 @@ class UserController extends Controller
         $user->license = $request->license;
         $user->career = $request->career;
         $user->hobby = $request->hobby;
+        $user->twitter = $request->twitter;
+        $user->youtube = $request->youtube;
+        $user->insta = $request->insta;
+        $user->blog = $request->blog;
         $user->save();
 
         return redirect()->route('user.user.show', compact('user'))->with(['message' => '更新しました。', 'status' => 'info']);
