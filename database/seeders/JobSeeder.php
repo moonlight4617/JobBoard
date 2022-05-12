@@ -26,7 +26,7 @@ class JobSeeder extends Seeder
                 'holiday' => 'シフト制。月６回',
                 'benefits' => '社会保険完備',
                 'emp_status' => '4',
-                'catch' => 'オープ人メンバーとして働きませんか？',
+                'catch' => 'オープニングメンバーとして働きませんか？',
             ],
             [
                 'companies_id' => 2,
