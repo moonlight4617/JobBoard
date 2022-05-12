@@ -25,6 +25,8 @@ class JobSeeder extends Seeder
                 'high_salary' => '600',
                 'holiday' => 'シフト制。月６回',
                 'benefits' => '社会保険完備',
+                'emp_status' => '4',
+                'catch' => 'オープニングメンバーとして働きませんか？',
             ],
             [
                 'companies_id' => 2,
@@ -36,6 +38,8 @@ class JobSeeder extends Seeder
                 'high_salary' => '480',
                 'holiday' => 'シフト制。月8回',
                 'benefits' => '社会保険完備',
+                'emp_status' => '0',
+                'catch' => '歴史ある老舗でサービスを身につけませんか？',
             ],
             [
                 'companies_id' => 3,
@@ -47,6 +51,8 @@ class JobSeeder extends Seeder
                 'high_salary' => '360',
                 'holiday' => 'シフト制。月8回',
                 'benefits' => '社会保険完備',
+                'emp_status' => '2',
+                'catch' => '技術を身につけるチャンス！',
             ],
         ]);
     }

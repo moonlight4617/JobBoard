@@ -44,12 +44,19 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                @if (Route::has('user.password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                        href="{{ route('user.password.request') }}">
-                        {{ __('パスワードをお忘れですか?') }}
+                <div class="flex-col flex">
+                    @if (Route::has('user.password.request'))
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                            href="{{ route('user.password.request') }}">
+                            {{ __('パスワードをお忘れですか?') }}
+                        </a>
+                    @endif
+
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 mt-2"
+                        href="{{ route('user.register') }}">
+                        {{ __('新規登録はこちら') }}
                     </a>
-                @endif
+                </div>
 
                 <x-button class="ml-3">
                     {{ __('ログイン') }}

@@ -96,6 +96,219 @@
                                         </div>
                                     @endif
 
+
+                                    <div class="p-2">
+                                        <p class="leading-7 text-sm text-gray-600">SNS</p>
+                                        <div class="flex items-center">
+                                            <div class="mx-4">
+                                                <!-- Modal toggle -->
+                                                <a data-modal-toggle="twitterModal">
+                                                    <img src="/images/twitter-brands.svg" class="w-8" />
+                                                </a>
+                                                <!-- Main modal -->
+                                                <div id="twitterModal" tabindex="-1" aria-hidden="true"
+                                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                        <!-- Modal content -->
+                                                        <div
+                                                            class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                            <!-- Modal header -->
+                                                            <div
+                                                                class="flex justify-end items-start pt-4 pr-4 rounded-t">
+                                                                <button type="button"
+                                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                                    data-modal-toggle="twitterModal">
+                                                                    <svg class="w-5 h-5" fill="currentColor"
+                                                                        viewBox="0 0 20 20"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                            clip-rule="evenodd"></path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="p-6 space-y-6">
+                                                                <p>twitter</p>
+                                                                @if ($user->twitter)
+                                                                    <input name="twitter" id="twitter" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->twitter }}" />
+                                                                @else
+                                                                    <input name="twitter" id="twitter" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
+                                                                <label for="twitter"
+                                                                    class="leading-7 text-sm text-gray-600">URLを入力してください</label>
+                                                            </div>
+                                                            <!-- Modal footer -->
+                                                            <div
+                                                                class="flex justify-end items-center pb-6 pr-6 space-x-2 rounded-b">
+                                                                <button data-modal-toggle="twitterModal" type="button"
+                                                                    class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 p-2.5 text-center">入力</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 mr-4">
+                                                <!-- Modal toggle -->
+                                                <a data-modal-toggle="youtubeModal">
+                                                    <img src="/images/youtube-brands.svg" class="w-8" />
+                                                </a>
+                                                <!-- Main modal -->
+                                                <div id="youtubeModal" tabindex="-1" aria-hidden="true"
+                                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                        <!-- Modal content -->
+                                                        <div
+                                                            class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                            <!-- Modal header -->
+                                                            <div
+                                                                class="flex justify-end items-start pt-4 pr-4 rounded-t">
+                                                                <button type="button"
+                                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                                    data-modal-toggle="youtubeModal">
+                                                                    <svg class="w-5 h-5" fill="currentColor"
+                                                                        viewBox="0 0 20 20"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                            clip-rule="evenodd"></path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="p-6 space-y-6">
+                                                                <p>youtube</p>
+                                                                <label for="youtube"
+                                                                    class="leading-7 text-sm text-gray-600">URLを入力してください</label>
+                                                                @if ($user->youtube)
+                                                                    <input name="youtube" id="youtube" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->youtube }}" />
+                                                                @else
+                                                                    <input name="youtube" id="youtube" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
+                                                            </div>
+                                                            <!-- Modal footer -->
+                                                            <div
+                                                                class="flex justify-end items-center pb-6 pr-6 space-x-2 rounded-b">
+                                                                <button data-modal-toggle="youtubeModal" type="button"
+                                                                    class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 p-2.5 text-center">入力</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 mr-4">
+                                                <!-- Modal toggle -->
+                                                <a data-modal-toggle="instaModal">
+                                                    <img src="/images/instagram-brands.svg" class="w-8" />
+                                                </a>
+                                                <!-- Main modal -->
+                                                <div id="instaModal" tabindex="-1" aria-hidden="true"
+                                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                        <!-- Modal content -->
+                                                        <div
+                                                            class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                            <!-- Modal header -->
+                                                            <div
+                                                                class="flex justify-end items-start pt-4 pr-4 rounded-t">
+                                                                <button type="button"
+                                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                                    data-modal-toggle="instaModal">
+                                                                    <svg class="w-5 h-5" fill="currentColor"
+                                                                        viewBox="0 0 20 20"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                            clip-rule="evenodd"></path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="p-6 space-y-6">
+                                                                <p>instagram</p>
+                                                                <label for="insta"
+                                                                    class="leading-7 text-sm text-gray-600">URLを入力してください</label>
+                                                                @if ($user->insta)
+                                                                    <input name="insta" id="insta" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->insta }}" />
+                                                                @else
+                                                                    <input name="insta" id="insta" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
+                                                            </div>
+                                                            <!-- Modal footer -->
+                                                            <div
+                                                                class="flex justify-end items-center pb-6 pr-6 space-x-2 rounded-b">
+                                                                <button data-modal-toggle="instaModal" type="button"
+                                                                    class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 p-2.5 text-center">入力</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 mr-4">
+                                                <!-- Modal toggle -->
+                                                <a data-modal-toggle="defaultModal">
+                                                    <img src="/images/blogger-brands.svg" class="w-8"
+                                                        alt="ブログ" />
+                                                </a>
+                                                <!-- Main modal -->
+                                                <div id="defaultModal" tabindex="-1" aria-hidden="true"
+                                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                        <!-- Modal content -->
+                                                        <div
+                                                            class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                            <!-- Modal header -->
+                                                            <div
+                                                                class="flex justify-end items-start pt-4 pr-4 rounded-t">
+                                                                <button type="button"
+                                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                                    data-modal-toggle="defaultModal">
+                                                                    <svg class="w-5 h-5" fill="currentColor"
+                                                                        viewBox="0 0 20 20"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                            clip-rule="evenodd"></path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="p-6 space-y-6">
+                                                                <p>ブログ</p>
+                                                                <label for="blog"
+                                                                    class="leading-7 text-sm text-gray-600">URLを入力してください</label>
+                                                                @if ($user->blog)
+                                                                    <input name="blog" id="blog" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                                        value="{{ $user->blog }}" />
+                                                                @else
+                                                                    <input name="blog" id="blog" type="text"
+                                                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                                @endif
+                                                            </div>
+                                                            <!-- Modal footer -->
+                                                            <div
+                                                                class="flex justify-end items-center pb-6 pr-6 space-x-2 rounded-b">
+                                                                <button data-modal-toggle="defaultModal" type="button"
+                                                                    class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 p-2.5 text-center">入力</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="p-2">
                                         <div class="relative">
                                             <p>ポートフォリオ</p>
@@ -127,7 +340,7 @@
                                             <p>画像を追加する　<input type="file" name="portfolio[]"
                                                     accept="image/png,image/jpeg,image/jpg" class="addPic"
                                                     multiple></p>
-                                            <small>一度に複数枚選択可能です</small>
+                                            <small>* 1度に複数枚選択可能です</small>
 
                                         </div>
                                     </div>
@@ -148,5 +361,6 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>
 
 </x-app-layout>

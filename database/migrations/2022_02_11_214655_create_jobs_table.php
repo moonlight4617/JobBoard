@@ -18,6 +18,8 @@ class CreateJobsTable extends Migration
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('job_name');
             $table->text('detail');
+            $table->string('catch');
+            $table->integer('emp_status');
             $table->string('conditions')->nullable();
             $table->string('duty_hours')->nullable();
             $table->integer('low_salary')->nullable();

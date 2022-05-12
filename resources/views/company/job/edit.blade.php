@@ -23,6 +23,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="job_name" class="leading-7 text-sm text-gray-600">求人名</label>
+                                            <small>　*必須</small>
                                             <input type="text" id="job_name" name="job_name" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ $job->job_name }}">
@@ -30,7 +31,18 @@
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
+                                            <label for="catch" class="leading-7 text-sm text-gray-600">呼びかけ文</label>
+                                            <small>　*必須</small>
+                                            <input type="text" id="catch" name="catch" required
+                                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                                value="{{ $job->catch }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="p-2">
+                                        <div class="relative">
                                             <label for="detail" class="leading-7 text-sm text-gray-600">仕事内容</label>
+                                            <small>　*必須</small>
                                             <textarea type="text" id="detail" name="detail" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $job->detail }}</textarea>
                                         </div>
@@ -41,6 +53,64 @@
                                             <textarea type="text" id="conditions" name="conditions"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ $job->conditions }}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <div class="relative">
+                                            <label for="emp_status" class="leading-7 text-sm text-gray-600">雇用形態</label>
+                                            <small>　*必須</small>
+                                            <select type="number" id="emp_status" name="emp_status"
+                                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                @foreach ($emp_statuses as $key => $value)
+                                                    @if ($job->empStatus() == $value)
+                                                        <option selected value={{ $key }}>{{ $value }}
+                                                        </option>
+                                                    @else
+                                                        <option value={{ $key }}>{{ $value }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <div class="relative">
+                                            <label for="occupation" class="leading-7 text-sm text-gray-600">職種</label>
+                                            <br />
+                                            <div class="m-2">
+                                                @foreach ($occupations as $occupation)
+                                                    @if ($jobOccus->contains($occupation->id))
+                                                        <input checked type="checkbox" id="occupation"
+                                                            name="occupation[]" value={{ $occupation->id }}
+                                                            class="bg-gray-100 bg-opacity-50 border-gray-300" />
+                                                    @else
+                                                        <input type="checkbox" id="occupation" name="occupation[]"
+                                                            value={{ $occupation->id }}
+                                                            class="bg-gray-100 bg-opacity-50 border-gray-300" />
+                                                    @endif
+                                                    <label for="prefecture"
+                                                        class="leading-7 text-sm text-gray-600 mr-3">{{ $occupation->name }}</label>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <div class="relative">
+                                            <label for="prefecture" class="leading-7 text-sm text-gray-600">勤務地</label>
+                                            <br />
+                                            @foreach ($prefectures as $prefecture)
+                                                @if ($jobPrefs->contains($prefecture->id))
+                                                    <input checked type="checkbox" id="prefecture" name="prefecture[]"
+                                                        value={{ $prefecture->id }}
+                                                        class="bg-gray-100 bg-opacity-50 border-gray-300 ml-3">
+                                                @else
+                                                    <input type="checkbox" id="prefecture" name="prefecture[]"
+                                                        value={{ $prefecture->id }}
+                                                        class="bg-gray-100 bg-opacity-50 border-gray-300 ml-3">
+                                                @endif
+                                                <label for="prefecture"
+                                                    class="leading-7 text-sm text-gray-600">{{ $prefecture->prefecture }}</label>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="p-2">

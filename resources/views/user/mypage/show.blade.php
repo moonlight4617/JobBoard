@@ -62,7 +62,7 @@
 
                                 @if ($tags)
                                     <div class="p-2">
-                                        <p class="leading-7 text-sm text-gray-600">特徴タグ</p>
+                                        <p>特徴タグ</p>
                                         @foreach ($tags as $tag)
                                             <div class="relative inline-block px-1 py-2">
                                                 <label for="checkbox1"
@@ -72,6 +72,24 @@
                                         @endforeach
                                     </div>
                                 @endif
+
+                                <div class="p-2">
+                                    <div class="relative flex">
+                                        <p>SNS：</p>
+                                        @if ($user->twitter)
+                                            <img src="/images/twitter-brands.svg" class="w-8" />
+                                        @endif
+                                        @if ($user->youtube)
+                                            <img src="/images/youtube-brands.svg" class="w-8" />
+                                        @endif
+                                        @if ($user->insta)
+                                            <img src="/images/instagram-brands.svg" class="w-8" />
+                                        @endif
+                                        @if ($user->blog)
+                                            <img src="/images/blogger-brands.svg" class="w-8" alt="ブログ" />
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="p-2">
                                     <div class="relative">

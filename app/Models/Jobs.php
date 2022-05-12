@@ -8,6 +8,9 @@ use App\Models\Companies;
 use App\Models\AppStatus;
 use App\Models\TagToJob;
 use App\Models\Tag;
+use App\Models\Prefecture;
+use App\Models\Occupation;
+use App\Enums\EmpStatus;
 
 class Jobs extends Model
 {
@@ -30,6 +33,8 @@ class Jobs extends Model
     protected $fillable = [
         'companies_id',
         'job_name',
+        'catch',
+        'emp_status',
         'detail',
         'conditions',
         'duty_hours',
@@ -56,5 +61,20 @@ class Jobs extends Model
     public function  Tags()
     {
         return $this->belongsToMany(Tag::class, 'tag_to_jobs', 'jobs_id', 'tags_id');
+    }
+
+    public function  Prefectures()
+    {
+        return $this->belongsToMany(Prefecture::class, 'job_locations', 'jobs_id', 'prefectures_id');
+    }
+
+    public function  occupations()
+    {
+        return $this->belongsToMany(Occupation::class, 'job_occupations', 'jobs_id', 'occupations_id');
+    }
+
+    public function  empStatus()
+    {
+        return EmpStatus::getDescription($this->emp_status);
     }
 }

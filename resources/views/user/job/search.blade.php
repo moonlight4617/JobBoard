@@ -35,8 +35,13 @@
                                 @if ($prefectures)
                                     @foreach ($prefectures as $prefecture)
                                         <li class="flex items-center p-2 pl-11 w-full ">
-                                            <input type="checkbox" value="{{ $prefecture->id }}" name="prefectures[]"
-                                                class="mr-2">
+                                            @if (!$requestPrefs == null && in_array($prefecture->id, $requestPrefs))
+                                                <input checked type="checkbox" value="{{ $prefecture->id }}"
+                                                    name="prefectures[]" class="mr-2">
+                                            @else
+                                                <input type="checkbox" value="{{ $prefecture->id }}"
+                                                    name="prefectures[]" class="mr-2">
+                                            @endif
                                             <label
                                                 class="text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ $prefecture->prefecture }}
                                             </label>
@@ -67,8 +72,13 @@
                                 @if ($occupations)
                                     @foreach ($occupations as $occupation)
                                         <li class="flex items-center p-2 pl-11 w-full ">
-                                            <input type="checkbox" value="{{ $occupation->id }}" name="occupations[]"
-                                                class="mr-2">
+                                            @if ($requestOccupations && in_array($occupation->id, $requestOccupations))
+                                                <input checked type="checkbox" value="{{ $occupation->id }}"
+                                                    name="occupations[]" class="mr-2">
+                                            @else
+                                                <input type="checkbox" value="{{ $occupation->id }}"
+                                                    name="occupations[]" class="mr-2">
+                                            @endif
                                             <label
                                                 class="text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ $occupation->name }}</label>
                                         </li>
@@ -102,15 +112,25 @@
                                     <label
                                         class="text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">下限年収
                                         <small>(万円)</small></label>
-                                    <input type="number" id="low_salary" name="low_salary"
-                                        class="leading-7 text-sm text-gray-600">
+                                    @if ($requestLowSalary)
+                                        <input type="number" id="low_salary" name="low_salary"
+                                            class="leading-7 text-sm text-gray-600" value="{{ $requestLowSalary }}">
+                                    @else
+                                        <input type="number" id="low_salary" name="low_salary"
+                                            class="leading-7 text-sm text-gray-600">
+                                    @endif
                                 </li>
                                 <li class="items-center pl-8">
                                     <label
                                         class="text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">上限年収
                                         <small>(万円)</small></label>
-                                    <input type="number" id="high_salary" name="high_salary"
-                                        class="leading-7 text-sm text-gray-600">
+                                    @if ($requestHighSalary)
+                                        <input type="number" id="high_salary" name="high_salary"
+                                            class="leading-7 text-sm text-gray-600" value="{{ $requestHighSalary }}">
+                                    @else
+                                        <input type="number" id="high_salary" name="high_salary"
+                                            class="leading-7 text-sm text-gray-600">
+                                    @endif
                                 </li>
                             </ul>
 
@@ -136,8 +156,13 @@
                                 @if ($tags)
                                     @foreach ($tags as $tag)
                                         <li class="flex items-center p-2 pl-11 w-full">
-                                            <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
-                                                class="mr-2">
+                                            @if ($requestTags && in_array($tag->id, $requestTags))
+                                                <input checked type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                                    class="mr-2">
+                                            @else
+                                                <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                                    class="mr-2">
+                                            @endif
                                             <label
                                                 class="text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ $tag->tag_name }}
                                             </label>
@@ -146,12 +171,18 @@
                             </ul>
                         </li>
                         <li>
-                            <input type="text" id="search" name="search"
-                                class="w-48 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 mr-2 leading-8 transition-colors duration-200 ease-in-out"
-                                placeholder="キーワード検索">
+                            @if ($requestSearch)
+                                <input type="text" id="search" name="search"
+                                    class="w-48 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 mr-2 leading-8 transition-colors duration-200 ease-in-out"
+                                    placeholder="キーワード検索" value="{{ $requestSearch }}">
+                            @else
+                                <input type="text" id="search" name="search"
+                                    class="w-48 bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 mr-2 leading-8 transition-colors duration-200 ease-in-out"
+                                    placeholder="キーワード検索">
+                            @endif
                         </li>
                     </ul>
-                    <button type="submit"
+                    <button
                         class="flex mt-6 mx-auto text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded">検索</button>
                 </form>
             </div>
@@ -174,8 +205,6 @@
                                         <img src="{{ asset('storage/jobs/' . $job->image1) }}">
                                     @endif
                                     <div class="p-6">
-                                        {{-- <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                                        CATEGORY</h2> --}}
                                         <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
                                             {{ $job->job_name }}
                                         </h1>
