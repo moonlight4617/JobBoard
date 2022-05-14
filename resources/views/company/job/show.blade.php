@@ -126,7 +126,18 @@
                                         福利厚生：{{ $job->benefits }}
                                     </div>
                                 </div>
+                                <div class="p-2">
+                                    <p for="career" class="leading-7 text-sm text-gray-600">特徴タグ</p>
+                                    @foreach ($job->Tags as $tag)
+                                        <div class="relative inline-block px-1 py-2">
+                                            <label
+                                                class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
+
                             <div class="p-2 w-full flex justify-around mt-4">
                                 <button type="button"
                                     onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id]) }}'"

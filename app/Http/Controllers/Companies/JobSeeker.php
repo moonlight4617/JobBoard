@@ -9,6 +9,7 @@ use App\Models\UserPictures;
 use App\Models\User;
 use App\Models\Companies;
 use App\Models\ContactUsers;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -20,8 +21,8 @@ class JobSeeker extends Controller
         // $users = DB::table('users')->where('deleted_at', null)->paginate(12);
         // $pictures = UserPictures::where('users_id', '=', $id)->get();
         $users = User::where('deleted_at', null)->with('userPictures')->paginate(12);
-        // dd($users);
-        return view('company.user.index', compact('users'));
+        $tags = Tag::where('subject', 0)->get();
+        return view('company.user.index', compact(['users', 'tags']));
     }
 
     public function follow(Request $request)
@@ -60,5 +61,19 @@ class JobSeeker extends Controller
         $users = Companies::findOrFail($company_id)->ContactUsers->where('follow', 1);
         // dd($users);
         return view('company.user.followIndex', compact('users'));
+    }
+
+    public function search(Request $request)
+    {
+        $requestTags = $request->tags;
+        if ($requestTags) {
+            $usersId = DB::table('tag_to_users')->whereIn('tags_id', $requestTags)->select('users_id');
+            $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(12);
+        } else {
+            $users = User::where('deleted_at', null)->with('userPictures')->paginate(12);
+        }
+
+        $tags = Tag::where('subject', 0)->get();
+        return view('company.user.index', compact(['users', 'tags', 'requestTags']));
     }
 }
