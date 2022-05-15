@@ -18,8 +18,6 @@ class JobSeeker extends Controller
 {
     public function index()
     {
-        // $users = DB::table('users')->where('deleted_at', null)->paginate(12);
-        // $pictures = UserPictures::where('users_id', '=', $id)->get();
         $users = User::where('deleted_at', null)->with('userPictures')->paginate(12);
         $tags = Tag::where('subject', 0)->get();
         return view('company.user.index', compact(['users', 'tags']));
@@ -56,11 +54,13 @@ class JobSeeker extends Controller
 
     public function followIndex()
     {
-        $company_id = Auth::id();
-        // $users = ContactUsers::where('companies_id', $company_id)->where('follow', 1)->paginate(12);
-        $users = Companies::findOrFail($company_id)->ContactUsers->where('follow', 1);
-        // dd($users);
-        return view('company.user.followIndex', compact('users'));
+        $followUsers = Companies::findOrFail(Auth::id())->ContactUsers->where('follow', 1);
+        foreach ($followUsers as $user) {
+            $usersId[] = $user->id;
+        }
+        $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(12);
+        $tags = Tag::where('subject', 0)->get();
+        return view('company.user.followIndex', compact(['users', 'tags']));
     }
 
     public function search(Request $request)
@@ -75,5 +75,25 @@ class JobSeeker extends Controller
 
         $tags = Tag::where('subject', 0)->get();
         return view('company.user.index', compact(['users', 'tags', 'requestTags']));
+    }
+
+    public function followSearch(Request $request)
+    {
+        $requestTags = $request->tags;
+        $followUsers = Companies::findOrFail(Auth::id())->ContactUsers->where('follow', 1);
+        foreach ($followUsers as $user) {
+            $usersId[] = $user->id;
+        }
+
+        if ($requestTags) {
+            $requestUsersId = DB::table('tag_to_users')->whereIn('tags_id', $requestTags)->select('users_id');
+
+            $users = User::where('deleted_at', null)->whereIn('id', $requestUsersId)->whereIn('id', $usersId)->with('userPictures')->paginate(12);
+        } else {
+            $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(12);
+        }
+
+        $tags = Tag::where('subject', 0)->get();
+        return view('company.user.followIndex', compact(['users', 'tags', 'requestTags']));
     }
 }

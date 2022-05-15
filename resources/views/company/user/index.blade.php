@@ -10,7 +10,7 @@
         {{-- サイドバー --}}
         <aside class="py-12 ml-4 w-64 hidden lg:inline-block" aria-label="Sidebar">
             <div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
-                <form method="GET" action="{{ route('company.user.search') }}">
+                <form method="GET" action="{{ route('company.user.index.search') }}">
                     @csrf
                     <ul class="space-y-2">
                         <li>
@@ -44,6 +44,7 @@
                                             <label
                                                 class="text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ $tag->tag_name }}
                                             </label>
+                                        </li>
                                     @endforeach
                                 @endif
                             </ul>
@@ -56,7 +57,7 @@
         </aside>
 
 
-        <div class="py-12">
+        <div class="py-12 w-full">
             <x-flash-message status="session('status')" />
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
