@@ -29,7 +29,7 @@ class JobsController extends Controller
      */
     public function index()
     {
-        $jobs = Jobs::where('companies_id', Auth::id())->with('tags')->get();
+        $jobs = Jobs::where('companies_id', Auth::id())->with('tags')->with('Prefectures')->get();
         return view('company.job.index', compact('jobs'));
     }
 
@@ -64,6 +64,19 @@ class JobsController extends Controller
             'benefits' => ['nullable', 'string', 'max:255'],
         ]);
 
+        // タグのバリデーション
+        $tags = $request->tag;
+        if ($tags) {
+            $correctTags = Tag::where('subject', 1)->pluck("id");
+            foreach ($tags as $tag) {
+                if (!$correctTags->contains($tag)) {
+                    return redirect()
+                        ->route('company.jobs.create')
+                        ->withErrors("特徴タグで不正な値が選択されています")
+                        ->withInput();
+                }
+            }
+        }
         // 雇用形態のバリデーション
         $emp_status = intval($request->emp_status);
         if (!EmpStatus::hasValue($emp_status)) {
@@ -147,6 +160,12 @@ class JobsController extends Controller
             'image3' => $fileNameToStore3,
         ]);
 
+        if ($request->tag) {
+            foreach ($request->tag as $tag) {
+                $job->Tags()->attach($tag);
+            }
+        }
+
         if ($prefectures) {
             foreach ($prefectures as $prefecture) {
                 $job->Prefectures()->attach($prefecture);
@@ -211,6 +230,19 @@ class JobsController extends Controller
             'benefits' => ['nullable', 'string', 'max:255'],
         ]);
 
+        // タグのバリデーション
+        $tags = $request->tag;
+        if ($tags) {
+            $correctTags = Tag::where('subject', 1)->pluck("id");
+            foreach ($tags as $tag) {
+                if (!$correctTags->contains($tag)) {
+                    return redirect()
+                        ->route('company.jobs.create')
+                        ->withErrors("特徴タグで不正な値が選択されています")
+                        ->withInput();
+                }
+            }
+        }
         // 雇用形態のバリデーション
         $emp_status = intval($request->emp_status);
         if (!EmpStatus::hasValue($emp_status)) {
@@ -258,10 +290,25 @@ class JobsController extends Controller
         $job->holiday = $request->holiday;
         $job->benefits = $request->benefits;
 
-        if ($request->tag) {
-            foreach ($request->tag as $tag) {
-                TagToJob::create(['jobs_id' => $id, 'tags_id' => $tag]);
+        // 条件分岐してタグを紐付け
+        $jobTags = $job->Tags->pluck('id');
+        if ($tags && $jobTags) {
+            foreach ($tags as $tag) {
+                if (!$jobTags->contains($tag)) {
+                    $job->Tags()->attach($tag);
+                }
             }
+            foreach ($jobTags as $jobTag) {
+                if (!in_array($jobTag, $tags)) {
+                    $job->Tags()->detach($jobTag);
+                }
+            }
+        } elseif ($tags) {
+            foreach ($tags as $tag) {
+                $job->Tags()->attach($tag);
+            }
+        } elseif ($jobTags) {
+            $job->Tags()->detach();
         }
 
         // 条件分岐して勤務地を紐付け
