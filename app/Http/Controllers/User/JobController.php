@@ -10,6 +10,8 @@ use App\Models\AppStatus;
 use App\Models\Prefecture;
 use App\Models\Occupation;
 use App\Models\Tag;
+use App\Models\User;
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -20,7 +22,8 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = DB::table('jobs')->where('rec_status', null)->paginate(12);
+        // $jobs = DB::table('jobs')->where('rec_status', null)->paginate(12);
+        $jobs = Jobs::where('rec_status', null)->paginate(12);
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
@@ -142,9 +145,9 @@ class JobController extends Controller
 
     public function favoriteIndex()
     {
-        $user_id = Auth::id();
-        $jobs = AppStatus::where('users_id', $user_id)->where('favorite', 1)->paginate(12);
-        // dd($jobs);
+        $user = User::findOrFail(Auth::id());
+        $jobsId = $user->appStatus()->where('favorite', 1)->pluck('jobs_id');
+        $jobs = Jobs::whereIn('id', $jobsId)->get();
         return view('user.job.favoriteIndex', compact('jobs'));
     }
 

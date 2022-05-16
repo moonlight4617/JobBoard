@@ -5589,7 +5589,7 @@ $(function () {
   like.on('click', function () {
     var $this = $(this); //this=イベントの発火した要素を代入
 
-    jobId = $this.data('job-id'); //data-review-idの値を取得
+    jobId = $this.data('job-id'); //data-job-idの値を取得
     //ajax処理スタート
 
     $.ajax({
@@ -5608,13 +5608,14 @@ $(function () {
 
       }
     }).done(function (data) {
-      // console.log(like.text());
-      if (like.text() === 'favorite_border') {
+      var favoriteId = $('.favoriteId' + jobId);
+
+      if (favoriteId.text() === 'favorite_border') {
         // console.log("お気に入りにしました");
-        like.html('<span class="material-icons liked like-toggle" data-job-id="{{ $job->id }}">favorite</span >');
+        favoriteId.text('favorite');
       } else {
         // console.log("お気に入りから外しました");
-        like.html('<span class="material-icons untilLike like-toggle" data-job-id="{{ $job->id }}">favorite_border</span >');
+        favoriteId.text('favorite_border');
       }
     }).fail(function () {
       console.log('fail');
