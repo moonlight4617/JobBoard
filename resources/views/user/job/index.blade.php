@@ -105,13 +105,13 @@
                                     <input type="number" id="low_salary" name="low_salary"
                                         class="leading-7 text-sm text-gray-600">
                                 </li>
-                                <li class="items-center pl-8">
+                                {{-- <li class="items-center pl-8">
                                     <label
                                         class="text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">上限年収
                                         <small>(万円)</small></label>
                                     <input type="number" id="high_salary" name="high_salary"
                                         class="leading-7 text-sm text-gray-600">
-                                </li>
+                                </li> --}}
                             </ul>
 
                         </li>
@@ -158,6 +158,8 @@
         </aside>
 
         <section class="text-gray-600 body-font">
+            <x-flash-message status="session('status')" />
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
             @if ($jobs)
                 @foreach ($jobs as $job)
                     <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
@@ -178,9 +180,7 @@
                                     <p class="leading-relaxed font-bold text-xl">
                                         {{ $job->job_name }} </p>
                                 </a>
-
-                                {{-- @auth('users') --}}
-                                <div class="parentFavorite{{ $job->id }}">
+                                @auth('users')
                                     @if (!$job->isLikedBy(Auth::user()))
                                         <span
                                             class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
@@ -190,8 +190,7 @@
                                             class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
                                             data-job-id="{{ $job->id }}">favorite</span>
                                     @endif
-                                </div>
-                                {{-- @endauth --}}
+                                @endauth
                             </div>
                             <p class="text-3xl mb-4 text-gray-900">{{ $job->catch }}</p>
                             <p class="mb-2 leading-relaxed">{{ $job->empStatus() }}</p>

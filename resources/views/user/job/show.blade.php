@@ -12,9 +12,6 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <section class="text-gray-600 body-font relative">
                         <div class="container px-5 py-4 mx-auto">
-                            <div class="flex flex-col text-center w-full mb-12">
-                                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">求人詳細</h1>
-                            </div>
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <div class="lg md:w-2/3 mx-auto">
 
@@ -58,15 +55,17 @@
 
 
                                 <div class="pl-2 pr-2 pt-2 pb-1">
-                                    <div class="relative">
+                                    <div class="mt-2 flex items-center">
                                         <span class="align-bottom">
                                             求人名：{{ $job->job_name }}</span>
                                         {{-- @auth('users') --}}
                                         @if (!$job->isLikedBy(Auth::user()))
-                                            <span class="material-icons favorite align-bottom ml-4"
+                                            <span
+                                                class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
                                                 data-job-id="{{ $job->id }}">favorite_border</span>
                                         @else
-                                            <span class="material-icons favorite align-bottom ml-4"
+                                            <span
+                                                class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
                                                 data-job-id="{{ $job->id }}">favorite</span>
                                         @endif
                                         {{-- @endauth --}}
