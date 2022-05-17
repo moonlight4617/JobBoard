@@ -15,6 +15,7 @@ class CreateAppStatusesTable extends Migration
     {
         Schema::create('app_statuses', function (Blueprint $table) {
             $table->id();
+            $table->unique(['users_id', 'jobs_id']);
             $table->foreignId('users_id')->constrained()->onDelete('cascade');
             $table->foreignId('jobs_id')->constrained()->onDelete('cascade');
             $table->boolean('app_flag')->default(false);

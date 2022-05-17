@@ -15,6 +15,7 @@ class JobOccupations extends Migration
     {
         Schema::create('job_occupations', function (Blueprint $table) {
             $table->id();
+            $table->unique(['jobs_id', 'occupations_id']);
             $table->foreignId('jobs_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('occupations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

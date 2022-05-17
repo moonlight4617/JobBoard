@@ -15,6 +15,7 @@ class JobLocationsTable extends Migration
     {
         Schema::create('job_locations', function (Blueprint $table) {
             $table->id();
+            $table->unique(['jobs_id', 'prefectures_id']);
             $table->foreignId('jobs_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('prefectures_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
