@@ -23,6 +23,7 @@ class Companies extends Authenticatable
     public function ContactUsers()
     {
         return $this->hasMany(ContactUsers::class);
+        // return $this->belongsToMany(ContactUsers::class, 'contact_users');
     }
 
     protected $fillable = [

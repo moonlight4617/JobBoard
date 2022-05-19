@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\JobController;
+use App\Http\Controllers\User\MessageController;
 use App\Http\Controllers\User\Company;
 
 
@@ -44,5 +45,8 @@ Route::post('favorite', [JobController::class, 'favorite'])->middleware('auth:us
 // お気に入り一覧
 Route::get('favorite/index', [JobController::class, 'favoriteIndex'])->middleware(['auth:users', 'ensure.user'])->name('favorite.index');
 
+// メッセージ
+Route::get('messages', [MessageController::class, 'index'])->middleware('auth:users')->name('message.index');
+Route::get('messages/{company}', [MessageController::class, 'show'])->middleware('auth:users')->name('message.show');
 
 require __DIR__ . '/auth.php';

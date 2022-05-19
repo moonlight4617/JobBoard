@@ -32,6 +32,7 @@ class User extends Authenticatable
     public function ContactUsers()
     {
         return $this->hasMany(ContactUsers::class, 'users_id');
+        // return $this->belongsToMany(ContactUsers::class, 'contact_users', 'users_id', 'companies_id');
     }
 
     public function  Tags()

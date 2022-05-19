@@ -36,6 +36,11 @@
                         応募済み求人
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('user.message.index')" :active="request()->routeIs('user.message.index')">
+                        メッセージ一覧
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
