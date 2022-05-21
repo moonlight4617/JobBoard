@@ -47,6 +47,7 @@ Route::get('favorite/index', [JobController::class, 'favoriteIndex'])->middlewar
 
 // メッセージ
 Route::get('messages', [MessageController::class, 'index'])->middleware('auth:users')->name('message.index');
+Route::post('messages/{company}/post', [MessageController::class, 'post'])->middleware('auth:users')->name('message.post');
 Route::get('messages/{company}', [MessageController::class, 'show'])->middleware('auth:users')->name('message.show');
 
 require __DIR__ . '/auth.php';

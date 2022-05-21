@@ -15,4 +15,11 @@ class Message extends Model
     {
         return $this->belongsTo(ContactUsers::class);
     }
+
+    protected $fillable = [
+        'contact_users_id',
+        'sent_time',
+        'sent_from',
+        'body'
+    ];
 }
