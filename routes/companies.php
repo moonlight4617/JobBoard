@@ -12,6 +12,7 @@ use App\Http\Controllers\Companies\Auth\VerifyEmailController;
 use App\Http\Controllers\Companies\JobsController;
 use App\Http\Controllers\Companies\CompanyController;
 use App\Http\Controllers\Companies\JobSeeker;
+use App\Http\Controllers\Companies\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +105,12 @@ Route::get('/hresource/followSearch', [JobSeeker::class, 'followSearch'])->middl
 
 // フォロー機能
 Route::post('/hresource/follow', [JobSeeker::class, 'follow'])->middleware('auth:companies')->name('user.follow');
+
+// メッセージ
+Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:companies')->name('message.index');
+Route::post('/messages/{user}/post', [MessageController::class, 'post'])->middleware('auth:companies')->name('message.post');
+Route::get('/messages/{user}', [MessageController::class, 'show'])->middleware('auth:companies')->name('message.show');
+
 
 // ユーザーとしてログイン
 Route::get('/loginToUser', [AuthenticatedSessionController::class, 'loginToUser'])

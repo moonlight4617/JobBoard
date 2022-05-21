@@ -1,10 +1,10 @@
 
 $(function () {
-  let post = $('.post');
+  let post = $('.postToUser');
 
   post.on('click', function () {
     let $this = $(this); //this=イベントの発火した要素を代入
-    let companyId = $this.data('company-id'); //data-company-idの値を取得
+    let userId = $this.data('user-id'); //data-user-idの値を取得
     let contactUsersId = $this.data('contactusers-id'); //data-contactUsers-idの値を取得
     let contents = $('.chatMessage').val()
     // console.log(contents);
@@ -13,7 +13,7 @@ $(function () {
       headers: { //HTTPヘッダ情報をヘッダ名と値のマップで記述
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },  //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
-      url: '/messages/' + companyId + '/post', //通信先アドレス
+      url: '/company/messages/' + userId + '/post', //通信先アドレス
       method: 'POST', //HTTPメソッドの種別を指定します。1.9.0以前の場合はtype:を使用。
       data: { //サーバーに送信するデータ
         'contact_users_id': contactUsersId, //contact_users_id
