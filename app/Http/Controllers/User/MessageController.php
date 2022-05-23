@@ -23,7 +23,7 @@ class MessageController extends Controller
         // $carbon = new Carbon('now');
         // dd(Carbon::now());
         $contactUsersId = ContactUsers::where('users_id', Auth::id())->where('companies_id', $id)->select('id')->get();
-        $messages = Message::whereIn('contact_users_id', $contactUsersId)->get();
+        $messages = Message::whereIn('contact_users_id', $contactUsersId)->orderBy('sent_time', 'asc')->get();
         $company = Companies::findOrFail($id);
         return view('user.message.show', compact(['contactUsersId', 'messages', 'company']));
     }

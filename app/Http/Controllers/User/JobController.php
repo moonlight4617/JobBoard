@@ -22,7 +22,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Jobs::where('rec_status', null)->paginate(12);
+        $jobs = Jobs::where('rec_status', 0)->paginate(12);
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
@@ -37,7 +37,7 @@ class JobController extends Controller
 
     public function application($id)
     {
-        $job = Jobs::findOrFail($id);
+        Jobs::findOrFail($id);
 
         // まだAppStatusesテーブルにデータなければ
         $app = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id())->first();

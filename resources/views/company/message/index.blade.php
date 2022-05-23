@@ -12,15 +12,44 @@
                     <x-flash-message status="session('status')" />
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
                     @if ($users)
-                        <ul>
-                            @foreach ($users as $user)
-                                <li>
-                                    <a href="{{ route('company.message.show', ['user' => $user->users->id]) }}">
-                                        {{ $user->users->name }}とのメッセージ一覧
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
+                        @foreach ($users as $user)
+                            <div class="container px-5 py-4 mx-auto border-b border-gray-200">
+                                <div class="flex flex-col">
+                                    <div class="flex items-center w-4/5 mx-auto sm:pb-2">
+                                        <div class="w-1/6 sm:mr-8 mr-4 items-center">
+                                            @if (empty($user->pro_image))
+                                                <img class="rounded-full w-20"
+                                                    src="https://via.placeholder.com/100x100?text=No+Image">
+                                            @else
+                                                <img class="rounded-full w-20 object-cover"
+                                                    src="{{ asset('storage/users/' . $user->pro_image) }}">
+                                            @endif
+                                        </div>
+                                        <div class="w-5/6 flex text-left sm:mt-0">
+                                            <div class="flex items-center mb-2">
+                                                <p>
+                                                    <a
+                                                        href="{{ route('company.message.show', ['user' => $user->users->id]) }}">
+                                                        <span
+                                                            class="text-gray-900 title-font font-bold text-3xl">{{ $user->users->name }}</span>
+                                                    </a>とのメッセージ
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if ($user->messages->last())
+                                        <div class="w-3/5 mx-auto">
+                                            <a
+                                                href="{{ route('company.message.show', ['user' => $user->users->id]) }}">
+                                                <p class="text-gray-500">{{ $user->messages->last()->body }}</p>
+                                                <small
+                                                    class="text-gray-500">{{ $user->messages->last()->sent_time }}</small>
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     @endif
                 </div>
             </div>

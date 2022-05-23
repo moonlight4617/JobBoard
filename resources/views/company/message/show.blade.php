@@ -15,6 +15,23 @@
                         <h1 class="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 my-4">
                             {{ $user->name }}さんとのメッセージ</h1>
                         <ul class="list">
+
+                            @if ($appJobs)
+                                <div class="p-2 flex flex-col items-start">
+                                    @foreach ($appJobs as $appJob)
+                                        <div
+                                            class="inline-block py-1 px-2 mb-4 rounded bg-indigo-50 text-indigo-500 font-medium tracking-widest">
+                                            <a href="{{ route('company.jobs.show', ['job' => $appJob->jobs->id]) }}">
+                                                {{ $appJob->jobs->job_name }}</a>
+                                            <span class="text-black">に応募済み</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+
+
+
+
                             @foreach ($messages as $message)
                                 <li>
                                     @if ($message->sent_from === 1)

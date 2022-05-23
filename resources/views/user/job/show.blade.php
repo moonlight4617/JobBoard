@@ -133,11 +133,15 @@
 
                             </div>
                             <div class="p-2 w-full flex justify-around mt-4">
+
                                 {{-- まだ応募してなければ --}}
                                 @if (!$job->isApplied(Auth::user()))
-                                    <button type="button"
-                                        onclick="location.href='{{ route('user.jobs.application', ['job' => $job->id]) }}'"
-                                        class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募する</button>
+                                    <form id="apply" method="post"
+                                        action="{{ route('user.jobs.application', ['job' => $job->id]) }}">
+                                        @csrf
+                                        <button type="button" onclick="apply(this)" href=""
+                                            class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募する</button>
+                                    </form>
                                 @else
                                     {{-- もう応募してれば --}}
                                     <button type="button" disabled
@@ -146,7 +150,6 @@
                                 <button type="button"
                                     class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg"
                                     onClick="history.back()">戻る</button>
-
                             </div>
                         </div>
                     </section>
@@ -154,6 +157,13 @@
             </div>
         </div>
     </div>
-
     <script src="{{ mix('js/swiper.js') }}"></script>
+    <script>
+        function apply(e) {
+            'use strict';
+            if (confirm('この求人に応募しますか？')) {
+                document.getElementById('apply').submit();
+            }
+        }
+    </script>
 </x-app-layout>
