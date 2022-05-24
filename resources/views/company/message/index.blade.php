@@ -35,6 +35,10 @@
                                                     </a>とのメッセージ
                                                 </p>
                                             </div>
+                                            <button
+                                                class="ml-auto flex items-center border-2 border-indigo-200 px-2 rounded text-indigo-700 hover:border-indigo-400 "
+                                                onClick="location.href='{{ route('company.user.show', ['user' => $user->users->id]) }}'">プロフィール
+                                            </button>
                                         </div>
                                     </div>
 

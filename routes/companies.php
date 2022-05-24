@@ -102,6 +102,7 @@ Route::get('/hresource', [JobSeeker::class, 'index'])->middleware('auth:companie
 Route::get('/hresource/followIndex', [JobSeeker::class, 'followIndex'])->middleware('auth:companies')->name('user.followIndex');
 Route::get('/hresource/search', [JobSeeker::class, 'search'])->middleware('auth:companies')->name('user.index.search');
 Route::get('/hresource/followSearch', [JobSeeker::class, 'followSearch'])->middleware('auth:companies')->name('user.followIndex.search');
+Route::get('/hresource/{user}', [JobSeeker::class, 'show'])->middleware('auth:companies')->name('user.show');
 
 // フォロー機能
 Route::post('/hresource/follow', [JobSeeker::class, 'follow'])->middleware('auth:companies')->name('user.follow');
