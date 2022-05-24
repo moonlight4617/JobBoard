@@ -18,7 +18,8 @@ class MessageController extends Controller
     public function index()
     {
         $users = ContactUsers::where('companies_id', Auth::id())->with('users')->with('messages')->get();
-        return view('company.message.index', compact(['users']));
+        $jobs = Companies::findOrFail(Auth::id())->jobs()->where('rec_status', '<>', '2')->get();
+        return view('company.message.index', compact(['users', 'jobs']));
     }
 
     public function show($id)
@@ -26,9 +27,9 @@ class MessageController extends Controller
         $contactUsersId = ContactUsers::where('companies_id', Auth::id())->where('users_id', $id)->select('id')->get();
         $messages = Message::whereIn('contact_users_id', $contactUsersId)->orderBy('sent_time', 'asc')->get();
         $user = User::findOrFail($id);
-        $jobsId = Companies::findOrFail(Auth::id())->jobs()->where('rec_status', '<>', '2')->pluck('id');
-        $appJobs = AppStatus::where('users_id', $id)->whereIn('jobs_id', $jobsId)->where('app_flag', 1)->get();
-        return view('company.message.show', compact(['contactUsersId', 'messages', 'user', 'appJobs']));
+        // $jobsId = Companies::findOrFail(Auth::id())->jobs()->where('rec_status', '<>', '2')->pluck('id');
+        // $appJobs = AppStatus::where('users_id', $id)->whereIn('jobs_id', $jobsId)->where('app_flag', 1)->get();
+        return view('company.message.show', compact(['contactUsersId', 'messages', 'user']));
     }
 
     public function post(Request $request)

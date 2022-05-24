@@ -16,7 +16,7 @@
                             {{ $user->name }}さんとのメッセージ</h1>
                         <ul class="list">
 
-                            @if ($appJobs)
+                            {{-- @if ($appJobs)
                                 <div class="p-2 flex flex-col items-start">
                                     @foreach ($appJobs as $appJob)
                                         <div
@@ -27,10 +27,7 @@
                                         </div>
                                     @endforeach
                                 </div>
-                            @endif
-
-
-
+                            @endif --}}
 
                             @foreach ($messages as $message)
                                 <li>

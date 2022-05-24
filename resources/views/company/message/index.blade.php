@@ -15,7 +15,7 @@
                         @foreach ($users as $user)
                             <div class="container px-5 py-4 mx-auto border-b border-gray-200">
                                 <div class="flex flex-col">
-                                    <div class="flex items-center w-4/5 mx-auto sm:pb-2">
+                                    <div class="flex items-center w-4/5 mx-auto">
                                         <div class="w-1/6 sm:mr-8 mr-4 items-center">
                                             @if (empty($user->pro_image))
                                                 <img class="rounded-full w-20"
@@ -37,16 +37,31 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($user->messages->last())
-                                        <div class="w-3/5 mx-auto">
+
+                                    <div class="w-3/5 mx-auto">
+                                        <div class="p-2 flex flex-col items-start">
+                                            @foreach ($jobs as $job)
+                                                @if ($job->isApplied($user))
+                                                    <div
+                                                        class="inline-block py-1 px-2 mb-2 rounded bg-indigo-50 text-indigo-500 font-medium tracking-widest">
+                                                        <a
+                                                            href="{{ route('company.jobs.show', ['job' => $job->id]) }}">
+                                                            {{ $job->job_name }}</a>
+                                                        <span class="text-black">に応募済み</span>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+
+                                        @if ($user->messages->last())
                                             <a
                                                 href="{{ route('company.message.show', ['user' => $user->users->id]) }}">
                                                 <p class="text-gray-500">{{ $user->messages->last()->body }}</p>
                                                 <small
                                                     class="text-gray-500">{{ $user->messages->last()->sent_time }}</small>
                                             </a>
-                                        </div>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
