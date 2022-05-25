@@ -44,7 +44,8 @@
 
                                     <div class="w-3/5 mx-auto">
                                         <div class="p-2 flex flex-col items-start">
-                                            @foreach ($jobs as $job)
+                                            {{-- @foreach ($jobs as $job) --}}
+                                            @foreach ($company->companies->jobs as $job)
                                                 @if ($job->isApplied(Auth::user()))
                                                     <div
                                                         class="inline-block py-1 px-2 mb-2 rounded bg-indigo-50 text-indigo-500 font-medium tracking-widest">
