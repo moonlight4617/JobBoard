@@ -142,7 +142,7 @@
                                 <button type="button"
                                     onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id]) }}'"
                                     class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
-                                <button type="button" onclick="location.href='{{ route('company.jobs.index') }}'"
+                                <button type="button" onClick="history.back()"
                                     class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
                                 <form id="delete_{{ $job->id }}" method="post"
                                     action="{{ route('company.jobs.destroy', ['job' => $job->id]) }}">

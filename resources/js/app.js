@@ -3,6 +3,8 @@ require('./favorite');
 require('./deletePicture');
 require('./follow');
 // require('./addPicture');
+require('./messageToCompany');
+require('./messageToUser');
 
 import Alpine from 'alpinejs';
 

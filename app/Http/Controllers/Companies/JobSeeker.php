@@ -23,6 +23,14 @@ class JobSeeker extends Controller
         return view('company.user.index', compact(['users', 'tags']));
     }
 
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        $pictures = UserPictures::where('users_id', '=', $id)->get();
+        $tags = $user->Tags;
+        return view('company.user.show', compact('user', 'pictures', 'tags'));
+    }
+
     public function follow(Request $request)
     {
         $company_id = Auth::user()->id;

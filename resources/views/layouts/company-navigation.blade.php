@@ -11,11 +11,6 @@
                 </div>
 
                 <!-- Navigation Links -->
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.dashboard')" :active="request()->routeIs('company.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
                         登録求人一覧
@@ -39,6 +34,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('company.user.followIndex')" :active="request()->routeIs('company.user.followIndex*')">
                         フォローしている人材
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.message.index')" :active="request()->routeIs('company.message.index')">
+                        メッセージ一覧
                     </x-nav-link>
                 </div>
             </div>

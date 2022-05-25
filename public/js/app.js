@@ -5484,6 +5484,10 @@ __webpack_require__(/*! ./deletePicture */ "./resources/js/deletePicture.js");
 __webpack_require__(/*! ./follow */ "./resources/js/follow.js"); // require('./addPicture');
 
 
+__webpack_require__(/*! ./messageToCompany */ "./resources/js/messageToCompany.js");
+
+__webpack_require__(/*! ./messageToUser */ "./resources/js/messageToUser.js");
+
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
@@ -5589,7 +5593,7 @@ $(function () {
   like.on('click', function () {
     var $this = $(this); //this=イベントの発火した要素を代入
 
-    jobId = $this.data('job-id'); //data-review-idの値を取得
+    jobId = $this.data('job-id'); //data-job-idの値を取得
     //ajax処理スタート
 
     $.ajax({
@@ -5608,13 +5612,14 @@ $(function () {
 
       }
     }).done(function (data) {
-      // console.log(like.text());
-      if (like.text() === 'favorite_border') {
+      var favoriteId = $('.favoriteId' + jobId);
+
+      if (favoriteId.text() === 'favorite_border') {
         // console.log("お気に入りにしました");
-        like.html('<span class="material-icons liked like-toggle" data-job-id="{{ $job->id }}">favorite</span >');
+        favoriteId.text('favorite');
       } else {
         // console.log("お気に入りから外しました");
-        like.html('<span class="material-icons untilLike like-toggle" data-job-id="{{ $job->id }}">favorite_border</span >');
+        favoriteId.text('favorite_border');
       }
     }).fail(function () {
       console.log('fail');
@@ -5663,6 +5668,102 @@ $(function () {
       }
     }).fail(function () {
       console.log('fail');
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/messageToCompany.js":
+/*!******************************************!*\
+  !*** ./resources/js/messageToCompany.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+$(function () {
+  var post = $('.post');
+  post.on('click', function () {
+    var $this = $(this); //this=イベントの発火した要素を代入
+
+    var companyId = $this.data('company-id'); //data-company-idの値を取得
+
+    var contactUsersId = $this.data('contactusers-id'); //data-contactUsers-idの値を取得
+
+    var contents = $('.chatMessage').val(); // console.log(contents);
+    //ajax処理スタート
+
+    $.ajax({
+      headers: {
+        //HTTPヘッダ情報をヘッダ名と値のマップで記述
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
+      url: '/messages/' + companyId + '/post',
+      //通信先アドレス
+      method: 'POST',
+      //HTTPメソッドの種別を指定します。1.9.0以前の場合はtype:を使用。
+      data: {
+        //サーバーに送信するデータ
+        'contact_users_id': contactUsersId,
+        //contact_users_id
+        'contents': contents //メッセージ内容
+
+      }
+    }).done(function (data) {
+      // console.log("送信しました");
+      var appendMessage = '<li><div class="mx-2 my-6 flex flex-col"><p class="ml-auto flex p-2 rounded bg-indigo-200 box-border lg:max-w-2xl md:max-w-lg max-w-md">' + contents + '</p><div class="ml-auto"><small>送信済み</small></div></div ></li>';
+      $('.list').append(appendMessage);
+      $('.chatMessage').val('');
+    }).fail(function () {// console.log('fail');
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/messageToUser.js":
+/*!***************************************!*\
+  !*** ./resources/js/messageToUser.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+$(function () {
+  var post = $('.postToUser');
+  post.on('click', function () {
+    var $this = $(this); //this=イベントの発火した要素を代入
+
+    var userId = $this.data('user-id'); //data-user-idの値を取得
+
+    var contactUsersId = $this.data('contactusers-id'); //data-contactUsers-idの値を取得
+
+    var contents = $('.chatMessage').val(); // console.log(contents);
+    //ajax処理スタート
+
+    $.ajax({
+      headers: {
+        //HTTPヘッダ情報をヘッダ名と値のマップで記述
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
+      url: '/company/messages/' + userId + '/post',
+      //通信先アドレス
+      method: 'POST',
+      //HTTPメソッドの種別を指定します。1.9.0以前の場合はtype:を使用。
+      data: {
+        //サーバーに送信するデータ
+        'contact_users_id': contactUsersId,
+        //contact_users_id
+        'contents': contents //メッセージ内容
+
+      }
+    }).done(function (data) {
+      // console.log("送信しました");
+      var appendMessage = '<li><div class="mx-2 my-6 flex flex-col"><p class="ml-auto flex p-2 rounded bg-indigo-200 box-border lg:max-w-2xl md:max-w-lg max-w-md">' + contents + '</p><div class="ml-auto"><small>送信済み</small></div></div ></li>';
+      $('.list').append(appendMessage);
+      $('.chatMessage').val('');
+    }).fail(function () {// console.log('fail');
     });
   });
 });

@@ -155,6 +155,7 @@ class JobsController extends Controller
             'high_salary' => $request->high_salary,
             'holiday' => $request->holiday,
             'benefits' => $request->benefits,
+            'rec_status' => 0,
             'image1' => $fileNameToStore1,
             'image2' => $fileNameToStore2,
             'image3' => $fileNameToStore3,

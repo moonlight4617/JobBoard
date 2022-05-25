@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Companies;
+use App\Models\Message;
 
 
 class ContactUsers extends Model
@@ -20,6 +21,11 @@ class ContactUsers extends Model
     public function users()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     protected $fillable = [

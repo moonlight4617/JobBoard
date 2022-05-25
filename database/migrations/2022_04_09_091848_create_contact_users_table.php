@@ -15,6 +15,7 @@ class CreateContactUsersTable extends Migration
     {
         Schema::create('contact_users', function (Blueprint $table) {
             $table->id();
+            $table->unique(['users_id', 'companies_id']);
             $table->foreignId('users_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('follow')->default(false);

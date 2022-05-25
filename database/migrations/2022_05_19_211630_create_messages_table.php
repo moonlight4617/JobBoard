@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class JobOccupations extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class JobOccupations extends Migration
      */
     public function up()
     {
-        Schema::create('job_occupations', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->unique(['jobs_id', 'occupations_id']);
-            $table->foreignId('jobs_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('occupations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('contact_users_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->dateTime('sent_time');
+            $table->integer('sent_from');
+            $table->string('body');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class JobOccupations extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_occupations');
+        Schema::dropIfExists('messages');
     }
 }

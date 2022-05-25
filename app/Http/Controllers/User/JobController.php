@@ -10,6 +10,8 @@ use App\Models\AppStatus;
 use App\Models\Prefecture;
 use App\Models\Occupation;
 use App\Models\Tag;
+use App\Models\User;
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -20,7 +22,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = DB::table('jobs')->where('rec_status', null)->paginate(12);
+        $jobs = Jobs::where('rec_status', 0)->paginate(12);
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
@@ -35,7 +37,7 @@ class JobController extends Controller
 
     public function application($id)
     {
-        $job = Jobs::findOrFail($id);
+        Jobs::findOrFail($id);
 
         // まだAppStatusesテーブルにデータなければ
         $app = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id())->first();
@@ -43,14 +45,14 @@ class JobController extends Controller
             $app = new AppStatus();
             $app->users_id = Auth::id();
             $app->jobs_id = $id;
-            $app->app_flag = true;
+            $app->app_flag = 1;
             $app->save();
         } else {
             // 既に応募済み
-            if ($app->app_flag = true) {
+            if ($app->app_flag === 1) {
                 return back()->with(['message' => '既に応募済みです', 'status' => 'info']);
             } else {
-                $app->app_flag = true;
+                $app->app_flag = 1;
                 $app->save();
             }
         }
@@ -93,26 +95,28 @@ class JobController extends Controller
         $requestPrefs = $request->prefectures;
         $requestOccupations = $request->occupations;
         $requestLowSalary = $request->low_salary;
-        $requestHighSalary = $request->high_salary;
+        // $requestHighSalary = $request->high_salary;
         $requestTags = $request->tags;
         $requestSearch = $request->search;
         // dd($requestSearch);
 
-        $jobs = DB::table('jobs')
-            ->when($requestPrefs, function ($query, $requestPrefs) {
-                return $query->leftJoin('job_locations', 'jobs.id', '=', 'job_locations.jobs_id')
-                    ->whereIn('job_locations.prefectures_id', $requestPrefs);
-            })
+        // $jobs = DB::table('jobs')
+        $jobs = Jobs::when($requestPrefs, function ($query, $requestPrefs) {
+            return $query->leftJoin('job_locations', 'jobs.id', '=', 'job_locations.jobs_id')
+                ->whereIn('job_locations.prefectures_id', $requestPrefs);
+        })
             ->when($requestOccupations, function ($query, $requestOccupations) {
                 return $query->leftJoin('job_occupations', 'jobs.id', '=', 'job_occupations.jobs_id')
                     ->whereIn('job_occupations.occupations_id', $requestOccupations);
             })
+            // 条件変更。上限廃止、下限のみに修正
             ->when($requestLowSalary, function ($query, $requestLowSalary) {
-                return $query->where('jobs.low_salary', '>=', $requestLowSalary);
+                return $query->where('jobs.low_salary', '>=', $requestLowSalary)
+                    ->orWhere('jobs.high_salary', '>=', $requestLowSalary);
             })
-            ->when($requestHighSalary, function ($query, $requestHighSalary) {
-                return $query->where('jobs.high_salary', '<=', $requestHighSalary);
-            })
+            // ->when($requestHighSalary, function ($query, $requestHighSalary) {
+            //     return $query->where('jobs.high_salary', '<=', $requestHighSalary);
+            // })
             ->when($requestTags, function ($query, $requestTags) {
                 return $query->leftJoin('tag_to_jobs', 'jobs.id', '=', 'tag_to_jobs.jobs_id')
                     ->whereIn('tag_to_jobs.tags_id', $requestTags);
@@ -133,26 +137,22 @@ class JobController extends Controller
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
-        return view('user.job.search', compact(['jobs', 'prefectures', 'occupations', 'tags', 'requestPrefs', 'requestOccupations', 'requestLowSalary', 'requestHighSalary', 'requestTags', 'requestSearch']));
-    }
-
-    public function search()
-    {
+        return view('user.job.search', compact(['jobs', 'prefectures', 'occupations', 'tags', 'requestPrefs', 'requestOccupations', 'requestLowSalary', 'requestTags', 'requestSearch']));
     }
 
     public function favoriteIndex()
     {
-        $user_id = Auth::id();
-        $jobs = AppStatus::where('users_id', $user_id)->where('favorite', 1)->paginate(12);
-        // dd($jobs);
+        $user = User::findOrFail(Auth::id());
+        $jobsId = $user->appStatus()->where('favorite', 1)->pluck('jobs_id');
+        $jobs = Jobs::whereIn('id', $jobsId)->get();
         return view('user.job.favoriteIndex', compact('jobs'));
     }
 
     public function appliedIndex()
     {
-        $user_id = Auth::id();
-        $jobs = AppStatus::where('users_id', $user_id)->where('app_flag', 1)->paginate(12);
-        // dd($jobs);
+        $user = User::findOrFail(Auth::id());
+        $jobsId = $user->appStatus()->where('app_flag', 1)->pluck('jobs_id');
+        $jobs = Jobs::whereIn('id', $jobsId)->get();
         return view('user.job.appliedIndex', compact('jobs'));
     }
 }
