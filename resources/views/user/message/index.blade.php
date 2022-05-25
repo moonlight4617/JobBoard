@@ -44,7 +44,6 @@
 
                                     <div class="w-3/5 mx-auto">
                                         <div class="p-2 flex flex-col items-start">
-                                            {{-- @foreach ($jobs as $job) --}}
                                             @foreach ($company->companies->jobs as $job)
                                                 @if ($job->isApplied(Auth::user()))
                                                     <div
@@ -63,7 +62,7 @@
                                                 <p class="text-gray-500">
                                                     {{ $company->messages->last()->body }}</p>
                                                 <small
-                                                    class="text-gray-500">{{ $company->messages->last()->sent_time }}</small>
+                                                    class="text-gray-500">{{ date('Y-m-d H:i', strtotime($company->messages->last()->sent_time)) }}</small>
                                             </a>
                                         @endif
                                     </div>

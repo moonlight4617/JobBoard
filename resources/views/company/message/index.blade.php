@@ -62,7 +62,7 @@
                                                 href="{{ route('company.message.show', ['user' => $user->users->id]) }}">
                                                 <p class="text-gray-500">{{ $user->messages->last()->body }}</p>
                                                 <small
-                                                    class="text-gray-500">{{ $user->messages->last()->sent_time }}</small>
+                                                    class="text-gray-500">{{ date('Y-m-d H:i', strtotime($user->messages->last()->sent_time)) }}</small>
                                             </a>
                                         @endif
                                     </div>
