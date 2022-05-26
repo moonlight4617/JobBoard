@@ -11,11 +11,12 @@ use App\Models\Prefecture;
 use App\Models\Occupation;
 use App\Models\Tag;
 use App\Models\User;
+use App\Mail\ApplyMail;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Mail;
 
 
 class JobController extends Controller
@@ -26,6 +27,8 @@ class JobController extends Controller
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
+        // $user = User::findOrFail(Auth::id());
+        // Mail::to($user->email)->send(new ApplyMail());
         return view('user.job.index', compact(['jobs', 'prefectures', 'occupations', 'tags']));
     }
 
@@ -37,8 +40,8 @@ class JobController extends Controller
 
     public function application($id)
     {
-        Jobs::findOrFail($id);
-
+        $job = Jobs::findOrFail($id);
+        $user = User::findOrFail(Auth::id());
         // まだAppStatusesテーブルにデータなければ
         $app = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id())->first();
         if (!$app) {
@@ -47,6 +50,7 @@ class JobController extends Controller
             $app->jobs_id = $id;
             $app->app_flag = 1;
             $app->save();
+            Mail::to($user->email)->send(new ApplyMail($job, route('user.jobs.show', ['job' => $id])));
         } else {
             // 既に応募済み
             if ($app->app_flag === 1) {
