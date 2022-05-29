@@ -12,6 +12,7 @@ use App\Models\Occupation;
 use App\Models\Tag;
 use App\Models\User;
 use App\Mail\ApplyMail;
+use App\Mail\AppliedMail;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +41,7 @@ class JobController extends Controller
     {
         $job = Jobs::findOrFail($id);
         $user = User::findOrFail(Auth::id());
+        $company = $job->companies;
         // まだAppStatusesテーブルにデータなければ
         $app = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id())->first();
         if (!$app) {
@@ -49,6 +51,7 @@ class JobController extends Controller
             $app->app_flag = 1;
             $app->save();
             Mail::to($user->email)->send(new ApplyMail($job, route('user.jobs.show', ['job' => $id])));
+            Mail::to($company->email)->send(new AppliedMail($job, route('company.jobs.show', ['job' => $id])));
         } else {
             // 既に応募済み
             if ($app->app_flag === 1) {
