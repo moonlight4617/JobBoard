@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Jobs;
 use App\Models\Tag;
 use App\Models\TagToJob;
+use App\Models\AppStatus;
 use App\Models\Prefecture;
 use App\Models\Occupation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
@@ -410,5 +412,12 @@ class JobsController extends Controller
     {
         Jobs::findOrFail($id)->delete();
         return redirect()->route('company.jobs.index')->with(['message' => '求人を削除しました。', 'status' => 'alert']);
+    }
+
+    public function appliedIndex($id)
+    {
+        $usersId = AppStatus::where('jobs_id', $id)->where('app_flag', 1)->pluck('users_id');
+        $users = User::whereIn('id', $usersId)->get();
+        return view('company.job.appliedIndex', compact('users'));
     }
 }

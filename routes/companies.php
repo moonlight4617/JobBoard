@@ -91,6 +91,7 @@ Route::get('/jobs/create', [JobsController::class, 'create'])->middleware('auth:
 Route::post('/jobs', [JobsController::class, 'store'])->middleware('auth:companies')->name('jobs.store');
 Route::get('/jobs/{job}', [JobsController::class, 'show'])->middleware(['ensure.jobCompany', 'auth:companies'])->name('jobs.show');
 Route::get('/jobs/{job}/edit', [JobsController::class, 'edit'])->middleware(['ensure.jobCompany', 'auth:companies'])->name('jobs.edit');
+Route::get('/jobs/{job}/appliedIndex', [JobsController::class, 'appliedIndex'])->middleware(['ensure.jobCompany', 'auth:companies'])->name('jobs.appliedIndex');
 Route::put('/jobs/{job}', [JobsController::class, 'update'])->middleware(['ensure.jobCompany', 'auth:companies'])->name('jobs.update');
 Route::delete('/jobs/{job}', [JobsController::class, 'destroy'])->middleware(['ensure.jobCompany', 'auth:companies'])->name('jobs.destroy');
 // Route::resource('jobs', JobsController::class)->middleware('auth:companies');

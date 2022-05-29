@@ -26,11 +26,18 @@ class MessageController extends Controller
 
     public function show($id)
     {
-        $contactUsersId = ContactUsers::where('companies_id', Auth::id())->where('users_id', $id)->select('id')->get();
-        $messages = Message::whereIn('contact_users_id', $contactUsersId)->orderBy('sent_time', 'asc')->get();
+        $contactUsersId = ContactUsers::where('companies_id', Auth::id())->where('users_id', $id)->select('id')->first();
+        if ($contactUsersId) {
+            $messages = Message::where('contact_users_id', $contactUsersId->id)->orderBy('sent_time', 'asc')->get();
+        } else {
+            $contactUsers = ContactUsers::create([
+                'companies_id' => Auth::id(),
+                'users_id' => $id
+            ]);
+            $contactUsersId = $contactUsers;
+            $messages = null;
+        }
         $user = User::findOrFail($id);
-        // $jobsId = Companies::findOrFail(Auth::id())->jobs()->where('rec_status', '<>', '2')->pluck('id');
-        // $appJobs = AppStatus::where('users_id', $id)->whereIn('jobs_id', $jobsId)->where('app_flag', 1)->get();
         return view('company.message.show', compact(['contactUsersId', 'messages', 'user']));
     }
 
