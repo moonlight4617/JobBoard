@@ -27,8 +27,6 @@ class JobController extends Controller
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
-        // $user = User::findOrFail(Auth::id());
-        // Mail::to($user->email)->send(new ApplyMail());
         return view('user.job.index', compact(['jobs', 'prefectures', 'occupations', 'tags']));
     }
 

@@ -12,6 +12,9 @@ use App\Models\User;
 use App\Models\Jobs;
 use App\Models\AppStatus;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMassegeMail;
+
 
 class MessageController extends Controller
 {
@@ -41,7 +44,11 @@ class MessageController extends Controller
     {
         $contact_users_id = $request->contact_users_id;
         $contents = $request->contents;
+        $companyId = $request->companyId;
+        $company = Companies::findOrFail($companyId);
+        $user = User::findOrFail(Auth::id());
         Message::create(['contact_users_id' => $contact_users_id, 'sent_time' => Carbon::now(), 'sent_from' => 1, 'body' => $contents]);
+        Mail::to($company->email)->send(new SendMassegeMail($user, route('company.message.show', ['user' => $user->id])));
         return;
     }
 }
