@@ -12,8 +12,9 @@ use App\Models\AppStatus;
 use App\Models\UserPictures;
 use App\Models\ContactUsers;
 use App\Models\Tag;
+use App\Notifications\User\VerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
@@ -81,4 +82,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail());
+    }
 }

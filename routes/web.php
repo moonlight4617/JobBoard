@@ -26,16 +26,18 @@ Route::get('/dashboard', function () {
     return view('user.dashboard');
 })->middleware(['auth:users'])->name('dashboard');
 
-Route::resource('user', UserController::class, ['except' => 'index'])->middleware(['auth:users', 'ensure.user']);
+Route::resource('user', UserController::class, ['except' => 'index'])->middleware(['auth:users', 'ensure.user', 'verified']);
 
 Route::post('deletepicture', [UserController::class, 'pictureDestroy'])->middleware('auth:users')->name('picture.delete');
 Route::post('addpicture', [UserController::class, 'pictureAdd'])->middleware('auth:users')->name('picture.add');
 
+// 求人
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/search', [JobController::class, 'query'])->name('jobs.query');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::post('/jobs/{job}/application', [JobController::class, 'application'])->name('jobs.application');
 
+// 企業詳細
 Route::get('/user/company/{company}', Company::class)->name('company.show');
 
 

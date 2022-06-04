@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\Http\Requests\Auth\LoginRequest;
 
 class RegisteredUserController extends Controller
 {
@@ -31,7 +32,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -47,10 +48,11 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        // logger('test', ['ログインユーザー' => Auth::user(), 'チェック' => Auth::check()]);
+        $request->authenticate();
 
+        $request->session()->regenerate();
         // return redirect(RouteServiceProvider::COMPANY_HOME);
         return redirect()->route('company.company.edit', ['company' => $user->id]);
     }
