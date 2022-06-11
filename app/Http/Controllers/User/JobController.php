@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\NotifyApply;
 
 
 class JobController extends Controller
@@ -45,13 +46,19 @@ class JobController extends Controller
         // まだAppStatusesテーブルにデータなければ
         $app = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id())->first();
         if (!$app) {
+            // dd($user, $company, $job, $id);
             $app = new AppStatus();
             $app->users_id = Auth::id();
             $app->jobs_id = $id;
             $app->app_flag = 1;
             $app->save();
-            Mail::to($user->email)->send(new ApplyMail($job, route('user.jobs.show', ['job' => $id])));
-            Mail::to($company->email)->send(new AppliedMail($job, route('company.jobs.show', ['job' => $id])));
+
+            // 非同期でのメール送信
+            NotifyApply::dispatch($user, $company, $job, $id);
+
+            // 同期処理でメール送信
+            // Mail::to($user->email)->send(new ApplyMail($job, route('user.jobs.show', ['job' => $id])));
+            // Mail::to($company->email)->send(new AppliedMail($job, route('company.jobs.show', ['job' => $id])));
         } else {
             // 既に応募済み
             if ($app->app_flag === 1) {
@@ -59,6 +66,8 @@ class JobController extends Controller
             } else {
                 $app->app_flag = 1;
                 $app->save();
+                // 非同期でのメール送信
+                NotifyApply::dispatch($user, $company, $job, $id);
             }
         }
         // return view('user.job.show', compact('job'))->with(['message' => '応募しました', 'status' => 'info']);

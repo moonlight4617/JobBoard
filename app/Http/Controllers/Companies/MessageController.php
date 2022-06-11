@@ -12,7 +12,8 @@ use App\Models\Companies;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendMassegeMail;
+// use App\Mail\SendMassegeMail;
+use App\Jobs\SendMessageMail;
 
 
 class MessageController extends Controller
@@ -49,7 +50,13 @@ class MessageController extends Controller
         $user = User::findOrFail($userId);
         $company = Companies::findOrFail(Auth::id());
         Message::create(['contact_users_id' => $contact_users_id, 'sent_time' => Carbon::now(), 'sent_from' => 0, 'body' => $contents]);
-        Mail::to($user->email)->send(new SendMassegeMail($company, route('user.message.show', ['company' => $company->id])));
+
+        // 非同期でメール送信
+        SendMessageMail::dispatch($company, $user);
+
+        // 同期的にメール送信。使う場合は上部のuseコメントアウト外す。
+        // Mail::to($user->email)->send(new SendMassegeMail($company, route('user.message.show', ['company' => $company->id])));
+
         return;
     }
 }
