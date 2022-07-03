@@ -21,7 +21,7 @@ class MessageController extends Controller
 {
     public function index()
     {
-        $companies = ContactUsers::where('users_id', Auth::id())->with('companies')->with('messages')->get();
+        $companies = ContactUsers::where('users_id', Auth::id())->with('companies')->with('messages')->paginate(50);
 
         // $users = ContactUsers::where('companies_id', Auth::id())->with('users')->with('messages')->get();
         // $jobs = User::findOrFail(Auth::id())->appStatus()->where('app_flag', 1)->jobs()->get();

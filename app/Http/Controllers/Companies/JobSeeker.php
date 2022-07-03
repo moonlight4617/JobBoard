@@ -18,7 +18,7 @@ class JobSeeker extends Controller
 {
     public function index()
     {
-        $users = User::where('deleted_at', null)->with('userPictures')->paginate(12);
+        $users = User::where('deleted_at', null)->with('userPictures')->paginate(50);
         $tags = Tag::where('subject', 0)->get();
         return view('company.user.index', compact(['users', 'tags']));
     }
@@ -66,7 +66,7 @@ class JobSeeker extends Controller
         foreach ($followUsers as $user) {
             $usersId[] = $user->id;
         }
-        $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(12);
+        $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(50);
         $tags = Tag::where('subject', 0)->get();
         return view('company.user.followIndex', compact(['users', 'tags']));
     }

@@ -20,7 +20,7 @@ class MessageController extends Controller
 {
     public function index()
     {
-        $users = ContactUsers::where('companies_id', Auth::id())->with('users')->with('messages')->get();
+        $users = ContactUsers::where('companies_id', Auth::id())->with('users')->with('messages')->paginate(50);
         $jobs = Companies::findOrFail(Auth::id())->jobs()->where('rec_status', '<>', '2')->get();
         return view('company.message.index', compact(['users', 'jobs']));
     }

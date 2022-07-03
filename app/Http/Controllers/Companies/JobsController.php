@@ -31,7 +31,7 @@ class JobsController extends Controller
      */
     public function index()
     {
-        $jobs = Jobs::where('companies_id', Auth::id())->with('tags')->with('Prefectures')->get();
+        $jobs = Jobs::where('companies_id', Auth::id())->with('tags')->with('Prefectures')->paginate(50);
         return view('company.job.index', compact('jobs'));
     }
 

@@ -25,7 +25,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Jobs::where('rec_status', 0)->paginate(12);
+        $jobs = Jobs::where('rec_status', 0)->paginate(50);
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
@@ -158,7 +158,7 @@ class JobController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $jobsId = $user->appStatus()->where('favorite', 1)->pluck('jobs_id');
-        $jobs = Jobs::whereIn('id', $jobsId)->get();
+        $jobs = Jobs::whereIn('id', $jobsId)->paginate(50);
         return view('user.job.favoriteIndex', compact('jobs'));
     }
 
@@ -166,7 +166,7 @@ class JobController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $jobsId = $user->appStatus()->where('app_flag', 1)->pluck('jobs_id');
-        $jobs = Jobs::whereIn('id', $jobsId)->get();
+        $jobs = Jobs::whereIn('id', $jobsId)->paginate(50);
         return view('user.job.appliedIndex', compact('jobs'));
     }
 }
