@@ -65,6 +65,7 @@
                 </div>
                 <hr>
             @endforeach
+            {{ $jobs->links() }}
         @endif
     </section>
 

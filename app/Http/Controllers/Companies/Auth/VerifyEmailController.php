@@ -25,6 +25,7 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
+        // ここを企業編集画面に遷移させるようにしておけばメール確認後に編集画面へ？
         return redirect()->intended(RouteServiceProvider::COMPANY_HOME . '?verified=1');
     }
 }

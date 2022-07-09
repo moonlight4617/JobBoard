@@ -8,11 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Jobs;
 use App\Models\ContactUsers;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\Company\VerifyEmail;
+use Illuminate\Notifications\Notifiable;
 
 
-class Companies extends Authenticatable
+
+class Companies extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
     use SoftDeletes;
 
     public function jobs()
@@ -58,4 +62,9 @@ class Companies extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail());
+    }
 }

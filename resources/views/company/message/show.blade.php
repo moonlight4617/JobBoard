@@ -55,17 +55,19 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <textarea type="text" id="chatMessage" name="chatMessage"
-                            class="chatMessage w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 my-4 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
-                        <div class="flex justify-around">
-                            <button type="button"
-                                class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg"
-                                onClick="history.back()">戻る</button>
-                            <button data-contactusers-id="{{ $contactUsersId->first()->id }}"
-                                data-user-id="{{ $user->id }}"
-                                class="postToUser text-center text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">送信</button>
-                        </div>
                     @endif
+                    <textarea type="text" id="chatMessage" name="chatMessage"
+                        class="chatMessage w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 my-4 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
+                    <div class="flex justify-around">
+                        {{-- <button type="button"
+                            class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg"
+                            onClick="location.href='{{ route('company.message.index') }}'">一覧へ戻る</button> --}}
+                        <button type="button"
+                            class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg"
+                            onClick="history.back()">戻る</button>
+                        <button data-contactusers-id="{{ $contactUsersId->id }}" data-user-id="{{ $user->id }}"
+                            class="postToUser text-center text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">送信</button>
+                    </div>
                 </div>
             </div>
         </div>

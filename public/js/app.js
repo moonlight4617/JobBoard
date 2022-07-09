@@ -5707,7 +5707,9 @@ $(function () {
         //サーバーに送信するデータ
         'contact_users_id': contactUsersId,
         //contact_users_id
-        'contents': contents //メッセージ内容
+        'contents': contents,
+        //メッセージ内容
+        'companyId': companyId //企業ID
 
       }
     }).done(function (data) {
@@ -5755,7 +5757,9 @@ $(function () {
         //サーバーに送信するデータ
         'contact_users_id': contactUsersId,
         //contact_users_id
-        'contents': contents //メッセージ内容
+        'contents': contents,
+        //メッセージ内容
+        'userId': userId //メッセージ内容
 
       }
     }).done(function (data) {

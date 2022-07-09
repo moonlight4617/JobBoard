@@ -17,7 +17,8 @@ $(function () {
       method: 'POST', //HTTPメソッドの種別を指定します。1.9.0以前の場合はtype:を使用。
       data: { //サーバーに送信するデータ
         'contact_users_id': contactUsersId, //contact_users_id
-        'contents': contents //メッセージ内容
+        'contents': contents, //メッセージ内容
+        'userId': userId //メッセージ内容
       },
     })
       .done(function (data) {

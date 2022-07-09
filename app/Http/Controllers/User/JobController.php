@@ -11,18 +11,21 @@ use App\Models\Prefecture;
 use App\Models\Occupation;
 use App\Models\Tag;
 use App\Models\User;
+use App\Mail\ApplyMail;
+use App\Mail\AppliedMail;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Mail;
+use App\Jobs\NotifyApply;
 
 
 class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Jobs::where('rec_status', 0)->paginate(12);
+        $jobs = Jobs::where('rec_status', 0)->paginate(50);
         $prefectures = Prefecture::all();
         $occupations = Occupation::all();
         $tags = Tag::where('subject', 1)->get();
@@ -37,16 +40,25 @@ class JobController extends Controller
 
     public function application($id)
     {
-        Jobs::findOrFail($id);
-
+        $job = Jobs::findOrFail($id);
+        $user = User::findOrFail(Auth::id());
+        $company = $job->companies;
         // まだAppStatusesテーブルにデータなければ
         $app = AppStatus::where('jobs_id', $id)->where('users_id', Auth::id())->first();
         if (!$app) {
+            // dd($user, $company, $job, $id);
             $app = new AppStatus();
             $app->users_id = Auth::id();
             $app->jobs_id = $id;
             $app->app_flag = 1;
             $app->save();
+
+            // 非同期でのメール送信
+            NotifyApply::dispatch($user, $company, $job, $id);
+
+            // 同期処理でメール送信
+            // Mail::to($user->email)->send(new ApplyMail($job, route('user.jobs.show', ['job' => $id])));
+            // Mail::to($company->email)->send(new AppliedMail($job, route('company.jobs.show', ['job' => $id])));
         } else {
             // 既に応募済み
             if ($app->app_flag === 1) {
@@ -54,6 +66,8 @@ class JobController extends Controller
             } else {
                 $app->app_flag = 1;
                 $app->save();
+                // 非同期でのメール送信
+                NotifyApply::dispatch($user, $company, $job, $id);
             }
         }
         // return view('user.job.show', compact('job'))->with(['message' => '応募しました', 'status' => 'info']);
@@ -144,7 +158,7 @@ class JobController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $jobsId = $user->appStatus()->where('favorite', 1)->pluck('jobs_id');
-        $jobs = Jobs::whereIn('id', $jobsId)->get();
+        $jobs = Jobs::whereIn('id', $jobsId)->paginate(50);
         return view('user.job.favoriteIndex', compact('jobs'));
     }
 
@@ -152,7 +166,7 @@ class JobController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $jobsId = $user->appStatus()->where('app_flag', 1)->pluck('jobs_id');
-        $jobs = Jobs::whereIn('id', $jobsId)->get();
+        $jobs = Jobs::whereIn('id', $jobsId)->paginate(50);
         return view('user.job.appliedIndex', compact('jobs'));
     }
 }
