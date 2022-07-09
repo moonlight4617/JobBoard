@@ -5,52 +5,40 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('company.user.index') }}">
+                    <a href="{{ route('user.jobs.index') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
-                        登録求人一覧
+                    <x-nav-link :href="route('user.login')" :active="request()->routeIs('user.login')">
+                        ログイン
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.jobs.create')" :active="request()->routeIs('company.jobs.create')">
-                        求人登録
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.company.show', ['company' => Auth::id()])" :active="request()->routeIs('company.company.show')">
-                        企業情報
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.user.index')" :active="request()->routeIs('company.user.index*')">
-                        人材一覧
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.user.followIndex')" :active="request()->routeIs('company.user.followIndex*')">
-                        フォローしている人材
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.message.index')" :active="request()->routeIs('company.message.index')">
-                        メッセージ一覧
+                    <x-nav-link :href="route('user.register')" :active="request()->routeIs('user.register')">
+                        会員登録
                     </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <x-dropdown align="right" width="48">
+
+
+                <div class="hidden space-x-8 sm:-my-px” sm:ml-10 sm:flex align="right">
+                    <x-nav-link :href="route('company.login')" :active="request()->routeIs('company.login')">
+                        企業はこちら
+                    </x-nav-link>
+                </div>
+
+
+                {{-- <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
                             class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}</div>
-
+                            企業はこちら
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
@@ -64,19 +52,21 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('company.logout') }}">
+                        <form method="POST" action="{{ route('user.logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('company.logout')" onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('user.logout')"
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                ログアウト
+                                {{ __('ログアウト') }}
                             </x-dropdown-link>
                         </form>
-                        <x-dropdown-link :href="route('company.loginToUser')">
-                            {{ __('ユーザーとしてログインする') }}
+                        <x-dropdown-link :href="route('user.loginToCompany')">
+                            {{ __('企業としてログインする') }}
                         </x-dropdown-link>
+
                     </x-slot>
-                </x-dropdown>
+                </x-dropdown> --}}
             </div>
 
             <!-- Hamburger -->
@@ -87,8 +77,8 @@
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -98,35 +88,25 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('company.dashboard')" :active="request()->routeIs('company.dashboard')">
+            <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        <div class="pt-2 pb-3 pl-3 space-y-1">
-            <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
-                登録求人一覧
-            </x-nav-link>
-        </div>
-        <div class="pt-2 pb-3 pl-3 space-y-1">
-            <x-nav-link :href="route('company.jobs.create')" :active="request()->routeIs('company.jobs.create')">
-                求人登録
-            </x-nav-link>
-        </div>
+
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('company.logout') }}">
+                <form method="POST" action="{{ route('user.logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('company.logout')" onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('user.logout')"
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        ログアウト
+                        {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

@@ -32,6 +32,8 @@
             @include('layouts.company-navigation')
         @elseif(auth('users')->user())
             @include('layouts.user-navigation')
+        @else
+            @include('layouts.guest-navigation')
         @endif
         <!-- Page Heading -->
         <header class="bg-white shadow">
