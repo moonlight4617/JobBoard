@@ -67,7 +67,8 @@
                         <form method="POST" action="{{ route('user.logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('user.logout')" onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('user.logout')"
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('ログアウト') }}
                             </x-dropdown-link>
@@ -88,8 +89,8 @@
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -99,8 +100,28 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('user.jobs.index')" :active="request()->routeIs('user.jobs.index')">
+                求人一覧
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.user.show', ['user' => Auth::id()])" :active="request()->routeIs('user.user.show')">
+                プロフィール
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.favorite.index')" :active="request()->routeIs('user.favorite.index')">
+                お気に入り求人
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.jobs.applied')" :active="request()->routeIs('user.jobs.applied')">
+                応募済み求人
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.message.index')" :active="request()->routeIs('user.message.index')">
+                メッセージ一覧
             </x-responsive-nav-link>
         </div>
 
@@ -116,11 +137,15 @@
                 <form method="POST" action="{{ route('user.logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('user.logout')" onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('user.logout')"
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        ログアウト
                     </x-responsive-nav-link>
                 </form>
+                <x-responsive-nav-link :href="route('user.loginToCompany')">
+                    企業としてログイン
+                </x-responsive-nav-link>
             </div>
         </div>
     </div>

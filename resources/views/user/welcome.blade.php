@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <x-slot name="header">
         トップページ
     </x-slot>
@@ -15,4 +15,4 @@
     </div>
     </div>
 
-</x-app-layout>
+</x-guest-layout>

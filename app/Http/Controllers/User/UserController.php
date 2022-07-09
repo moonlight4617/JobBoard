@@ -252,4 +252,13 @@ class UserController extends Controller
         $picture->delete();
         return;
     }
+
+    public function test()
+    {
+        if (Auth::guard('companies')->check()) {
+            return view('company.welcome');
+        } else {
+            return view('user.welcome');
+        }
+    }
 }

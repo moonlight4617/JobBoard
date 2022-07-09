@@ -29,6 +29,9 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         // dd($request->email);
+        if (Auth::guard('users')->check()) {
+            Auth::guard('users')->logout();
+        }
         $request->authenticate();
 
         $request->session()->regenerate();

@@ -5,6 +5,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\JobController;
 use App\Http\Controllers\User\MessageController;
 use App\Http\Controllers\User\Company;
+use App\Http\Controllers\Top;
 
 
 /*
@@ -21,6 +22,8 @@ use App\Http\Controllers\User\Company;
 Route::get('/', function () {
     return view('user.welcome');
 });
+// Route::get('/', [Top::class, 'test'])->name('top');
+
 
 Route::get('/dashboard', function () {
     return view('user.dashboard');
