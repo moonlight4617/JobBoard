@@ -31,7 +31,7 @@ class JobsController extends Controller
      */
     public function index()
     {
-        $jobs = Jobs::where('companies_id', Auth::id())->with('tags')->with('Prefectures')->paginate(50);
+        $jobs = Jobs::where('companies_id', Auth::id())->where('rec_status', 0)->with('tags')->with('Prefectures')->paginate(50);
         return view('company.job.index', compact('jobs'));
     }
 
@@ -419,5 +419,19 @@ class JobsController extends Controller
         $usersId = AppStatus::where('jobs_id', $id)->where('app_flag', 1)->pluck('users_id');
         $users = User::whereIn('id', $usersId)->get();
         return view('company.job.appliedIndex', compact('users'));
+    }
+
+    public function previousIndex()
+    {
+        $jobs = Jobs::where('companies_id', Auth::id())->where('rec_status', 1)->with('tags')->with('Prefectures')->paginate(50);
+        return view('company.job.previous', compact('jobs'));
+    }
+
+    public function close($id)
+    {
+        $job = Jobs::findOrFail($id);
+        $job->rec_status = 1;
+        $job->save();
+        return redirect()->route('company.jobs.show', compact('job'))->with(['message' => '公開終了しました。', 'status' => 'info']);
     }
 }

@@ -13,7 +13,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
-                        登録求人一覧
+                        募集中の求人
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.jobs.previous')" :active="request()->routeIs('company.jobs.previous')">
+                        過去の求人
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -105,7 +110,12 @@
         </div> --}}
         <div class="pt-2 pb-3 pl-3 space-y-1">
             <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
-                登録求人一覧
+                募集中の求人
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.jobs.previous')" :active="request()->routeIs('company.jobs.previous')">
+                過去の求人
             </x-nav-link>
         </div>
         <div class="pt-2 pb-3 pl-3 space-y-1">
