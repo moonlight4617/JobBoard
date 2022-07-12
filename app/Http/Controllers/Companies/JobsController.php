@@ -434,4 +434,12 @@ class JobsController extends Controller
         $job->save();
         return redirect()->route('company.jobs.show', compact('job'))->with(['message' => '公開終了しました。', 'status' => 'info']);
     }
+
+    public function resume($id)
+    {
+        $job = Jobs::findOrFail($id);
+        $job->rec_status = 0;
+        $job->save();
+        return redirect()->route('company.jobs.show', compact('job'))->with(['message' => '募集再開しました。', 'status' => 'info']);
+    }
 }

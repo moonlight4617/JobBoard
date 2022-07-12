@@ -145,14 +145,25 @@
                                 <button type="button"
                                     onclick="location.href='{{ route('company.jobs.appliedIndex', ['job' => $job->id]) }}'"
                                     class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募者一覧</button>
-                                <form id="previous_{{ $job->id }}" method="post"
-                                    action="{{ route('company.jobs.close', ['job' => $job->id]) }}">
-                                    @csrf
-                                    @method('post')
-                                    <button type="button" href="" data-id="{{ $job->id }}"
-                                        onclick="previousPost(this)"
-                                        class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">公開終了</button>
-                                </form>
+                                @if ($job->rec_status == 0)
+                                    <form id="previous_{{ $job->id }}" method="post"
+                                        action="{{ route('company.jobs.close', ['job' => $job->id]) }}">
+                                        @csrf
+                                        @method('post')
+                                        <button type="button" href="" data-id="{{ $job->id }}"
+                                            onclick="previousPost(this)"
+                                            class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">公開終了</button>
+                                    </form>
+                                @elseif ($job->rec_status == 1)
+                                    <form id="resume_{{ $job->id }}" method="post"
+                                        action="{{ route('company.jobs.resume', ['job' => $job->id]) }}">
+                                        @csrf
+                                        @method('post')
+                                        <button type="button" href="" data-id="{{ $job->id }}"
+                                            onclick="resumePost(this)"
+                                            class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">募集再開</button>
+                                    </form>
+                                @endif
                                 {{-- <button type="button" onClick="location.href='{{ route('company.jobs.index') }}'"
                                     class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button> --}}
                                 <form id="delete_{{ $job->id }}" method="post"
@@ -184,6 +195,13 @@
             'use strict';
             if (confirm('公開終了しますか？')) {
                 document.getElementById('previous_' + e.dataset.id).submit();
+            }
+        }
+
+        function resumePost(e) {
+            'use strict';
+            if (confirm('募集再開しますか？')) {
+                document.getElementById('resume_' + e.dataset.id).submit();
             }
         }
     </script>

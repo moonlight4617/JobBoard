@@ -33,6 +33,7 @@ use App\Http\Controllers\Companies\MessageController;
 //   return view('company.dashboard');
 // })->middleware('auth:companies')->name('dashboard');
 
+// 認証
 Route::get('/register', [RegisteredUserController::class, 'create'])
   ->middleware('guest')
   ->name('register');
@@ -86,6 +87,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
   ->middleware('auth:companies')
   ->name('logout');
 
+// 求人
 Route::get('/jobs', [JobsController::class, 'index'])->middleware(['auth:companies', 'verified'])->name('jobs.index');
 Route::get('/jobs/previous', [JobsController::class, 'previousIndex'])->middleware(['auth:companies', 'verified'])->name('jobs.previous');
 Route::get('/jobs/create', [JobsController::class, 'create'])->middleware(['auth:companies', 'verified'])->name('jobs.create');
@@ -93,6 +95,7 @@ Route::post('/jobs', [JobsController::class, 'store'])->middleware(['auth:compan
 Route::get('/jobs/{job}', [JobsController::class, 'show'])->middleware(['ensure.jobCompany', 'auth:companies', 'verified'])->name('jobs.show');
 Route::get('/jobs/{job}/edit', [JobsController::class, 'edit'])->middleware(['ensure.jobCompany', 'auth:companies', 'verified'])->name('jobs.edit');
 Route::post('/jobs/{job}/close', [JobsController::class, 'close'])->middleware(['ensure.jobCompany', 'auth:companies', 'verified'])->name('jobs.close');
+Route::post('/jobs/{job}/resume', [JobsController::class, 'resume'])->middleware(['ensure.jobCompany', 'auth:companies', 'verified'])->name('jobs.resume');
 Route::get('/jobs/{job}/appliedIndex', [JobsController::class, 'appliedIndex'])->middleware(['ensure.jobCompany', 'auth:companies', 'verified'])->name('jobs.appliedIndex');
 Route::put('/jobs/{job}', [JobsController::class, 'update'])->middleware(['ensure.jobCompany', 'auth:companies', 'verified'])->name('jobs.update');
 Route::delete('/jobs/{job}', [JobsController::class, 'destroy'])->middleware(['ensure.jobCompany', 'auth:companies', 'verified'])->name('jobs.destroy');
