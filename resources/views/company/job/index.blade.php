@@ -61,6 +61,12 @@
                                                 class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">詳細</button>
                                         </div> --}}
 
+                                        <div class="p-4">
+                                            <button type="button"
+                                                onclick="location.href='{{ route('company.jobs.appliedIndex', ['job' => $job->id]) }}'"
+                                                class="border-blue-500 border py-2 px-8 focus:outline-none hover:bg-blue-400 hover:text-white rounded text-lg">応募者一覧</button>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <hr>
