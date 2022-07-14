@@ -13,7 +13,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
-                        登録求人一覧
+                        募集中の求人
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.jobs.previous')" :active="request()->routeIs('company.jobs.previous')">
+                        過去の求人
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -22,7 +27,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.company.show', ['company' => Auth::id()])" :active="request()->routeIs('company.company.show')">
+                    <x-nav-link :href="route('company.company.show', ['company' => Auth::guard('companies')->id()])" :active="request()->routeIs('company.company.show')">
                         企業情報
                     </x-nav-link>
                 </div>
@@ -49,7 +54,7 @@
                     <x-slot name="trigger">
                         <button
                             class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::guard('companies')->user()->name }}</div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +72,8 @@
                         <form method="POST" action="{{ route('company.logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('company.logout')" onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('company.logout')"
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 ログアウト
                             </x-dropdown-link>
@@ -87,8 +93,8 @@
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -97,14 +103,19 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+        {{-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('company.dashboard')" :active="request()->routeIs('company.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-        </div>
+        </div> --}}
         <div class="pt-2 pb-3 pl-3 space-y-1">
             <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
-                登録求人一覧
+                募集中の求人
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.jobs.previous')" :active="request()->routeIs('company.jobs.previous')">
+                過去の求人
             </x-nav-link>
         </div>
         <div class="pt-2 pb-3 pl-3 space-y-1">
@@ -112,11 +123,31 @@
                 求人登録
             </x-nav-link>
         </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.company.show', ['company' => Auth::guard('companies')->id()])" :active="request()->routeIs('company.company.show')">
+                企業情報
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.user.index')" :active="request()->routeIs('company.user.index*')">
+                人材一覧
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.user.followIndex')" :active="request()->routeIs('company.user.followIndex*')">
+                フォローしている人材
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.message.index')" :active="request()->routeIs('company.message.index')">
+                メッセージ一覧
+            </x-nav-link>
+        </div>
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-800">{{ Auth::guard('companies')->user()->name }}</div>
+                <div class="font-medium text-sm text-gray-500">{{ Auth::guard('companies')->user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -124,7 +155,8 @@
                 <form method="POST" action="{{ route('company.logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('company.logout')" onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('company.logout')"
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         ログアウト
                     </x-responsive-nav-link>

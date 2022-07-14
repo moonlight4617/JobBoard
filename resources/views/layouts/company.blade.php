@@ -29,12 +29,11 @@
         @if (auth('admin')->user())
             @include('layouts.admin-navigation')
         @elseif(auth('companies')->user())
-            {{-- @include('layouts.guest-company-navigation') --}}
             @include('layouts.company-navigation')
         @elseif(auth('users')->user())
             @include('layouts.user-navigation')
         @else
-            @include('layouts.guest-navigation')
+            @include('layouts.guest-company-navigation')
         @endif
         <!-- Page Heading -->
         {{-- <header class="bg-white shadow">

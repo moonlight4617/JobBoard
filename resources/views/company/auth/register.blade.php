@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-company-layout>
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -24,7 +24,8 @@
             <div class="mt-4">
                 <x-label for="email" :value="__('Eメール')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                    required />
             </div>
 
             <!-- Password -->
@@ -54,4 +55,4 @@
             </div>
         </form>
     </x-auth-card>
-</x-guest-layout>
+</x-company-layout>

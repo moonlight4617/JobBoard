@@ -28,6 +28,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        if (Auth::guard('companies')->check()) {
+            Auth::guard('companies')->logout();
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();

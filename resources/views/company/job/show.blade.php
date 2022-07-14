@@ -131,10 +131,15 @@
                                     @foreach ($job->Tags as $tag)
                                         <div class="relative inline-block px-1 py-2">
                                             <label
-                                                class="text-white rounded-full bg-teal-500  cursor-pointer ease-in peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
+                                                class="text-white rounded-full bg-teal-500 peer-hover:bg-teal-600 px-2 py-1 peer-checked:bg-teal-600">{{ $tag->tag_name }}
                                             </label>
                                         </div>
                                     @endforeach
+                                </div>
+                                <div class="p-4">
+                                    <button type="button"
+                                        onclick="location.href='{{ route('company.jobs.appliedIndex', ['job' => $job->id]) }}'"
+                                        class="border-blue-500 border py-2 px-8 focus:outline-none hover:bg-blue-400 hover:text-white rounded text-lg">応募者一覧</button>
                                 </div>
                             </div>
 
@@ -142,11 +147,27 @@
                                 <button type="button"
                                     onclick="location.href='{{ route('company.jobs.edit', ['job' => $job->id]) }}'"
                                     class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">編集</button>
-                                <button type="button"
-                                    onclick="location.href='{{ route('company.jobs.appliedIndex', ['job' => $job->id]) }}'"
-                                    class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募者一覧</button>
-                                <button type="button" onClick="history.back()"
-                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                @if ($job->rec_status == 0)
+                                    <form id="previous_{{ $job->id }}" method="post"
+                                        action="{{ route('company.jobs.close', ['job' => $job->id]) }}">
+                                        @csrf
+                                        @method('post')
+                                        <button type="button" href="" data-id="{{ $job->id }}"
+                                            onclick="previousPost(this)"
+                                            class="bg-red-300 border-0 py-2 px-8 focus:outline-none hover:bg-red-400 rounded text-lg">公開終了</button>
+                                    </form>
+                                @elseif ($job->rec_status == 1)
+                                    <form id="resume_{{ $job->id }}" method="post"
+                                        action="{{ route('company.jobs.resume', ['job' => $job->id]) }}">
+                                        @csrf
+                                        @method('post')
+                                        <button type="button" href="" data-id="{{ $job->id }}"
+                                            onclick="resumePost(this)"
+                                            class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">募集再開</button>
+                                    </form>
+                                @endif
+                                {{-- <button type="button" onClick="location.href='{{ route('company.jobs.index') }}'"
+                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button> --}}
                                 <form id="delete_{{ $job->id }}" method="post"
                                     action="{{ route('company.jobs.destroy', ['job' => $job->id]) }}">
                                     @csrf
@@ -169,6 +190,20 @@
             'use strict';
             if (confirm('本当に削除してもいいですか?')) {
                 document.getElementById('delete_' + e.dataset.id).submit();
+            }
+        }
+
+        function previousPost(e) {
+            'use strict';
+            if (confirm('公開終了しますか？')) {
+                document.getElementById('previous_' + e.dataset.id).submit();
+            }
+        }
+
+        function resumePost(e) {
+            'use strict';
+            if (confirm('募集再開しますか？')) {
+                document.getElementById('resume_' + e.dataset.id).submit();
             }
         }
     </script>

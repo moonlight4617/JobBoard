@@ -15,7 +15,7 @@
                         @foreach ($companies as $company)
                             <div class="container px-5 py-4 mx-auto border-b border-gray-200">
                                 <div class="flex flex-col">
-                                    <div class="flex items-center w-4/5 mx-auto">
+                                    <div class="flex items-center sm:w-4/5 mx-auto">
                                         <div class="w-1/6 sm:mr-8 mr-4 items-center">
                                             @if (empty($company->companies->image1))
                                                 <img class="rounded-full w-20"
@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="w-3/5 mx-auto">
+                                    <div class="sm:w-3/5 mx-auto">
                                         <div class="p-2 flex flex-col items-start">
                                             @foreach ($company->companies->jobs as $job)
                                                 @if ($job->isApplied(Auth::user()))

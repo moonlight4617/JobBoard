@@ -5,52 +5,54 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('user.jobs.index') }}">
+                    <a href="{{ route('company.jobs.index') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
+                {{-- @auth('users') --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.jobs.index')" :active="request()->routeIs('user.jobs.index')">
-                        求人一覧
+                    <x-nav-link :href="route('company.login')" :active="request()->routeIs('company.login')">
+                        ログイン
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.register')" :active="request()->routeIs('company.register')">
+                        会員登録
+                    </x-nav-link>
+                </div>
+                {{-- @else --}}
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                        {{ __('Dashboard') }}
+                        <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
+                            求職者一覧へ戻る
+                        </x-nav-link>
+                    </div> --}}
+
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.company.show', ['company' => Auth::guard('companies')->id()])" :active="request()->routeIs('company.company.show')">
+                        企業情報
                     </x-nav-link>
                 </div> --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.user.show', ['user' => Auth::id()])" :active="request()->routeIs('user.user.show')">
-                        プロフィール
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.favorite.index')" :active="request()->routeIs('user.favorite.index')">
-                        お気に入り求人
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.jobs.applied')" :active="request()->routeIs('user.jobs.applied')">
-                        応募済み求人
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.message.index')" :active="request()->routeIs('user.message.index')">
-                        メッセージ一覧
-                    </x-nav-link>
-                </div>
+                {{-- @endauth --}}
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <x-dropdown align="right" width="48">
+
+
+                <div class="hidden space-x-8 sm:-my-px” sm:ml-10 sm:flex align="right">
+                    <x-nav-link :href="route('user.login')" :active="request()->routeIs('user.login')">
+                        ユーザー向けはこちら
+                    </x-nav-link>
+                </div>
+
+
+                {{-- <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
                             class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}</div>
-
+                            企業はこちら
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
@@ -78,7 +80,7 @@
                         </x-dropdown-link>
 
                     </x-slot>
-                </x-dropdown>
+                </x-dropdown> --}}
             </div>
 
             <!-- Hamburger -->
@@ -99,42 +101,31 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+        {{-- @auth('users') --}}
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.jobs.index')" :active="request()->routeIs('user.jobs.index')">
-                求人一覧
+            <x-responsive-nav-link :href="route('company.login')" :active="request()->routeIs('company.login')">
+                ログイン
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('company.register')" :active="request()->routeIs('company.register')">
+                会員登録
             </x-responsive-nav-link>
         </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.user.show', ['user' => Auth::id()])" :active="request()->routeIs('user.user.show')">
-                プロフィール
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.favorite.index')" :active="request()->routeIs('user.favorite.index')">
-                お気に入り求人
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.jobs.applied')" :active="request()->routeIs('user.jobs.applied')">
-                応募済み求人
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.message.index')" :active="request()->routeIs('user.message.index')">
-                メッセージ一覧
-            </x-responsive-nav-link>
-        </div>
+        {{-- @else
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
+                    求職者一覧へ戻る
+                </x-responsive-nav-link>
+            </div>
+        @endauth --}}
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('user.logout') }}">
+                {{-- <form method="POST" action="{{ route('user.logout') }}">
                     @csrf
 
                     <x-responsive-nav-link :href="route('user.logout')"
@@ -142,10 +133,11 @@
                                         this.closest('form').submit();">
                         ログアウト
                     </x-responsive-nav-link>
-                </form>
-                <x-responsive-nav-link :href="route('user.loginToCompany')">
-                    企業としてログイン
+                </form> --}}
+                <x-responsive-nav-link :href="route('user.login')">
+                    ユーザー向けはこちら
                 </x-responsive-nav-link>
+
             </div>
         </div>
     </div>

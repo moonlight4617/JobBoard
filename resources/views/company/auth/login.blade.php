@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-company-layout>
     <x-auth-card>
         企業ログイン
         <x-slot name="logo">
@@ -64,4 +64,4 @@
             </div>
         </form>
     </x-auth-card>
-</x-guest-layout>
+</x-company-layout>

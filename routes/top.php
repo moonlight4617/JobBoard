@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Top;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //   return view('user.welcome');
 // });
+// Route::get('/', [Top::class, 'test'])->name('top');
