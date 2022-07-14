@@ -103,11 +103,17 @@
                                                                 data-user-id="{{ $user->id }}"
                                                                 id="follow-{{ $user->id }}">favorite</span>
                                                         @endif
+                                                        <span class="material-icons ml-2 cursor-pointer"
+                                                            onClick="location.href='{{ route('company.message.show', ['user' => $user->id]) }}'">
+                                                            mail_outline
+                                                        </span>
                                                     @endauth
                                                 </div>
                                                 <p class="leading-relaxed text-lg text-left">{{ $user->catch }}</p>
                                                 <hr />
-
+                                                {{-- <button
+                                                    class="mt-4 p-2 flex items-center border-2 border-indigo-200 px-2 rounded text-indigo-700 hover:border-indigo-400 "
+                                                    onClick="location.href='{{ route('company.user.show', ['user' => $user->id]) }}'">メッセージを送る</button> --}}
                                             </div>
                                         </div>
                                         <div class="md:w-4/5 mx-auto">

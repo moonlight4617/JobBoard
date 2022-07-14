@@ -55,7 +55,7 @@
             </div>
         </aside>
 
-
+        {{-- メイン --}}
         <div class="py-12 w-full">
             <x-flash-message status="session('status')" />
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -102,6 +102,10 @@
                                                                 data-user-id="{{ $user->id }}"
                                                                 id="follow-{{ $user->id }}">favorite</span>
                                                         @endif
+                                                        <span class="material-icons ml-2 cursor-pointer"
+                                                            onClick="location.href='{{ route('company.message.show', ['user' => $user->id]) }}'">
+                                                            mail_outline
+                                                        </span>
                                                     @endauth
                                                 </div>
                                                 <p class="leading-relaxed text-lg text-left">{{ $user->catch }}
