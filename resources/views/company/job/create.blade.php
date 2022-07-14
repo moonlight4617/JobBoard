@@ -118,7 +118,8 @@
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
-                                            <label for="holiday" class="leading-7 text-sm text-gray-600">休日・休暇</label>
+                                            <label for="holiday"
+                                                class="leading-7 text-sm text-gray-600">休日・休暇</label>
                                             <textarea type="text" id="holiday" name="holiday"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
                                         </div>
@@ -170,9 +171,9 @@
                                                 </p>
                                             </div>
                                             <div class="p-2 w-full flex justify-around mt-8">
-                                                <button type="button"
+                                                {{-- <button type="button"
                                                     onclick="location.href='{{ route('company.dashboard') }}'"
-                                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                                                    class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button> --}}
                                                 <button type="button" onclick="jobPost(this)"
                                                     class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">登録</button>
                                             </div>

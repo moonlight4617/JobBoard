@@ -34,8 +34,8 @@
                                     @foreach ($tags as $tag)
                                         <li class="flex items-center p-2 pl-11 w-full">
                                             @if (isset($requestTags) && $requestTags && in_array($tag->id, $requestTags))
-                                                <input checked type="checkbox" value="{{ $tag->id }}" name="tags[]"
-                                                    class="mr-2">
+                                                <input checked type="checkbox" value="{{ $tag->id }}"
+                                                    name="tags[]" class="mr-2">
                                             @else
                                                 <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
                                                     class="mr-2">
@@ -70,17 +70,24 @@
                                             class="flex sm:items-center md:w-4/5 mx-auto sm:pb-10 sm:flex-row flex-col">
                                             <div class="sm:w-1/3 sm:mr-10 inline-flex items-center justify-center">
                                                 @if (empty($user->pro_image))
-                                                    <img class="rounded-full h-40 w-40"
-                                                        src="https://via.placeholder.com/100x100?text=No+Image">
+                                                    <a href="{{ route('company.user.show', ['user' => $user->id]) }}">
+                                                        <img class="rounded-full h-40 w-40"
+                                                            src="https://via.placeholder.com/100x100?text=No+Image">
+                                                    </a>
                                                 @else
-                                                    <img class="rounded-full h-40 w-40 object-cover"
-                                                        src="{{ asset('storage/users/' . $user->pro_image) }}">
+                                                    <a href="{{ route('company.user.show', ['user' => $user->id]) }}">
+                                                        <img class="rounded-full h-40 w-40 object-cover"
+                                                            src="{{ asset('storage/users/' . $user->pro_image) }}">
+                                                    </a>
                                                 @endif
                                             </div>
                                             <div class="sm:w-2/3 sm:text-left text-center mt-6 sm:mt-0">
                                                 <div class="flex items-center mb-2">
                                                     <p class="text-gray-900 title-font font-bold text-3xl">
-                                                        {{ $user->name }}
+                                                        <a
+                                                            href="{{ route('company.user.show', ['user' => $user->id]) }}">
+                                                            {{ $user->name }}
+                                                        </a>
                                                     </p>
 
 
