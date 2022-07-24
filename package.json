@@ -16,7 +16,6 @@
         "axios": "^0.21",
         "install": "^0.13.0",
         "jquery": "^3.6.0",
-        "laravel-mix": "^4.0.10",
         "lodash": "^4.17.19",
         "micromodal": "^0.4.10",
         "npm": "^8.5.1",
@@ -28,5 +27,8 @@
     "engines": {
         "node": "16.x",
         "npm": "7.x"
+    },
+    "devDependencies": {
+        "laravel-mix": "^6.0.49"
     }
 }
