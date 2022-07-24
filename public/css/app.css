@@ -1325,6 +1325,9 @@ select {
 .pt-6 {
   padding-top: 1.5rem;
 }
+.pb-36 {
+  padding-bottom: 9rem;
+}
 .text-left {
   text-align: left;
 }
@@ -2109,6 +2112,14 @@ select {
 
   .sm\:pt-24 {
     padding-top: 6rem;
+  }
+
+  .sm\:pt-36 {
+    padding-top: 9rem;
+  }
+
+  .sm\:pb-36 {
+    padding-bottom: 9rem;
   }
 
   .sm\:text-left {

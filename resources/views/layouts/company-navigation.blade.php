@@ -12,38 +12,28 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
-                        募集中の求人
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.jobs.previous')" :active="request()->routeIs('company.jobs.previous')">
-                        過去の求人
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.jobs.create')" :active="request()->routeIs('company.jobs.create')">
-                        求人登録
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('company.company.show', ['company' => Auth::guard('companies')->id()])" :active="request()->routeIs('company.company.show')">
-                        企業情報
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('company.user.index')" :active="request()->routeIs('company.user.index*')">
                         人材一覧
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('company.user.followIndex')" :active="request()->routeIs('company.user.followIndex*')">
-                        フォローしている人材
+                        フォロー中の人材
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('company.message.index')" :active="request()->routeIs('company.message.index')">
-                        メッセージ一覧
+                        メッセージ
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
+                        募集中の求人
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('company.jobs.create')" :active="request()->routeIs('company.jobs.create')">
+                        求人登録をする
                     </x-nav-link>
                 </div>
             </div>
@@ -69,9 +59,15 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
+                        <x-dropdown-link :href="route('company.company.show', ['company' => Auth::guard('companies')->id()])">
+                            {{ __('企業情報') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('company.jobs.previous')">
+                            {{ __('過去の求人') }}
+                        </x-dropdown-link>
+                        <hr />
                         <form method="POST" action="{{ route('company.logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('company.logout')"
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -103,11 +99,21 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        {{-- <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('company.dashboard')" :active="request()->routeIs('company.dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div> --}}
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.user.index')" :active="request()->routeIs('company.user.index*')">
+                人材一覧
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.user.followIndex')" :active="request()->routeIs('company.user.followIndex*')">
+                フォローしている人材
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('company.message.index')" :active="request()->routeIs('company.message.index')">
+                メッセージ一覧
+            </x-nav-link>
+        </div>
         <div class="pt-2 pb-3 pl-3 space-y-1">
             <x-nav-link :href="route('company.jobs.index')" :active="request()->routeIs('company.jobs.index')">
                 募集中の求人
@@ -126,21 +132,6 @@
         <div class="pt-2 pb-3 pl-3 space-y-1">
             <x-nav-link :href="route('company.company.show', ['company' => Auth::guard('companies')->id()])" :active="request()->routeIs('company.company.show')">
                 企業情報
-            </x-nav-link>
-        </div>
-        <div class="pt-2 pb-3 pl-3 space-y-1">
-            <x-nav-link :href="route('company.user.index')" :active="request()->routeIs('company.user.index*')">
-                人材一覧
-            </x-nav-link>
-        </div>
-        <div class="pt-2 pb-3 pl-3 space-y-1">
-            <x-nav-link :href="route('company.user.followIndex')" :active="request()->routeIs('company.user.followIndex*')">
-                フォローしている人材
-            </x-nav-link>
-        </div>
-        <div class="pt-2 pb-3 pl-3 space-y-1">
-            <x-nav-link :href="route('company.message.index')" :active="request()->routeIs('company.message.index')">
-                メッセージ一覧
             </x-nav-link>
         </div>
         <!-- Responsive Settings Options -->

@@ -33,7 +33,6 @@
                                         <p class="leading-relaxed text-xl">{{ $user->catch }}</p>
                                     </div>
                                 </div>
-
                                 <div class="p-2">
                                     <div class="relative">
                                         <div class="my-4">
@@ -104,8 +103,7 @@
                                         @endif
                                         @if ($user->blog)
                                             <a href="https://{{ $user->blog }}" target="_blank">
-                                                <img src="/images/blogger-brands.svg" class="w-8 mx-2"
-                                                    alt="ブログ" />
+                                                <img src="/images/blogger-brands.svg" class="w-8 mx-2" alt="ブログ" />
                                             </a>
                                         @endif
                                     </div>
