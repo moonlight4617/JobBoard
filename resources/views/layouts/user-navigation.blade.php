@@ -17,15 +17,10 @@
                     </x-nav-link>
                 </div>
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div> --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.user.show', ['user' => Auth::id()])" :active="request()->routeIs('user.user.show')">
                         プロフィール
                     </x-nav-link>
-                </div>
+                </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.favorite.index')" :active="request()->routeIs('user.favorite.index')">
                         お気に入り求人
@@ -64,6 +59,13 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
+                        <x-dropdown-link :href="route('user.user.show', ['user' => Auth::id()])">
+                            {{ __('マイプロフィール') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('user.edit')">
+                            {{ __('会員情報') }}
+                        </x-dropdown-link>
+                        <hr />
                         <form method="POST" action="{{ route('user.logout') }}">
                             @csrf
 
@@ -76,7 +78,6 @@
                         <x-dropdown-link :href="route('user.loginToCompany')">
                             {{ __('企業としてログインする') }}
                         </x-dropdown-link>
-
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -105,11 +106,6 @@
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.user.show', ['user' => Auth::id()])" :active="request()->routeIs('user.user.show')">
-                プロフィール
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('user.favorite.index')" :active="request()->routeIs('user.favorite.index')">
                 お気に入り求人
             </x-responsive-nav-link>
@@ -122,6 +118,11 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('user.message.index')" :active="request()->routeIs('user.message.index')">
                 メッセージ一覧
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.user.show', ['user' => Auth::id()])" :active="request()->routeIs('user.user.show')">
+                プロフィール
             </x-responsive-nav-link>
         </div>
 

@@ -190,6 +190,10 @@
                                             class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
                                             data-job-id="{{ $job->id }}">favorite</span>
                                     @endif
+                                    <span class="material-icons ml-2 mb-1 cursor-pointer"
+                                        onClick="location.href='{{ route('user.message.show', ['company' => $job->companies->id]) }}'">
+                                        mail_outline
+                                    </span>
                                 @endauth
                             </div>
                             <p class="text-3xl mb-4 text-gray-900">{{ $job->catch }}</p>

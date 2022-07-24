@@ -58,17 +58,21 @@
                                     <div class="mt-2 flex items-center">
                                         <span class="align-bottom">
                                             求人名：{{ $job->job_name }}</span>
-                                        {{-- @auth('users') --}}
-                                        @if (!$job->isLikedBy(Auth::user()))
-                                            <span
-                                                class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
-                                                data-job-id="{{ $job->id }}">favorite_border</span>
-                                        @else
-                                            <span
-                                                class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
-                                                data-job-id="{{ $job->id }}">favorite</span>
-                                        @endif
-                                        {{-- @endauth --}}
+                                        @auth('users')
+                                            @if (!$job->isLikedBy(Auth::user()))
+                                                <span
+                                                    class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
+                                                    data-job-id="{{ $job->id }}">favorite_border</span>
+                                            @else
+                                                <span
+                                                    class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
+                                                    data-job-id="{{ $job->id }}">favorite</span>
+                                            @endif
+                                            <span class="material-icons ml-2 mb-1 cursor-pointer"
+                                                onClick="location.href='{{ route('user.message.show', ['company' => $job->companies->id]) }}'">
+                                                mail_outline
+                                            </span>
+                                        @endauth
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -135,18 +139,20 @@
                             <div class="p-2 w-full flex justify-around mt-4">
 
                                 {{-- まだ応募してなければ --}}
-                                @if (!$job->isApplied(Auth::user()))
-                                    <form id="apply" method="post"
-                                        action="{{ route('user.jobs.application', ['job' => $job->id]) }}">
-                                        @csrf
-                                        <button type="button" onclick="apply(this)" href=""
-                                            class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募する</button>
-                                    </form>
-                                @else
-                                    {{-- もう応募してれば --}}
-                                    <button type="button" disabled
-                                        class="bg-gray-300 border-0 py-2 px-8 focus:outline-none rounded text-lg">応募済み</button>
-                                @endif
+                                @auth('users')
+                                    @if (!$job->isApplied(Auth::user()))
+                                        <form id="apply" method="post"
+                                            action="{{ route('user.jobs.application', ['job' => $job->id]) }}">
+                                            @csrf
+                                            <button type="button" onclick="apply(this)" href=""
+                                                class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">応募する</button>
+                                        </form>
+                                    @else
+                                        {{-- もう応募してれば --}}
+                                        <button type="button" disabled
+                                            class="bg-gray-300 border-0 py-2 px-8 focus:outline-none rounded text-lg">応募済み</button>
+                                    @endif
+                                @endauth
                                 <button type="button"
                                     class="bg-gray-300 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg"
                                     onClick="history.back()">戻る</button>

@@ -25,6 +25,14 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
   ->middleware(['guest']);
 
+Route::get('/edit', [RegisteredUserController::class, 'edit'])
+  ->middleware('auth:users')
+  ->name('edit');
+
+Route::post('/update', [RegisteredUserController::class, 'update'])
+  ->middleware('auth:users')
+  ->name('update');
+
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
   ->middleware('guest')
   ->name('password.request');
@@ -36,6 +44,9 @@ Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
 Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
   ->middleware('guest')
   ->name('password.reset');
+// Route::get('/reset-password/{token}', function ($token) {
+//   return view('user.auth.reset-password', ['token' => $token]);
+// })->name('password.reset');
 
 Route::post('/reset-password', [NewPasswordController::class, 'store'])
   ->middleware('guest')
