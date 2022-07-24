@@ -22,11 +22,6 @@ class JobOccupationsSeeder extends Seeder
         'created_at' => '2022/02/06 17:05:00'
       ],
       [
-        'jobs_id' => '1',
-        'occupations_id' => '1',
-        'created_at' => '2022/02/06 17:05:00'
-      ],
-      [
         'jobs_id' => '2',
         'occupations_id' => '2',
         'created_at' => '2022/02/06 17:05:00'
