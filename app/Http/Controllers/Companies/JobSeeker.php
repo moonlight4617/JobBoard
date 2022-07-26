@@ -62,11 +62,16 @@ class JobSeeker extends Controller
 
     public function followIndex()
     {
+        $usersId = null;
         $followUsers = Companies::findOrFail(Auth::id())->ContactUsers->where('follow', 1);
         foreach ($followUsers as $user) {
             $usersId[] = $user->id;
         }
-        $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(50);
+        if ($usersId != null) {
+            $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(50);
+        } else {
+            $users = null;
+        }
         $tags = Tag::where('subject', 0)->get();
         return view('company.user.followIndex', compact(['users', 'tags']));
     }
