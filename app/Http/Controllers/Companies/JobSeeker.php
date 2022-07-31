@@ -65,7 +65,7 @@ class JobSeeker extends Controller
         $usersId = null;
         $followUsers = Companies::findOrFail(Auth::id())->ContactUsers->where('follow', 1);
         foreach ($followUsers as $user) {
-            $usersId[] = $user->id;
+            $usersId[] = $user->users_id;
         }
         if ($usersId != null) {
             $users = User::where('deleted_at', null)->whereIn('id', $usersId)->with('userPictures')->paginate(50);
