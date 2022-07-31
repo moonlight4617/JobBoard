@@ -13,7 +13,7 @@
                     <section class="text-gray-600 body-font relative">
                         <div class="container px-5 py-4 mx-auto">
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                            <div class="md:w-3/5 mx-auto mt-4">
+                            <div class="md:w-4/5 lg:w-3/5 mx-auto mt-4">
                                 <div class="flex items-center pb-10 border-gray-200 sm:flex-row flex-col">
                                     <div class="sm:mr-10 inline-flex items-center justify-center">
                                         @if (empty($user->pro_image))
