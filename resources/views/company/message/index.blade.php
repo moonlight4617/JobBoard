@@ -17,12 +17,12 @@
                                 <div class="flex flex-col">
                                     <div class="flex items-center sm:w-4/5 mx-auto">
                                         <div class="w-1/6 sm:mr-8 mr-4 items-center">
-                                            @if (empty($user->pro_image))
+                                            @if (empty($user->users->pro_image))
                                                 <img class="rounded-full w-20"
                                                     src="https://via.placeholder.com/100x100?text=No+Image">
                                             @else
-                                                <img class="rounded-full w-20 object-cover"
-                                                    src="/images/{{ $user->pro_image }}">
+                                                <img class="rounded-full w-20 h-20 object-cover"
+                                                    src="/images/{{ $user->users->pro_image }}">
                                                 {{-- src="{{ asset('storage/users/' . $user->pro_image) }}"> --}}
                                             @endif
                                         </div>
