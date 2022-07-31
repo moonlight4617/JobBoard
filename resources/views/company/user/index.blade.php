@@ -78,7 +78,8 @@
                                                 @else
                                                     <a href="{{ route('company.user.show', ['user' => $user->id]) }}">
                                                         <img class="rounded-full h-40 w-40 object-cover"
-                                                            src="{{ asset('storage/users/' . $user->pro_image) }}">
+                                                            src="/images/{{ $user->pro_image }}">
+                                                        {{-- src="{{ asset('storage/users/' . $user->pro_image) }}"> --}}
                                                     </a>
                                                 @endif
                                             </div>
@@ -163,7 +164,8 @@
                                                                     class="h-full flex flex-col items-center text-center">
                                                                     <img alt="portfolio"
                                                                         class="flex-shrink-0 rounded-lg w-full object-contain object-center mb-4"
-                                                                        src="{{ asset('storage/users/portfolio/' . $user->userPictures->get($i)->filename) }}">
+                                                                        src="/images/{{ $user->userPictures->get($i)->filename }}">
+                                                                    {{-- src="{{ asset('storage/users/portfolio/' . $user->userPictures->get($i)->filename) }}"> --}}
                                                                 </div>
                                                             </div>
                                                         @endif

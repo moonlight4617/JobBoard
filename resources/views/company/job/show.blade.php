@@ -30,21 +30,24 @@
                                             @if (empty($job->image1))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/jobs/' . $job->image1) }}">
+                                                <img src="/images/{{ $job->image1 }}">
+                                                {{-- <img src="{{ asset('storage/jobs/' . $job->image1) }}"> --}}
                                             @endif
                                         </div>
                                         <div class="swiper-slide">
                                             @if (empty($job->image2))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/jobs/' . $job->image2) }}">
+                                                <img src="/images/{{ $job->image2 }}">
+                                                {{-- <img src="{{ asset('storage/jobs/' . $job->image2) }}"> --}}
                                             @endif
                                         </div>
                                         <div class="swiper-slide">
                                             @if (empty($job->image3))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/jobs/' . $job->image3) }}">
+                                                <img src="/images/{{ $job->image3 }}">
+                                                {{-- <img src="{{ asset('storage/jobs/' . $job->image3) }}"> --}}
                                             @endif
                                         </div>
                                     </div>

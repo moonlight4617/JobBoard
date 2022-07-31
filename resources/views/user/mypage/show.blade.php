@@ -21,7 +21,8 @@
                                                 src="https://via.placeholder.com/100x100?text=No+Image">
                                         @else
                                             <img class="rounded-full h-40 w-40 object-cover"
-                                                src="{{ asset('storage/users/' . $user->pro_image) }}">
+                                                src="/images/{{ $user->pro_image }}">
+                                            {{-- src="{{ asset('storage/users/' . $user->pro_image) }}"> --}}
                                         @endif
                                     </div>
                                     <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
@@ -126,7 +127,8 @@
                                                         <a class="block relative h-48 rounded overflow-hidden">
                                                             <img alt="userPictures"
                                                                 class="object-cover object-center w-full h-full block"
-                                                                src="{{ asset('storage/users/portfolio/' . $picture->filename) }}">
+                                                                src="/images/{{ $picture->filename }}">
+                                                            {{-- src="{{ asset('storage/users/portfolio/' . $picture->filename) }}"> --}}
                                                         </a>
                                                     </div>
                                                 @endforeach

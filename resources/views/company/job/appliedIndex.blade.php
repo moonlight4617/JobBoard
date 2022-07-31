@@ -23,7 +23,8 @@
                                                         src="https://via.placeholder.com/100x100?text=No+Image">
                                                 @else
                                                     <img class="rounded-full w-20 h-20 object-cover"
-                                                        src="{{ asset('storage/users/' . $user->pro_image) }}">
+                                                        src="/images/{{ $user->pro_image }}">
+                                                    {{-- src="{{ asset('storage/users/' . $user->pro_image) }}"> --}}
                                                 @endif
                                             </a>
                                         </div>

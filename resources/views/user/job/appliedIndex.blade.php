@@ -17,8 +17,10 @@
                                 <img class="object-cover object-center rounded"
                                     src="https://via.placeholder.com/1980x1080?text=No+Image" alt="No Image">
                             @else
-                                <img class="object-cover object-center rounded"
-                                    src="{{ asset('storage/jobs/' . $job->image1) }}" alt="job-image">
+                                <img class="object-cover object-center rounded" src="/images/{{ $job->image1 }}"
+                                    alt="job-image">
+                                {{-- <img class="object-cover object-center rounded"
+                                    src="{{ asset('storage/jobs/' . $job->image1) }}" alt="job-image"> --}}
                             @endif
                         </a>
                     </div>

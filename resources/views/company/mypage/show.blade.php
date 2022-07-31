@@ -30,21 +30,24 @@
                                             @if (empty($company->image1))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/companies/' . $company->image1) }}">
+                                                <img src="/images/{{ $company->image1 }}">
+                                                {{-- <img src="{{ asset('storage/companies/' . $company->image1) }}"> --}}
                                             @endif
                                         </div>
                                         <div class="swiper-slide">
                                             @if (empty($company->image2))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/companies/' . $company->image2) }}">
+                                                <img src="/images/{{ $company->image2 }}">
+                                                {{-- <img src="{{ asset('storage/companies/' . $company->image2) }}"> --}}
                                             @endif
                                         </div>
                                         <div class="swiper-slide">
                                             @if (empty($company->image3))
                                                 <img src="https://via.placeholder.com/1980x1080?text=No+Image">
                                             @else
-                                                <img src="{{ asset('storage/companies/' . $company->image3) }}">
+                                                <img src="/images/{{ $company->image3 }}">
+                                                {{-- <img src="{{ asset('storage/companies/' . $company->image3) }}"> --}}
                                             @endif
                                         </div>
                                     </div>

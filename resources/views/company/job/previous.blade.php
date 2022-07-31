@@ -23,7 +23,8 @@
                                                 alt="No Image">
                                         @else
                                             <img class="mx-auto lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
-                                                src="{{ asset('storage/jobs/' . $job->image1) }}" alt="job-image">
+                                                src="/images/{{ $job->image1 }}" alt="job-image">
+                                            {{-- src="{{ asset('storage/jobs/' . $job->image1) }}" alt="job-image"> --}}
                                         @endif
                                     </a>
                                     <div class="text-center lg:w-2/3 w-full">
