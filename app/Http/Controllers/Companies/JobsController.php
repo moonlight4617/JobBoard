@@ -367,7 +367,10 @@ class JobsController extends Controller
             $extension = $imageFile1->extension();
             $fileNameToStore1 = $fileName . '.'  . $extension;
             $resizedImage1 = InterventionImage::make($imageFile1)->orientate()->fit(1920, 1080)->encode();
-            Storage::put('public/jobs/' . $fileNameToStore1, $resizedImage1);
+            $storedImage1 = Storage::put('public/jobs/' . $fileNameToStore1, $resizedImage1);
+            if (!$storedImage1) {
+                return redirect()->route('company.jobs.show', compact('job'))->with(['message' => '画像更新失敗', 'status' => 'info']);
+            }
             $job->image1 = $fileNameToStore1;
         }
         if ($request->imgpath2) {
