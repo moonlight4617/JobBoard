@@ -43,7 +43,7 @@
                                                     class="mb-2 mx-2 leading-relaxed">{{ $prefecture->prefecture }}</span>
                                             @endforeach
                                         @endif
-                                        <p class="mb-2 leading-relaxed">{{ $job->detail }}</p>
+                                        <p class="mb-2 leading-relaxed">{!! $job->detail !!}</p>
 
                                         @if ($job->tags)
                                             @foreach ($job->tags as $tag)

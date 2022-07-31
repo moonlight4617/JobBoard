@@ -39,7 +39,7 @@
                                         <div class="my-4">
                                             <span class="font-bold border p-1 border-gray-400 rounded">自己紹介文</span>
                                         </div>
-                                        <p class="ml-2">{{ $user->intro }}</p>
+                                        <p class="ml-2">{!! $user->intro !!}</p>
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -47,7 +47,7 @@
                                         <div class="my-4">
                                             <span class="font-bold border p-1 border-gray-400 rounded">経歴</span>
                                         </div>
-                                        <p class="ml-2">{{ $user->career }}</p>
+                                        <p class="ml-2">{!! $user->career !!}</p>
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -55,7 +55,7 @@
                                         <div class="my-4">
                                             <span class="font-bold border p-1 border-gray-400 rounded">資格</span>
                                         </div>
-                                        <p class="ml-2">{{ $user->license }}</p>
+                                        <p class="ml-2">{!! $user->license !!}</p>
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -63,7 +63,7 @@
                                         <div class="my-4">
                                             <span class="font-bold border p-1 border-gray-400 rounded">趣味・特技</span>
                                         </div>
-                                        <p class="ml-2">{{ $user->hobby }}</p>
+                                        <p class="ml-2">{!! $user->hobby !!}</p>
                                     </div>
                                 </div>
 
@@ -104,8 +104,7 @@
                                         @endif
                                         @if ($user->blog)
                                             <a href="https://{{ $user->blog }}" target="_blank">
-                                                <img src="/images/blogger-brands.svg" class="w-8 mx-2"
-                                                    alt="ブログ" />
+                                                <img src="/images/blogger-brands.svg" class="w-8 mx-2" alt="ブログ" />
                                             </a>
                                         @endif
                                     </div>

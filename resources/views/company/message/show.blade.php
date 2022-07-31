@@ -35,7 +35,7 @@
                                         <div class="mx-2 my-6 flex flex-col">
                                             <p
                                                 class="mr-auto flex p-2 rounded bg-gray-200 box-border lg:max-w-2xl md:max-w-lg max-w-md">
-                                                {{ $message->body }}
+                                                {!! $message->body !!}
                                             </p>
                                             <div class="mr-auto">
                                                 <small>{{ date('Y-m-d H:i', strtotime($message->sent_time)) }}</small>
@@ -45,7 +45,7 @@
                                         <div class="mx-2 my-6 flex flex-col">
                                             <p
                                                 class="ml-auto flex p-2 rounded bg-indigo-200 box-border lg:max-w-2xl md:max-w-lg max-w-md">
-                                                {{ $message->body }}
+                                                {!! $message->body !!}
                                             </p>
                                             <div class="ml-auto">
                                                 <small>{{ date('Y-m-d H:i', strtotime($message->sent_time)) }}</small>

@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        企業詳細：{{ $company->intro }}
+                                        企業詳細：{!! $company->intro !!}
                                     </div>
                                 </div>
                                 <div class="p-2">

@@ -93,17 +93,17 @@
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        仕事内容：{{ $job->detail }}
+                                        仕事内容：{!! $job->detail !!}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        応募条件：{{ $job->conditions }}
+                                        応募条件：{!! $job->conditions !!}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        勤務時間：{{ $job->duty_hours }}
+                                        勤務時間：{!! $job->duty_hours !!}
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -118,12 +118,12 @@
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        休日・休暇：{{ $job->holiday }}
+                                        休日・休暇：{!! $job->holiday !!}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        福利厚生：{{ $job->benefits }}
+                                        福利厚生：{!! $job->benefits !!}
                                     </div>
                                 </div>
                                 <div class="p-2">

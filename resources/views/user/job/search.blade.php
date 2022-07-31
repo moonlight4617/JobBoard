@@ -157,8 +157,8 @@
                                     @foreach ($tags as $tag)
                                         <li class="flex items-center p-2 pl-11 w-full">
                                             @if ($requestTags && in_array($tag->id, $requestTags))
-                                                <input checked type="checkbox" value="{{ $tag->id }}" name="tags[]"
-                                                    class="mr-2">
+                                                <input checked type="checkbox" value="{{ $tag->id }}"
+                                                    name="tags[]" class="mr-2">
                                             @else
                                                 <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
                                                     class="mr-2">
@@ -221,6 +221,10 @@
                                             class="material-icons favoriteId{{ $job->id }} favorite mb-1 ml-4 cursor-pointer"
                                             data-job-id="{{ $job->id }}">favorite</span>
                                     @endif
+                                    <span class="material-icons ml-2 mb-1 cursor-pointer"
+                                        onClick="location.href='{{ route('user.message.show', ['company' => $job->companies->id]) }}'">
+                                        mail_outline
+                                    </span>
                                 @endauth
                             </div>
                             <p class="text-3xl mb-4 text-gray-900">{{ $job->catch }}</p>
@@ -234,7 +238,7 @@
                                     <span class="mb-2 mx-2 leading-relaxed">{{ $prefecture->prefecture }}</span>
                                 @endforeach
                             @endif
-                            <p class="mb-2 leading-relaxed">{{ $job->detail }}</p>
+                            <p class="mb-2 leading-relaxed">{!! $job->detail !!}</p>
                             @if ($job->tags)
                                 @foreach ($job->tags as $tag)
                                     <div class="relative inline-block px-1 py-2">

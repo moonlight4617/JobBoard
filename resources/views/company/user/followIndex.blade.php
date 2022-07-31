@@ -120,19 +120,19 @@
                                                     <span
                                                         class="font-bold border p-1 border-gray-400 rounded">自己紹介</span>
                                                 </div>
-                                                <p class="ml-2">{{ $user->intro }}</p>
+                                                <p class="ml-2">{!! $user->intro !!}</p>
                                             @endif
                                             @if ($user->career)
                                                 <div class="my-4">
                                                     <span class="font-bold border p-1 border-gray-400 rounded">経歴</span>
                                                 </div>
-                                                <p class="ml-2">{{ $user->career }}</p>
+                                                <p class="ml-2">{!! $user->career !!}</p>
                                             @endif
                                             @if ($user->license)
                                                 <div class="my-4">
                                                     <span class="font-bold border p-1 border-gray-400 rounded">資格</span>
                                                 </div>
-                                                <p class="ml-2">{{ $user->license }}</p>
+                                                <p class="ml-2">{!! $user->license !!}</p>
                                             @endif
                                             @if ($user->Tags->first())
                                                 <div class="my-4">

@@ -115,10 +115,11 @@ class JobController extends Controller
         // dd($requestSearch);
 
         // $jobs = DB::table('jobs')
-        $jobs = Jobs::when($requestPrefs, function ($query, $requestPrefs) {
-            return $query->leftJoin('job_locations', 'jobs.id', '=', 'job_locations.jobs_id')
-                ->whereIn('job_locations.prefectures_id', $requestPrefs);
-        })
+        $jobs = Jobs::where('rec_status', 0)
+            ->when($requestPrefs, function ($query, $requestPrefs) {
+                return $query->leftJoin('job_locations', 'jobs.id', '=', 'job_locations.jobs_id')
+                    ->whereIn('job_locations.prefectures_id', $requestPrefs);
+            })
             ->when($requestOccupations, function ($query, $requestOccupations) {
                 return $query->leftJoin('job_occupations', 'jobs.id', '=', 'job_occupations.jobs_id')
                     ->whereIn('job_occupations.occupations_id', $requestOccupations);
@@ -158,7 +159,7 @@ class JobController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $jobsId = $user->appStatus()->where('favorite', 1)->pluck('jobs_id');
-        $jobs = Jobs::whereIn('id', $jobsId)->paginate(50);
+        $jobs = Jobs::whereIn('id', $jobsId)->where('rec_status', 0)->paginate(50);
         return view('user.job.favoriteIndex', compact('jobs'));
     }
 
@@ -166,7 +167,7 @@ class JobController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         $jobsId = $user->appStatus()->where('app_flag', 1)->pluck('jobs_id');
-        $jobs = Jobs::whereIn('id', $jobsId)->paginate(50);
+        $jobs = Jobs::whereIn('id', $jobsId)->where('rec_status', 0)->paginate(50);
         return view('user.job.appliedIndex', compact('jobs'));
     }
 }

@@ -48,8 +48,7 @@
                                                 @if ($job->isApplied($user))
                                                     <div
                                                         class="inline-block py-1 px-2 mb-2 rounded bg-indigo-50 text-indigo-500 font-medium tracking-widest">
-                                                        <a
-                                                            href="{{ route('company.jobs.show', ['job' => $job->id]) }}">
+                                                        <a href="{{ route('company.jobs.show', ['job' => $job->id]) }}">
                                                             {{ $job->job_name }}</a>
                                                         <span class="text-black">に応募済み</span>
                                                     </div>
@@ -58,9 +57,8 @@
                                         </div>
 
                                         @if ($user->messages->last())
-                                            <a
-                                                href="{{ route('company.message.show', ['user' => $user->users->id]) }}">
-                                                <p class="text-gray-500">{{ $user->messages->last()->body }}</p>
+                                            <a href="{{ route('company.message.show', ['user' => $user->users->id]) }}">
+                                                <p class="text-gray-500">{!! $user->messages->last()->body !!}</p>
                                                 <small
                                                     class="text-gray-500">{{ date('Y-m-d H:i', strtotime($user->messages->last()->sent_time)) }}</small>
                                             </a>
