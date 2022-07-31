@@ -54,7 +54,7 @@ class JobController extends Controller
             $app->save();
 
             // 非同期でのメール送信
-            NotifyApply::dispatch($user, $company, $job, $id);
+            // NotifyApply::dispatch($user, $company, $job, $id);
 
             // 同期処理でメール送信
             // Mail::to($user->email)->send(new ApplyMail($job, route('user.jobs.show', ['job' => $id])));
@@ -67,7 +67,7 @@ class JobController extends Controller
                 $app->app_flag = 1;
                 $app->save();
                 // 非同期でのメール送信
-                NotifyApply::dispatch($user, $company, $job, $id);
+                // NotifyApply::dispatch($user, $company, $job, $id);
             }
         }
         // return view('user.job.show', compact('job'))->with(['message' => '応募しました', 'status' => 'info']);

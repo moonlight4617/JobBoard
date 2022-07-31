@@ -59,7 +59,7 @@ class MessageController extends Controller
         Message::create(['contact_users_id' => $contact_users_id, 'sent_time' => Carbon::now(), 'sent_from' => 1, 'body' => $contents]);
 
         // 非同期でメール送信
-        SendMessageMail::dispatch($user, $company);
+        // SendMessageMail::dispatch($user, $company);
 
         // 同期的にメール送信。使う場合は上部のuseコメントアウト外す。
         // Mail::to($company->email)->send(new SendMassegeMail($user, route('company.message.show', ['user' => $user->id])));
