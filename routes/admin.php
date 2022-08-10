@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CompaniesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\TagsController;
 
 
 /*
@@ -31,9 +32,13 @@ use App\Http\Controllers\Admin\UsersController;
 Route::resource('companies', CompaniesController::class)->middleware('auth:admin');
 Route::resource('users', UsersController::class)->middleware('auth:admin');
 
-Route::get('/', function () {
-  return view('admin.dashboard');
-})->middleware(['auth:admin'])->name('dashboard');
+Route::get('/tags', [TagsController::class, 'index'])->middleware(['auth:admin'])->name('tags.index');
+Route::post('/tags/store', [TagsController::class, 'store'])->middleware(['auth:admin'])->name('tags.store');
+Route::delete('/tags/destroy', [TagsController::class, 'destroy'])->middleware(['auth:admin'])->name('tags.destroy');
+
+// Route::get('/', function () {
+//   return view('admin.dashboard');
+// })->middleware(['auth:admin'])->name('dashboard');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
   ->middleware('guest')

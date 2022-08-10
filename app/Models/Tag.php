@@ -20,4 +20,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(User::class, 'tag_to_users', 'tags_id', 'users_id')->withTimestamps();
     }
+
+    protected $fillable = [
+        'tag_name',
+        'subject'
+    ];
 }
