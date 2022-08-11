@@ -8,6 +8,9 @@ use App\Models\Companies;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\UploadImageRequest;
+use InterventionImage;
+use Illuminate\Support\Facades\Storage;
 
 
 class CompaniesController extends Controller
@@ -41,24 +44,70 @@ class CompaniesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(UploadImageRequest $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'intro' => ['required', 'string'],
+            'tel' => ['nullable', 'string'],
+            'post_code' => ['nullable', 'integer'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'homepage' => ['nullable', 'string', 'max:255']
         ]);
 
-        Companies::create([
+        $company = Companies::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'intro' => $request->intro
+            'intro' => $request->intro,
+            'tel' => $request->tel,
+            'post_code' => $request->post_code,
+            'address' => $request->address,
+            'homepage' => $request->homepage
         ]);
 
+        // image1,2,3がparamsにあれば、一旦削除した後に、登録
+        if ($request->imgpath1) {
+            $imageFile = $request->imgpath1;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore1 = $fileName . '.'  . $extension;
+            $resizedImage1 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
+            Storage::put('public/companies/' . $fileNameToStore1, $resizedImage1);
+        } else {
+            $fileNameToStore1 = null;
+        }
+        if ($request->imgpath2) {
+            $imageFile = $request->imgpath2;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore2 = $fileName . '.'  . $extension;
+            $resizedImage2 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
+            Storage::put('public/companies/' . $fileNameToStore2, $resizedImage2);
+        } else {
+            $fileNameToStore2 = null;
+        }
+        if ($request->imgpath3) {
+            $imageFile = $request->imgpath3;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore3 = $fileName . '.'  . $extension;
+            $resizedImage3 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
+            Storage::put('public/companies/' . $fileNameToStore3, $resizedImage3);
+        } else {
+            $fileNameToStore3 = null;
+        }
+
+        $company->image1 = $fileNameToStore1;
+        $company->image2 = $fileNameToStore2;
+        $company->image3 = $fileNameToStore3;
+
+        $company->save();
 
         return redirect()->route('admin.companies.index')->with(['message' => '企業登録しました。', 'status' => 'info']);
     }
@@ -94,13 +143,18 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UploadImageRequest $request, $id)
     {
         $company = Companies::findOrFail($id);
         $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('companies')->ignore($company->id)],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('companies')->ignore($company->id)],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'intro' => ['required', 'string'],
+            'tel' => ['nullable', 'string'],
+            'post_code' => ['nullable', 'integer'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'homepage' => ['nullable', 'string', 'max:255']
         ]);
 
         $company->name = $request->name;
@@ -110,7 +164,58 @@ class CompaniesController extends Controller
             $company->password = Hash::make($request->password);
         }
         $company->intro = $request->intro;
-        // dd($company);
+        $company->tel = $request->tel;
+        $company->post_code = $request->post_code;
+        $company->address = $request->address;
+        $company->homepage = $request->homepage;
+
+        // image1,2,3がparamsにあれば、一旦削除した後に、登録
+        if ($request->imgpath1) {
+            // 画像が既に登録ずみであれば削除
+            $filePath1 = 'public/companies/' . $company->image1;
+            if (Storage::exists($filePath1)) {
+                Storage::delete($filePath1);
+            }
+            // 改めて画像登録
+            $imageFile = $request->imgpath1;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore1 = $fileName . '.'  . $extension;
+            $resizedImage1 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
+            Storage::put('public/companies/' . $fileNameToStore1, $resizedImage1);
+            $company->image1 = $fileNameToStore1;
+        }
+        if ($request->imgpath2) {
+            // 画像が既に登録ずみであれば削除
+            $filePath2 = 'public/companies/' . $company->image2;
+            if (Storage::exists($filePath2)) {
+                Storage::delete($filePath2);
+            }
+            // 改めて画像登録
+            $imageFile = $request->imgpath2;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore2 = $fileName . '.'  . $extension;
+            $resizedImage2 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
+            Storage::put('public/companies/' . $fileNameToStore2, $resizedImage2);
+            $company->image2 = $fileNameToStore2;
+        }
+        if ($request->imgpath3) {
+            // 画像が既に登録ずみであれば削除
+            $filePath3 = 'public/companies/' . $company->image3;
+            if (Storage::exists($filePath3)) {
+                Storage::delete($filePath3);
+            }
+            // 改めて画像登録
+            $imageFile = $request->imgpath3;
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameToStore3 = $fileName . '.'  . $extension;
+            $resizedImage3 = InterventionImage::make($imageFile)->orientate()->fit(1920, 1080)->encode();
+            Storage::put('public/companies/' . $fileNameToStore3, $resizedImage3);
+            $company->image3 = $fileNameToStore3;
+        }
+
         $company->save();
 
         return redirect()->route('admin.companies.index')->with(['message' => '企業を更新しました。', 'status' => 'info']);
