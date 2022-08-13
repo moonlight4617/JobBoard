@@ -240,8 +240,7 @@ class CompaniesController extends Controller
         $requestName = $request->name;
         $requestEmail = $request->email;
 
-        // $companies = Company::when($requestName, function ($query, $requestName) {
-        $companies = DB::table('companies')->when($requestName, function ($query, $requestName) {
+        $companies = Companies::where('deleted_at', null)->when($requestName, function ($query, $requestName) {
             $spaceConversion = mb_convert_kana($requestName, 's');
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
             foreach ($wordArraySearched as $word) {
