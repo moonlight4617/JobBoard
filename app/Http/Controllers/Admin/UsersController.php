@@ -249,4 +249,33 @@ class UsersController extends Controller
         User::findOrFail($id)->delete();
         return redirect()->route('admin.users.index')->with(['message' => 'ユーザーを削除しました。', 'status' => 'alert']);
     }
+
+    public function query(Request $request)
+    {
+        $requestName = $request->name;
+        $requestEmail = $request->email;
+
+        $users = User::where('deleted_at', null)
+            ->when($requestName, function ($query, $requestName) {
+                $spaceConversion = mb_convert_kana($requestName, 's');
+                $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($wordArraySearched as $word) {
+                    return $query->where(function ($query) use ($word) {
+                        $query->where('name', 'like', '%' . $word . '%');
+                    });
+                }
+            })
+            ->when($requestEmail, function ($query, $requestEmail) {
+                $spaceConversion = mb_convert_kana($requestEmail, 's');
+                $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($wordArraySearched as $word) {
+                    return $query->where(function ($query) use ($word) {
+                        $query->where('email', 'like', '%' . $word . '%');
+                    });
+                }
+            })
+            ->paginate(50);
+
+        return view('admin.user.index', compact('users'));
+    }
 }

@@ -240,23 +240,22 @@ class CompaniesController extends Controller
         $requestName = $request->name;
         $requestEmail = $request->email;
 
-        $companies = Companies::where('deleted_at', null)->when($requestName, function ($query, $requestName) {
-            $spaceConversion = mb_convert_kana($requestName, 's');
-            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
-            foreach ($wordArraySearched as $word) {
-                return $query->where(function ($query) use ($word) {
-                    $query->where('name', 'like', '%' . $word . '%')
-                        ->orWhere('email', 'like', '%' . $word . '%');
-                });
-            }
-        })
+        $companies = Companies::where('deleted_at', null)
+            ->when($requestName, function ($query, $requestName) {
+                $spaceConversion = mb_convert_kana($requestName, 's');
+                $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($wordArraySearched as $word) {
+                    return $query->where(function ($query) use ($word) {
+                        $query->where('name', 'like', '%' . $word . '%');
+                    });
+                }
+            })
             ->when($requestEmail, function ($query, $requestEmail) {
                 $spaceConversion = mb_convert_kana($requestEmail, 's');
                 $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
                 foreach ($wordArraySearched as $word) {
                     return $query->where(function ($query) use ($word) {
-                        $query->where('name', 'like', '%' . $word . '%')
-                            ->orWhere('email', 'like', '%' . $word . '%');
+                        $query->where('email', 'like', '%' . $word . '%');
                     });
                 }
             })

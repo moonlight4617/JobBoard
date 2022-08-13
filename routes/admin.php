@@ -33,6 +33,9 @@ use App\Http\Controllers\Admin\TagsController;
 Route::get('companies/query', [CompaniesController::class, 'query'])->middleware('auth:admin')->name('companies.query');
 // 企業登録、一覧、詳細、削除
 Route::resource('companies', CompaniesController::class)->middleware('auth:admin');
+// ユーザー検索
+Route::get('users/query', [UsersController::class, 'query'])->middleware('auth:admin')->name('users.query');
+// ユーザー登録、一覧、詳細、削除
 Route::resource('users', UsersController::class)->middleware('auth:admin');
 
 Route::get('/tags', [TagsController::class, 'index'])->middleware(['auth:admin'])->name('tags.index');
