@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CompaniesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\TagsController;
+use App\Http\Controllers\Admin\JobsController;
 
 
 /*
@@ -41,6 +42,11 @@ Route::resource('users', UsersController::class)->middleware('auth:admin');
 Route::get('/tags', [TagsController::class, 'index'])->middleware(['auth:admin'])->name('tags.index');
 Route::post('/tags/store', [TagsController::class, 'store'])->middleware(['auth:admin'])->name('tags.store');
 Route::delete('/tags/destroy', [TagsController::class, 'destroy'])->middleware(['auth:admin'])->name('tags.destroy');
+
+Route::get('/jobs', [JobsController::class, 'index'])->middleware(['auth:admin'])->name('jobs.index');
+Route::get('/jobs/query', [JobsController::class, 'query'])->middleware(['auth:admin'])->name('jobs.query');
+Route::get('/jobs/{job}', [JobsController::class, 'show'])->middleware(['auth:admin'])->name('jobs.show');
+
 
 // Route::get('/', function () {
 //   return view('admin.dashboard');

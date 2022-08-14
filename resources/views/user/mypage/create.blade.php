@@ -20,7 +20,9 @@
                                 <div class="lg md:w-2/3 mx-auto">
                                     <div class="p-2">
                                         <div class="relative">
-                                            <label for="catch" class="leading-7 text-sm text-gray-600">キャッチコピー</label>
+                                            <label for="catch"
+                                                class="leading-7 text-sm text-gray-600">キャッチコピー</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <input type="text" id="catch" name="catch" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ old('catch') }}">
@@ -29,6 +31,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="intro" class="leading-7 text-sm text-gray-600">自己紹介文</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <textarea type="text" id="intro" name="intro" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
                                         </div>

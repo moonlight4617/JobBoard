@@ -55,10 +55,11 @@ class UsersController extends Controller
     public function store(UploadImageRequest $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'not_regex:/^(\s|　)|(\s|　)$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'intro' => ['nullable', 'string'],
+            'catch' => ['required', 'string', 'max:255'],
+            'intro' => ['required', 'string'],
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
@@ -154,11 +155,11 @@ class UsersController extends Controller
         // dd($request);
         $request->validate(
             [
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:255', 'not_regex:/^(\s|　)|(\s|　)$/'],
                 'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
                 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
-                'catch' => ['nullable', 'string', 'max:255'],
-                'intro' => ['nullable', 'string'],
+                'catch' => ['required', 'string', 'max:255'],
+                'intro' => ['required', 'string'],
                 'license' => ['nullable', 'string'],
                 'career' => ['nullable', 'string'],
                 'hobby' => ['nullable', 'string'],

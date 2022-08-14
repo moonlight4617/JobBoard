@@ -22,6 +22,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="name" class="leading-7 text-sm text-gray-600">ユーザー名</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <input type="text" id="name" name="name" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ old('name') }}">
@@ -30,6 +31,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="email" class="leading-7 text-sm text-gray-600">Eメール</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <input type="email" id="email" name="email" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ old('email') }}">
@@ -38,6 +40,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <input type="password" id="password" name="password" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ old('password') }}">
@@ -47,6 +50,7 @@
                                         <div class="relative">
                                             <label for="password_confirmation"
                                                 class="leading-7 text-sm text-gray-600">パスワード確認</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <input type="password" id="password_confirmation"
                                                 name="password_confirmation" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -55,7 +59,9 @@
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
-                                            <label for="catch" class="leading-7 text-sm text-gray-600">キャッチコピー</label>
+                                            <label for="catch"
+                                                class="leading-7 text-sm text-gray-600">キャッチコピー</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <input type="text" id="catch" name="catch" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ old('catch') }}">
@@ -64,6 +70,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="intro" class="leading-7 text-sm text-gray-600">自己紹介文</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
                                             <textarea type="text" id="intro" name="intro" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
                                         </div>
@@ -107,11 +114,12 @@
 
                                     <div class="p-2 ">
                                         <p class="leading-7 text-sm text-gray-600">プロフィール画像</p>
-                                        <input type="file" name="pro_image" accept="image/png,image/jpeg,image/jpg">
+                                        <input type="file" name="pro_image"
+                                            accept="image/png,image/jpeg,image/jpg">
                                     </div>
                                     <div class="p-2 ">
-                                        <p class="leading-7 text-sm text-gray-600">ポートフォリオ画像を登録</p><input type="file"
-                                            name="portfolio1" accept="image/png,image/jpeg,image/jpg">
+                                        <p class="leading-7 text-sm text-gray-600">ポートフォリオ画像を登録</p><input
+                                            type="file" name="portfolio1" accept="image/png,image/jpeg,image/jpg">
                                     </div>
 
                                     <div class="p-2 w-full flex justify-around mt-4">

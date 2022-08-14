@@ -24,16 +24,17 @@
                                         @if (empty($user->pro_image))
                                             プロフィール画像
                                         @else
-                                            <img src="{{ asset('storage/users/' . $user->pro_image) }}"
-                                                class="w-1/4">
+                                            <img src="{{ asset('storage/users/' . $user->pro_image) }}" class="w-1/4">
                                         @endif
                                         <input type="file" name="pro_image" accept="image/png,image/jpeg,image/jpg">
                                     </div>
 
                                     <div class="p-2">
                                         <div class="relative">
-                                            <label for="catch" class="leading-7 text-sm text-gray-600">キャッチコピー</label>
-                                            <input type="text" id="catch" name="catch"
+                                            <label for="catch"
+                                                class="leading-7 text-sm text-gray-600">キャッチコピー</label>
+                                            <small class="text-red-500 ml-2">※必須項目</small>
+                                            <input type="text" id="catch" name="catch" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ $user->catch }}">
                                         </div>
@@ -41,7 +42,8 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="intro" class="leading-7 text-sm text-gray-600">自己紹介文</label>
-                                            <textarea type="text" id="intro" name="intro"
+                                            <small class="text-red-500 ml-2">※必須項目</small>
+                                            <textarea type="text" id="intro" name="intro" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $user->intro }}</textarea>
                                         </div>
                                     </div>
@@ -131,11 +133,13 @@
                                                             <div class="p-6 space-y-6">
                                                                 <p>twitter</p>
                                                                 @if ($user->twitter)
-                                                                    <input name="twitter" id="twitter" type="text"
+                                                                    <input name="twitter" id="twitter"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                                         value="{{ $user->twitter }}" />
                                                                 @else
-                                                                    <input name="twitter" id="twitter" type="text"
+                                                                    <input name="twitter" id="twitter"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                                 @endif
                                                                 <label for="twitter"
@@ -144,7 +148,8 @@
                                                             <!-- Modal footer -->
                                                             <div
                                                                 class="flex justify-end items-center pb-6 pr-6 space-x-2 rounded-b">
-                                                                <button data-modal-toggle="twitterModal" type="button"
+                                                                <button data-modal-toggle="twitterModal"
+                                                                    type="button"
                                                                     class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 p-2.5 text-center">入力</button>
                                                             </div>
                                                         </div>
@@ -184,18 +189,21 @@
                                                                 <label for="youtube"
                                                                     class="leading-7 text-sm text-gray-600">URLを入力してください</label>
                                                                 @if ($user->youtube)
-                                                                    <input name="youtube" id="youtube" type="text"
+                                                                    <input name="youtube" id="youtube"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                                         value="{{ $user->youtube }}" />
                                                                 @else
-                                                                    <input name="youtube" id="youtube" type="text"
+                                                                    <input name="youtube" id="youtube"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                                 @endif
                                                             </div>
                                                             <!-- Modal footer -->
                                                             <div
                                                                 class="flex justify-end items-center pb-6 pr-6 space-x-2 rounded-b">
-                                                                <button data-modal-toggle="youtubeModal" type="button"
+                                                                <button data-modal-toggle="youtubeModal"
+                                                                    type="button"
                                                                     class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 p-2.5 text-center">入力</button>
                                                             </div>
                                                         </div>
@@ -235,11 +243,13 @@
                                                                 <label for="insta"
                                                                     class="leading-7 text-sm text-gray-600">URLを入力してください</label>
                                                                 @if ($user->insta)
-                                                                    <input name="insta" id="insta" type="text"
+                                                                    <input name="insta" id="insta"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                                         value="{{ $user->insta }}" />
                                                                 @else
-                                                                    <input name="insta" id="insta" type="text"
+                                                                    <input name="insta" id="insta"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                                 @endif
                                                             </div>
@@ -287,18 +297,21 @@
                                                                 <label for="blog"
                                                                     class="leading-7 text-sm text-gray-600">URLを入力してください</label>
                                                                 @if ($user->blog)
-                                                                    <input name="blog" id="blog" type="text"
+                                                                    <input name="blog" id="blog"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                                         value="{{ $user->blog }}" />
                                                                 @else
-                                                                    <input name="blog" id="blog" type="text"
+                                                                    <input name="blog" id="blog"
+                                                                        type="text"
                                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                                 @endif
                                                             </div>
                                                             <!-- Modal footer -->
                                                             <div
                                                                 class="flex justify-end items-center pb-6 pr-6 space-x-2 rounded-b">
-                                                                <button data-modal-toggle="defaultModal" type="button"
+                                                                <button data-modal-toggle="defaultModal"
+                                                                    type="button"
                                                                     class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 p-2.5 text-center">入力</button>
                                                             </div>
                                                         </div>
@@ -338,8 +351,8 @@
                                                 </section>
                                             @endif
                                             <p>画像を追加する　<input type="file" name="portfolio[]"
-                                                    accept="image/png,image/jpeg,image/jpg" class="addPic"
-                                                    multiple></p>
+                                                    accept="image/png,image/jpeg,image/jpg" class="addPic" multiple>
+                                            </p>
                                             <small>* 1度に複数枚選択可能です</small>
 
                                         </div>

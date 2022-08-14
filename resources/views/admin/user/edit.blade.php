@@ -24,8 +24,7 @@
                                         @if (empty($user->pro_image))
                                             プロフィール画像
                                         @else
-                                            <img src="{{ asset('storage/users/' . $user->pro_image) }}"
-                                                class="w-1/4">
+                                            <img src="{{ asset('storage/users/' . $user->pro_image) }}" class="w-1/4">
                                         @endif
                                         <input type="file" name="pro_image" accept="image/png,image/jpeg,image/jpg">
                                     </div>
@@ -33,6 +32,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="name" class="leading-7 text-sm text-gray-600">ユーザー名</label>
+                                            <small class="text-red-500 ml-2">※必須</small>
                                             <input type="text" id="name" name="name" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ $user->name }}">
@@ -41,6 +41,7 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="email" class="leading-7 text-sm text-gray-600">Eメール</label>
+                                            <small class="text-red-500 ml-2">※必須</small>
                                             <input type="text" id="email" name="email" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ $user->email }}">
@@ -48,8 +49,8 @@
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
-                                            <label for="password"
-                                                class="leading-7 text-sm text-gray-600">パスワード</label><small>　*変更する場合のみ記入</small>
+                                            <label for="password" class="leading-7 text-sm text-gray-600">パスワード</label>
+                                            <small class="text-red-500 ml-2">※変更する場合のみ記入</small>
                                             <input type="password" id="password" name="password"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ old('password') }}">
@@ -58,7 +59,8 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="password_confirmation"
-                                                class="leading-7 text-sm text-gray-600">パスワード確認</label><small>　*変更する場合のみ記入</small>
+                                                class="leading-7 text-sm text-gray-600">パスワード確認</label>
+                                            <small class="text-red-500 ml-2">※変更する場合のみ記入</small>
                                             <input type="password" id="password_confirmation"
                                                 name="password_confirmation"
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -67,8 +69,10 @@
                                     </div>
                                     <div class="p-2">
                                         <div class="relative">
-                                            <label for="catch" class="leading-7 text-sm text-gray-600">キャッチコピー</label>
-                                            <input type="text" id="catch" name="catch"
+                                            <label for="catch"
+                                                class="leading-7 text-sm text-gray-600">キャッチコピー</label>
+                                            <small class="text-red-500 ml-2">※必須</small>
+                                            <input type="text" id="catch" name="catch" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                                 value="{{ $user->catch }}">
                                         </div>
@@ -76,7 +80,8 @@
                                     <div class="p-2">
                                         <div class="relative">
                                             <label for="intro" class="leading-7 text-sm text-gray-600">自己紹介文</label>
-                                            <textarea type="text" id="intro" name="intro"
+                                            <small class="text-red-500 ml-2">※必須</small>
+                                            <textarea type="text" id="intro" name="intro" required
                                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $user->intro }}</textarea>
                                         </div>
                                     </div>
@@ -161,8 +166,8 @@
                                                 </section>
                                             @endif
                                             <p>画像を追加する　<input type="file" name="portfolio[]"
-                                                    accept="image/png,image/jpeg,image/jpg" class="addPic"
-                                                    multiple></p>
+                                                    accept="image/png,image/jpeg,image/jpg" class="addPic" multiple>
+                                            </p>
                                             <small>一度に複数枚選択可能です</small>
 
                                         </div>

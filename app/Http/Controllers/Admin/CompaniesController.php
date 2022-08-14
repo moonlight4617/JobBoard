@@ -51,7 +51,7 @@ class CompaniesController extends Controller
     public function store(UploadImageRequest $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'not_regex:/^(\s|　)|(\s|　)$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'intro' => ['required', 'string'],
@@ -148,7 +148,7 @@ class CompaniesController extends Controller
     {
         $company = Companies::findOrFail($id);
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'not_regex:/^(\s|　)|(\s|　)$/'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('companies')->ignore($company->id)],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'intro' => ['required', 'string'],
