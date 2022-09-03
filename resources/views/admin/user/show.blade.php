@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        紹介文：{{ $user->intro }}
+                                        紹介文：{!! $user->intro !!}
                                     </div>
                                 </div>
                                 <div class="p-2">
@@ -46,17 +46,17 @@
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        資格：{{ $user->license }}
+                                        資格：{!! $user->license !!}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        経歴：{{ $user->career }}
+                                        経歴：{!! $user->career !!}
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div class="relative">
-                                        趣味・特技：{{ $user->hobby }}
+                                        趣味・特技：{!! $user->hobby !!}
                                     </div>
                                 </div>
 
@@ -96,6 +96,11 @@
                                         </div>
                                     </section>
                                 @endif
+                                <div class="p-2">
+                                    <button type="button"
+                                        onclick="location.href='{{ route('admin.users.messageIndex', ['user' => $user->id]) }}'"
+                                        class="bg-blue-300 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">メッセージ</button>
+                                </div>
                             </div>
                             <div class="p-2 w-full flex justify-around mt-4">
                                 <button type="button"

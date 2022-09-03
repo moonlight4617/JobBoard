@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CompaniesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\Admin\JobsController;
+use App\Http\Controllers\Admin\MessageController;
 
 
 /*
@@ -39,13 +40,20 @@ Route::get('users/query', [UsersController::class, 'query'])->middleware('auth:a
 // ユーザー登録、一覧、詳細、削除
 Route::resource('users', UsersController::class)->middleware('auth:admin');
 
+// タグ関連
 Route::get('/tags', [TagsController::class, 'index'])->middleware(['auth:admin'])->name('tags.index');
 Route::post('/tags/store', [TagsController::class, 'store'])->middleware(['auth:admin'])->name('tags.store');
 Route::delete('/tags/destroy', [TagsController::class, 'destroy'])->middleware(['auth:admin'])->name('tags.destroy');
 
+// 求人関連
 Route::get('/jobs', [JobsController::class, 'index'])->middleware(['auth:admin'])->name('jobs.index');
 Route::get('/jobs/query', [JobsController::class, 'query'])->middleware(['auth:admin'])->name('jobs.query');
 Route::get('/jobs/{job}', [JobsController::class, 'show'])->middleware(['auth:admin'])->name('jobs.show');
+
+// メッセージ関連
+Route::get('/user/messagesIndex/{user}', [MessageController::class, 'userMessageIndex'])->middleware(['auth:admin'])->name('users.messageIndex');
+Route::get('/user/messages/{user}', [MessageController::class, 'show'])->middleware(['auth:admin'])->name('users.messageShow');
+Route::delete('/user/messages/{user}', [MessageController::class, 'delete'])->middleware(['auth:admin'])->name('users.messageDelete');
 
 
 // Route::get('/', function () {
