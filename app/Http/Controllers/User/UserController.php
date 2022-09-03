@@ -51,8 +51,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'catch' => ['nullable', 'string', 'max:255'],
-            'intro' => ['nullable', 'string'],
+            'catch' => ['required', 'string', 'max:255'],
+            'intro' => ['required', 'string'],
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],
@@ -135,8 +135,8 @@ class UserController extends Controller
     public function update(UploadImageRequest $request, $id)
     {
         $request->validate([
-            'catch' => ['nullable', 'string', 'max:255'],
-            'intro' => ['nullable', 'string'],
+            'catch' => ['required', 'string', 'max:255'],
+            'intro' => ['required', 'string'],
             'license' => ['nullable', 'string'],
             'career' => ['nullable', 'string'],
             'hobby' => ['nullable', 'string'],

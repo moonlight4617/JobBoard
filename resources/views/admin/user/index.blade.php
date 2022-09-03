@@ -13,7 +13,20 @@
                     <section class="text-gray-600 body-font">
                         <div class="container md:px-5 py-4 mx-auto">
                             <div class="w-full mx-auto overflow-auto">
-                                <table class="table-auto w-full text-left whitespace-no-wrap">
+                                <form method="POST" enctype="multipart/form-data"
+                                    action="{{ route('admin.users.query') }}">
+                                    @csrf
+                                    @method('get')
+                                    <label for="name" class="leading-7 text-sm text-gray-600">ユーザー名</label>
+                                    <input id="name" name="name"
+                                        class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="email" class="ml-4 leading-7 text-sm text-gray-600">Eメール</label>
+                                    <input id="email" name="email"
+                                        class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <button type="submit"
+                                        class="text-white bg-blue-500 border-0 py-2 px-8 ml-4 focus:outline-none hover:bg-blue-600 rounded text-lg">検索</button>
+                                </form>
+                                <table class="table-auto w-full text-left whitespace-no-wrap mt-4">
                                     <thead>
                                         <tr>
                                             <th

@@ -28,6 +28,9 @@
                     <x-nav-link :href="route('admin.tags.index')" :active="request()->routeIs('admin.tags.index')">
                         タグ編集
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.jobs.index')" :active="request()->routeIs('admin.jobs.index')">
+                        求人一覧
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -111,6 +114,11 @@
         <div class="pt-2 pb-3 pl-3 space-y-1">
             <x-nav-link :href="route('admin.tags.index')" :active="request()->routeIs('admin.tags.index')">
                 タグ編集
+            </x-nav-link>
+        </div>
+        <div class="pt-2 pb-3 pl-3 space-y-1">
+            <x-nav-link :href="route('admin.jobs.index')" :active="request()->routeIs('admin.jobs.index')">
+                求人一覧
             </x-nav-link>
         </div>
 

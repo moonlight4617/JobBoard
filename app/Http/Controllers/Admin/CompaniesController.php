@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\User\Company;
 use Illuminate\Http\Request;
 use App\Models\Companies;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\UploadImageRequest;
 use InterventionImage;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 class CompaniesController extends Controller
@@ -27,7 +29,6 @@ class CompaniesController extends Controller
     public function index()
     {
         $companies = Companies::select('id', 'name', 'email', 'created_at', 'updated_at')->paginate(50);
-        // dd($companies);
         return view('admin.company.index', compact('companies'));
     }
 
@@ -50,7 +51,7 @@ class CompaniesController extends Controller
     public function store(UploadImageRequest $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'not_regex:/^(\s|　)|(\s|　)$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'intro' => ['required', 'string'],
@@ -147,7 +148,7 @@ class CompaniesController extends Controller
     {
         $company = Companies::findOrFail($id);
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'not_regex:/^(\s|　)|(\s|　)$/'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('companies')->ignore($company->id)],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'intro' => ['required', 'string'],
@@ -231,5 +232,35 @@ class CompaniesController extends Controller
     {
         Companies::findOrFail($id)->delete();
         return redirect()->route('admin.companies.index')->with(['message' => '企業を削除しました。', 'status' => 'alert']);
+    }
+
+    public function query(Request $request)
+    {
+        // dd($request);
+        $requestName = $request->name;
+        $requestEmail = $request->email;
+
+        $companies = Companies::where('deleted_at', null)
+            ->when($requestName, function ($query, $requestName) {
+                $spaceConversion = mb_convert_kana($requestName, 's');
+                $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($wordArraySearched as $word) {
+                    return $query->where(function ($query) use ($word) {
+                        $query->where('name', 'like', '%' . $word . '%');
+                    });
+                }
+            })
+            ->when($requestEmail, function ($query, $requestEmail) {
+                $spaceConversion = mb_convert_kana($requestEmail, 's');
+                $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($wordArraySearched as $word) {
+                    return $query->where(function ($query) use ($word) {
+                        $query->where('email', 'like', '%' . $word . '%');
+                    });
+                }
+            })
+            ->paginate(50);
+
+        return view('admin.company.index', compact('companies'));
     }
 }
