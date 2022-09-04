@@ -40,9 +40,6 @@ class MessageController extends Controller
 
     public function show($id, Request $request)
     {
-        // $carbon = new Carbon('now');
-        // dd(Carbon::now());
-        // dd($id, $request);
         $user = User::findOrFail($id);
         $company = Companies::findOrFail($request->company);
         $contactUsersId = ContactUsers::where('users_id', $id)->where('companies_id', $company->id)->select('id')->get();
@@ -55,14 +52,17 @@ class MessageController extends Controller
 
     public function delete(Request $request)
     {
-        // $test = User::where('id', 90)->count();
-        // dd($test);
-        dd($request);
+        // dd($request);
         foreach ($request->messages as $messageId) {
             Message::findOrFail($messageId)->delete();
         }
-        // $user
-        // $company
-        return view('admin.message.show', compact(['contactUsersId', 'messages', 'company', 'user']))->with(['message' => 'メッセージを削除しました', 'status' => 'info']);
+        $user = User::findOrFail($request->userId);
+        $company = Companies::findOrFail($request->compId);
+        $contactUsersId = ContactUsers::where('users_id', $request->userId)->where('companies_id', $request->compId)->select('id')->get();
+        if ($contactUsersId->first() == null) {
+            return back()->with(['message' => 'まだチャットルームがありません', 'status' => 'alert']);
+        }
+        $messages = Message::whereIn('contact_users_id', $contactUsersId)->orderBy('sent_time', 'asc')->get();
+        return redirect()->route('admin.users.messageShow', compact(['contactUsersId', 'messages', 'company', 'user']))->with(['message' => 'メッセージを削除しました', 'status' => 'info']);
     }
 }
